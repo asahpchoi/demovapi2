@@ -10,13 +10,24 @@ import Stack from "@mui/material/Stack";
 import { call } from "./util.js";
 import CallIcon from '@mui/icons-material/Call';
 import StopIcon from '@mui/icons-material/Stop';
+import { roles } from "./roles.js";
+
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 export default function App() {
-  //const private_key = "9175acca-10da-411e-adb4-60d9fb4b0851";
-
   const [welcomeMessage, setWelcomeMessage] = useState("how are you?");
   const [prompt, setPrompt] = useState(`you are a professional agent`);
   const [isCalling, setIsCalling] = useState(false);
+  console.log({ roles })
+
+  const renderRole = (r) => {
+    return <Button onClick={() => {
+      console.log(roles[r].prompt)
+      setPrompt(roles[r].prompt)
+    }}>{r}</Button>
+  }
+
   return (
     <div className="App">
       <Card fullWidth>
@@ -44,7 +55,7 @@ export default function App() {
             />
           </Stack>
         </CardContent>
-        <CardActions  >
+        <CardActions>
           <Stack direction="row" spacing={2}>
             <Fab style={{ "backgroundColor": "green" }}
               onClick={() => {
@@ -58,17 +69,18 @@ export default function App() {
             <Fab disabled={!isCalling}
               style={{ "backgroundColor": "red" }}
               onClick={() => {
-
                 setIsCalling(false);
                 window.location.reload();
               }}
             >
               <StopIcon />
             </Fab>
-
           </Stack>
-
-
+          <ButtonGroup>
+            {
+              Object.keys(roles).map(k => renderRole(k))
+            }
+          </ButtonGroup>
 
         </CardActions>
       </Card>
