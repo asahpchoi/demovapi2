@@ -162,14 +162,13 @@ export default function App() {
               {!sessionId ? showLogin() : <Button>{name}</Button>}
             </Typography>
             Change to  <Select
-
               onChange={(event) => {
                 const id = event.target.value;
                 window.location.replace(`?sid=${id}`)
               }}
             >
               {userlist.map(u => {
-                return <MenuItem value={u.id} selected={u.id===sessionId}>{u.username}</MenuItem>
+                return <MenuItem value={u.id} selected={u.id==sessionId}>{u.username}</MenuItem>
               })}
             </Select>
           </Toolbar>
