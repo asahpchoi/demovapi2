@@ -11,7 +11,7 @@ import { call } from "./libs/util.js";
 import CallIcon from '@mui/icons-material/Call';
 import StopIcon from '@mui/icons-material/Stop';
 import { roles } from "./libs/roles.js";
-
+import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Typography from '@mui/material/Typography';
@@ -20,6 +20,7 @@ import "./App.css";
 import { callLLM } from "./libs/llm.mjs";
 import TextsmsIcon from '@mui/icons-material/Textsms';
 
+import AppBar from '@mui/material/AppBar';
 export default function App() {
   const [welcomeMessage, setWelcomeMessage] = useState("how are you?");
   const [prompt, setPrompt] = useState(`you are a professional agent`);
@@ -43,7 +44,6 @@ export default function App() {
           <Stack className="center fullscreen" style={{ padding: "10px" }}>
             <TextField
               multiline
-              rows="5"
               label="Ask your Agent"
               fullWidth
               value={userPrompt}
@@ -51,7 +51,7 @@ export default function App() {
                 setUserPrompt(e.target.value);
               }}
             />
-            <Stack direction="row">
+            <Stack direction="row" className="center">
               <Button onClick={async () => {
                 const answer = await callLLM(prompt, userPrompt);
                 setAnswer(answer)
@@ -69,7 +69,7 @@ export default function App() {
 
           <div className="center">
             <Fab
-              style={{ "backgroundColor": "red" }}
+       
               onClick={() => {
                 setIsCalling(false);
                 window.location.reload();
@@ -80,6 +80,15 @@ export default function App() {
           </div>
         </Stack>
       </Modal>
+      <AppBar position="static" style={{"backgroundColor":"#FF7900"}}>
+        <Toolbar>
+
+          <Typography  >
+            FWD AI Demo
+          </Typography>
+
+        </Toolbar>
+      </AppBar>
       <Card fullWidth>
         <CardMedia />
         <CardContent>
