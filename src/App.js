@@ -26,6 +26,8 @@ import AppBar from '@mui/material/AppBar';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { products } from "./libs/products.js"
+import Checkbox from '@mui/material/Checkbox';
 
 import Vapi from "@vapi-ai/web";
 export default function App() {
@@ -41,6 +43,8 @@ export default function App() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [inputName, setInputName] = useState(name);
   const [userlist, setUserlist] = useState([])
+  const [includeProduct, setIncludeProduct] = React.useState(false);
+
   useEffect(() => {
     async function init() {
 
@@ -68,12 +72,7 @@ export default function App() {
 
     }}>{r}</Button>
   }
-
-
   const showLogin = () => {
-
-
-
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
       setLoginOpen((previousOpen) => !previousOpen);
@@ -216,7 +215,7 @@ export default function App() {
 
             <Fab
               onClick={() => {
-                call(welcomeMessage, prompt);
+                call(welcomeMessage, prompt, includeProduct?products:{});
                 setIsCalling(true);
               }}
 
@@ -236,6 +235,17 @@ export default function App() {
 
 
         </CardActions>
+      </Card>
+      <Card fullWidth>
+        <Stack direction="row">
+          <Card style={{ width: '20vw' }}>
+         <h3>Include Product Knowledge</h3>
+            <Checkbox onClick={()=>{
+              setIncludeProduct(!includeProduct)
+            }}>Product</Checkbox>
+
+          </Card>
+        </Stack>
       </Card>
     </div >
   );
