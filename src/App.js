@@ -17,7 +17,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import "./App.css";
-import {callLLM} from "./libs/llm.mjs";
+import { callLLM } from "./libs/llm.mjs";
 
 export default function App() {
   const [welcomeMessage, setWelcomeMessage] = useState("how are you?");
@@ -36,9 +36,8 @@ export default function App() {
 
   return (
     <div className="App">
-      <Modal open={!isCalling} >
+      <Modal open={isCalling} >
         <Stack className="overlay" spacing={2}>
-
           <TextField
             multiline
             rows="5"
@@ -49,28 +48,37 @@ export default function App() {
               setUserPrompt(e.target.value);
             }}
           />
-          <Fab 
-            style={{ "backgroundColor": "red" }}
-            onClick={() => {
-              setIsCalling(false);
-              window.location.reload();
-            }}
-          >
 
-            <StopIcon />
-          </Fab>
-          <Button onClick={async ()=>{
+          <Button onClick={async () => {
             const answer = await callLLM(prompt, userPrompt);
             setAnswer(answer)
           }}>Ask</Button>
 
           {answer}
+
+          <div className="center">
+            <Fab
+              style={{ "backgroundColor": "red" }}
+              onClick={() => {
+                setIsCalling(false);
+                window.location.reload();
+              }}
+            >
+              <StopIcon />
+            </Fab>
+          </div>
         </Stack>
       </Modal>
       <Card fullWidth>
         <CardMedia />
         <CardContent>
+
           <Stack spacing={2}>
+            <ButtonGroup>
+              {
+                Object.keys(roles).map(k => renderRole(k))
+              }
+            </ButtonGroup>
             <TextField
               fullWidth
               label="Welcome Message"
@@ -94,22 +102,19 @@ export default function App() {
         </CardContent>
         <CardActions>
           <Stack direction="row" spacing={2}>
-            <Fab style={{ "backgroundColor": "green" }}
-              onClick={() => {
-                call(welcomeMessage, prompt);
-                setIsCalling(true);
-              }}
-              disabled={isCalling}
-            >
-              <CallIcon />
-            </Fab>
-
+            <div className="center">
+              <Fab style={{ "backgroundColor": "green" }}
+                onClick={() => {
+                  call(welcomeMessage, prompt);
+                  setIsCalling(true);
+                }}
+                disabled={isCalling}
+              >
+                <CallIcon />
+              </Fab>
+            </div>
           </Stack>
-          <ButtonGroup>
-            {
-              Object.keys(roles).map(k => renderRole(k))
-            }
-          </ButtonGroup>
+
 
         </CardActions>
       </Card>
