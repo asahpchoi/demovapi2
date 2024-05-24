@@ -28,11 +28,11 @@ export default function App() {
   const [isTexting, setIsTexting] = useState(false);
   const [userPrompt, setUserPrompt] = useState(``)
   const [answer, setAnswer] = useState(``)
-  console.log({ roles })
+
 
   const renderRole = (r) => {
     return <Button onClick={() => {
-      console.log(roles[r].prompt)
+
       setPrompt(roles[r].prompt)
     }}>{r}</Button>
   }
@@ -41,46 +41,53 @@ export default function App() {
     <div className="App">
       <Modal open={isTexting}  >
         <div className="fullscreen">
-          <Stack className="center fullscreen" style={{ padding: "10px" }}>
+          <Stack justifyContent="center" style={{padding: "10px"}}>
             <TextField
-              multiline
-              label="Ask your Agent"
+              label="Ask a question"
               fullWidth
               value={userPrompt}
               onChange={(e) => {
                 setUserPrompt(e.target.value);
               }}
+              onKeyDown={
+                async (e) => {
+                  if (e.keyCode === 13) {
+                    setUserPrompt("");
+                    const answer = await callLLM(prompt, userPrompt);
+                    setAnswer(answer)
+                  }
+                }
+              }
             />
-            <Stack direction="row" className="center">
+            <Stack direction="row" justifyContent="center">
               <Button onClick={async () => {
                 const answer = await callLLM(prompt, userPrompt);
                 setAnswer(answer)
               }}>Ask</Button>
               <Button onClick={() => setIsTexting(false)}>Close</Button>
             </Stack>
-            <Typography> {answer}</Typography>
+            <Typography> Answer: {answer}</Typography>
 
           </Stack>
         </div>
       </Modal>
       <Modal open={isCalling} >
-        <Stack className="overlay" spacing={2}>
+        <Stack className="overlay" spacing={2} justifyContent="center" className="center">
 
 
-          <div className="center">
-            <Fab
-       
-              onClick={() => {
-                setIsCalling(false);
-                window.location.reload();
-              }}
-            >
-              <StopIcon />
-            </Fab>
-          </div>
+          <Fab
+
+            onClick={() => {
+              setIsCalling(false);
+              window.location.reload();
+            }}
+          >
+            <StopIcon />
+          </Fab>
+
         </Stack>
       </Modal>
-      <AppBar position="static" style={{"backgroundColor":"#FF7900"}}>
+      <AppBar position="static" style={{ "backgroundColor": "#FF7900" }}>
         <Toolbar>
 
           <Typography  >
@@ -92,12 +99,13 @@ export default function App() {
       <Card fullWidth>
         <CardMedia />
         <CardContent>
+
+          {
+            Object.keys(roles).map(k => renderRole(k))
+          }
           <Stack spacing={2}>
-            <Stack direction="row" spacing={2}>
-              {
-                Object.keys(roles).map(k => renderRole(k))
-              }
-            </Stack>
+
+
             <TextField
               fullWidth
               label="Welcome Message"
@@ -120,28 +128,27 @@ export default function App() {
           </Stack>
         </CardContent>
         <CardActions>
-          <Stack direction="row" spacing={2}>
-            <div className="center">
-              <Stack direction="row" spacing={2}>
-                <Fab
-                  onClick={() => {
-                    call(welcomeMessage, prompt);
-                    setIsCalling(true);
-                  }}
+          <Stack direction="row" spacing={2} justifyContent="center" fullWidth className="center">
 
-                >
-                  <CallIcon />
-                </Fab>
-                <Fab
-                  onClick={() => {
-                    setIsTexting(true);
-                  }}
 
-                >
-                  <TextsmsIcon />
-                </Fab>
-              </Stack>
-            </div>
+            <Fab
+              onClick={() => {
+                call(welcomeMessage, prompt);
+                setIsCalling(true);
+              }}
+
+            >
+              <CallIcon />
+            </Fab>
+            <Fab
+              onClick={() => {
+                setIsTexting(true);
+              }}
+
+            >
+              <TextsmsIcon />
+            </Fab>
+
           </Stack>
 
 
