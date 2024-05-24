@@ -139,7 +139,7 @@ export default function App() {
         </div>
       </Modal>
       <Modal open={isCalling} >
-        <Stack className="overlay" spacing={2} justifyContent="center" className="center">
+        <Stack className="overlay" spacing={2} justifyContent="center">
 
           <Fab
 
@@ -169,10 +169,8 @@ export default function App() {
               }}
             >
               {userlist.map(u => {
-                return <MenuItem value={u.id}>{u.username}</MenuItem>
-
+                return <MenuItem value={u.id} selected={u.id===sessionId}>{u.username}</MenuItem>
               })}
-
             </Select>
           </Toolbar>
         </AppBar>
@@ -180,13 +178,10 @@ export default function App() {
       <Card fullWidth>
         <CardMedia />
         <CardContent>
-
           {
             Object.keys(roles).map(k => renderRole(k))
           }
           <Stack spacing={2}>
-
-
             <TextField
               fullWidth
               label="Welcome Message"
@@ -211,14 +206,11 @@ export default function App() {
         </CardContent>
         <CardActions>
           <Stack direction="row" spacing={2} justifyContent="center" fullWidth className="center">
-
-
             <Fab
               onClick={() => {
                 call(welcomeMessage, prompt, includeProduct ? products : {});
                 setIsCalling(true);
               }}
-
             >
               <CallIcon />
             </Fab>
@@ -226,14 +218,10 @@ export default function App() {
               onClick={() => {
                 setIsTexting(true);
               }}
-
             >
               <TextsmsIcon />
             </Fab>
-
           </Stack>
-
-
         </CardActions>
       </Card>
       <Card fullWidth>
@@ -242,9 +230,6 @@ export default function App() {
             setIncludeProduct(!includeProduct)
           }}>Product</Checkbox>
           <h3>Include Product Knowledge (Set for Life)</h3>
-
-
-
         </Stack>
       </Card>
     </div >
