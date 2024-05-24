@@ -7,18 +7,24 @@ import TextField from "@mui/material/TextField";
 import Fab from '@mui/material/Fab';
 import { useState } from "react";
 import Stack from "@mui/material/Stack";
-import { call } from "./util.js";
+import { call } from "./libs/util.js";
 import CallIcon from '@mui/icons-material/Call';
 import StopIcon from '@mui/icons-material/Stop';
-import { roles } from "./roles.js";
+import { roles } from "./libs/roles.js";
 
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import "./App.css";
+import {callLLM} from "./libs/llm.mjs";
 
 export default function App() {
   const [welcomeMessage, setWelcomeMessage] = useState("how are you?");
   const [prompt, setPrompt] = useState(`you are a professional agent`);
   const [isCalling, setIsCalling] = useState(false);
+  const [userPrompt, setUserPrompt] = useState(``)
+  const [answer, setAnswer] = useState(``)
   console.log({ roles })
 
   const renderRole = (r) => {
@@ -30,6 +36,37 @@ export default function App() {
 
   return (
     <div className="App">
+      <Modal open={!isCalling} >
+        <Stack className="overlay" spacing={2}>
+
+          <TextField
+            multiline
+            rows="5"
+            label="Ask your Agent"
+            fullWidth
+            value={userPrompt}
+            onChange={(e) => {
+              setUserPrompt(e.target.value);
+            }}
+          />
+          <Fab 
+            style={{ "backgroundColor": "red" }}
+            onClick={() => {
+              setIsCalling(false);
+              window.location.reload();
+            }}
+          >
+
+            <StopIcon />
+          </Fab>
+          <Button onClick={async ()=>{
+            const answer = await callLLM(prompt, userPrompt);
+            setAnswer(answer)
+          }}>Ask</Button>
+
+          {answer}
+        </Stack>
+      </Modal>
       <Card fullWidth>
         <CardMedia />
         <CardContent>
@@ -66,15 +103,7 @@ export default function App() {
             >
               <CallIcon />
             </Fab>
-            <Fab disabled={!isCalling}
-              style={{ "backgroundColor": "red" }}
-              onClick={() => {
-                setIsCalling(false);
-                window.location.reload();
-              }}
-            >
-              <StopIcon />
-            </Fab>
+
           </Stack>
           <ButtonGroup>
             {
