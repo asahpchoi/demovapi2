@@ -27,5 +27,9 @@ export function call(welcomeMessage, prompt) {
   vapi.start("cb6e3612-eb7e-463e-9041-ad17021669d7", assistantOverrides);
 }
 
+export function stopCall() {
+  vapi.stop();
+}
+
  
  
