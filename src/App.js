@@ -18,11 +18,13 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import "./App.css";
 import { callLLM } from "./libs/llm.mjs";
+import TextsmsIcon from '@mui/icons-material/Textsms';
 
 export default function App() {
   const [welcomeMessage, setWelcomeMessage] = useState("how are you?");
   const [prompt, setPrompt] = useState(`you are a professional agent`);
   const [isCalling, setIsCalling] = useState(false);
+  const [isTexting, setIsTexting] = useState(false);
   const [userPrompt, setUserPrompt] = useState(``)
   const [answer, setAnswer] = useState(``)
   console.log({ roles })
@@ -36,25 +38,34 @@ export default function App() {
 
   return (
     <div className="App">
+      <Modal open={isTexting}  >
+        <div className="fullscreen">
+          <Stack className="center fullscreen" style={{ padding: "10px" }}>
+            <TextField
+              multiline
+              rows="5"
+              label="Ask your Agent"
+              fullWidth
+              value={userPrompt}
+              onChange={(e) => {
+                setUserPrompt(e.target.value);
+              }}
+            />
+            <Stack direction="row">
+              <Button onClick={async () => {
+                const answer = await callLLM(prompt, userPrompt);
+                setAnswer(answer)
+              }}>Ask</Button>
+              <Button onClick={() => setIsTexting(false)}>Close</Button>
+            </Stack>
+            <Typography> {answer}</Typography>
+
+          </Stack>
+        </div>
+      </Modal>
       <Modal open={isCalling} >
         <Stack className="overlay" spacing={2}>
-          <TextField
-            multiline
-            rows="5"
-            label="Ask your Agent"
-            fullWidth
-            value={userPrompt}
-            onChange={(e) => {
-              setUserPrompt(e.target.value);
-            }}
-          />
 
-          <Button onClick={async () => {
-            const answer = await callLLM(prompt, userPrompt);
-            setAnswer(answer)
-          }}>Ask</Button>
-
-          {answer}
 
           <div className="center">
             <Fab
@@ -72,13 +83,12 @@ export default function App() {
       <Card fullWidth>
         <CardMedia />
         <CardContent>
-
           <Stack spacing={2}>
-            <ButtonGroup>
+            <Stack direction="row" spacing={2}>
               {
                 Object.keys(roles).map(k => renderRole(k))
               }
-            </ButtonGroup>
+            </Stack>
             <TextField
               fullWidth
               label="Welcome Message"
@@ -103,21 +113,31 @@ export default function App() {
         <CardActions>
           <Stack direction="row" spacing={2}>
             <div className="center">
-              <Fab style={{ "backgroundColor": "green" }}
-                onClick={() => {
-                  call(welcomeMessage, prompt);
-                  setIsCalling(true);
-                }}
-                disabled={isCalling}
-              >
-                <CallIcon />
-              </Fab>
+              <Stack direction="row" spacing={2}>
+                <Fab
+                  onClick={() => {
+                    call(welcomeMessage, prompt);
+                    setIsCalling(true);
+                  }}
+
+                >
+                  <CallIcon />
+                </Fab>
+                <Fab
+                  onClick={() => {
+                    setIsTexting(true);
+                  }}
+
+                >
+                  <TextsmsIcon />
+                </Fab>
+              </Stack>
             </div>
           </Stack>
 
 
         </CardActions>
       </Card>
-    </div>
+    </div >
   );
 }
