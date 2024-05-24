@@ -20,7 +20,7 @@ export function call(welcomeMessage, prompt, rag) {
       messages: [
         {
           role: "system",
-          content: prompt + `, with following context: ${context}`,
+          content: prompt + `, keep the answer short and precise, with following context: ${context}`,
         },
       ],
     },

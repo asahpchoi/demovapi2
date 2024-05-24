@@ -215,7 +215,7 @@ export default function App() {
 
             <Fab
               onClick={() => {
-                call(welcomeMessage, prompt, includeProduct?products:{});
+                call(welcomeMessage, prompt, includeProduct ? products : {});
                 setIsCalling(true);
               }}
 
@@ -238,13 +238,13 @@ export default function App() {
       </Card>
       <Card fullWidth>
         <Stack direction="row">
-          <Card style={{ width: '20vw' }}>
-         <h3>Include Product Knowledge</h3>
-            <Checkbox onClick={()=>{
-              setIncludeProduct(!includeProduct)
-            }}>Product</Checkbox>
+          <Checkbox onClick={() => {
+            setIncludeProduct(!includeProduct)
+          }}>Product</Checkbox>
+          <h3>Include Product Knowledge (Set for Life)</h3>
 
-          </Card>
+
+
         </Stack>
       </Card>
     </div >
