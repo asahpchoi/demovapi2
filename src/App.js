@@ -79,11 +79,11 @@ export default function App() {
       setLoginOpen((previousOpen) => !previousOpen);
     };
 
-    return <> <Button onClick={handleClick}>
+    return <div> <Button onClick={handleClick}>
       Login
     </Button>
       <Popper open={loginOpen} anchorEl={anchorEl} >
-        <Stack direction="row" style={{ backgroundColor: 'white' }}>
+        <Stack direction="row" style={{ backgroundColor: 'white', padding: '10px', margin: '10px' }}>
           <TextField
             fullWidth
             label="Your Name"
@@ -102,7 +102,7 @@ export default function App() {
           >Update</Button>
         </Stack>
       </Popper >
-    </>
+    </div>
   }
 
   return (
@@ -155,25 +155,29 @@ export default function App() {
 
         </Stack>
       </Modal>
-      <AppBar position="static" style={{ "backgroundColor": "#FF7900" }}>
-        <Toolbar>
-          FWD AI Demo {!sessionId ? showLogin() : <Button>{name}</Button>}
+      <Box>
+        <AppBar position="static" style={{ "backgroundColor": "#FF7900" }}>
+          <Toolbar>
+            FWD AI Demo
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              {!sessionId ? showLogin() : <Button>{name}</Button>}
+            </Typography>
+            Change to  <Select
 
-          <Select
+              onChange={(event) => {
+                const id = event.target.value;
+                window.location.replace(`?sid=${id}`)
+              }}
+            >
+              {userlist.map(u => {
+                return <MenuItem value={u.id}>{u.username}</MenuItem>
 
-            onChange={(event) => {
-              const id = event.target.value;
-              window.location.replace(`?sid=${id}`)
-            }}
-          >
-            {userlist.map(u => {
-              return <MenuItem value={u.id}>{u.username}</MenuItem>
+              })}
 
-            })}
-
-          </Select>
-        </Toolbar>
-      </AppBar>
+            </Select>
+          </Toolbar>
+        </AppBar>
+      </Box>
       <Card fullWidth>
         <CardMedia />
         <CardContent>
