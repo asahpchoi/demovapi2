@@ -29,7 +29,7 @@
     jsonpointer "^5.0.0"
     leven "^3.1.0"
 
-"@azure-rest/core-client@^1.1.7":
+"@azure-rest/core-client@^1.1.4", "@azure-rest/core-client@^1.1.7":
   version "1.4.0"
   resolved "https://registry.npmjs.org/@azure-rest/core-client/-/core-client-1.4.0.tgz"
   integrity sha512-ozTDPBVUDR5eOnMIwhggbnVmOrka4fXCs8n8mvUo4WLLc38kki6bAOByDoVZZPz/pZy2jMt2kwfpvy/UjALj6w==
@@ -64,7 +64,7 @@
     "@azure/core-util" "^1.1.0"
     tslib "^2.6.2"
 
-"@azure/core-client@^1.4.0":
+"@azure/core-client@^1.4.0", "@azure/core-client@^1.7.3":
   version "1.9.2"
   resolved "https://registry.npmjs.org/@azure/core-client/-/core-client-1.9.2.tgz"
   integrity sha512-kRdry/rav3fUKHl/aDLd/pDLcB+4pOFwPPTVEExuMyaI5r+JBbMWqRbCY1pn5BniDaU3lRxO9eaQ1AmSMehl/w==
@@ -133,7 +133,7 @@
     stoppable "^1.1.0"
     tslib "^2.2.0"
 
-"@azure/logger@^1.0.0", "@azure/logger@^1.0.3":
+"@azure/logger@^1.0.0", "@azure/logger@^1.0.3", "@azure/logger@^1.0.4":
   version "1.1.2"
   resolved "https://registry.npmjs.org/@azure/logger/-/logger-1.1.2.tgz"
   integrity sha512-l170uE7bsKpIU6B/giRc9i4NI0Mj+tANMMMxf7Zi/5cKzEqPayP7+X1WPrG7e+91JgY8N+7K7nF2WOi7iVhXvg==
@@ -160,6 +160,19 @@
     "@azure/msal-common" "14.10.0"
     jsonwebtoken "^9.0.0"
     uuid "^8.3.0"
+
+"@azure/openai-assistants@^1.0.0-beta.5":
+  version "1.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@azure/openai-assistants/-/openai-assistants-1.0.0-beta.5.tgz#ff88cea47c9c40bb00f71a7fe636cfc908249f89"
+  integrity sha512-j4KT4TwoLvAZJgUdnZgwqMBe99l8KZdORd/NbOyqpOHs0Ozj3ZfsVU81iL5/CG+Ps9LiZ8lKbaPaJq6Hi6Vz3Q==
+  dependencies:
+    "@azure-rest/core-client" "^1.1.4"
+    "@azure/core-auth" "^1.5.0"
+    "@azure/core-client" "^1.7.3"
+    "@azure/core-rest-pipeline" "^1.13.0"
+    "@azure/core-util" "^1.6.1"
+    "@azure/logger" "^1.0.4"
+    tslib "^2.2.0"
 
 "@azure/openai@^1.0.0-beta.12":
   version "1.0.0-beta.12"

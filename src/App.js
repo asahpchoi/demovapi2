@@ -84,7 +84,7 @@ export default function App() {
 
     return (
       <div>
-        <Button onClick={handleClick}>Login</Button>
+        <Button onClick={handleClick}>Provide your name</Button>
         <Popper open={loginOpen} anchorEl={anchorEl}>
           <Stack direction="row" style={{ backgroundColor: 'white', padding: '10px', margin: '10px' }}>
             <TextField
@@ -157,7 +157,10 @@ export default function App() {
 
       {/* Modal for calling interaction */}
       <Modal open={isCalling}>
-        <Stack className="overlay" spacing={2} justifyContent="center">
+        <Stack className="overlay" spacing={2} style={{"textAlign": "middle"}}>
+          <div>
+            {prompt}
+          </div>
           <Fab onClick={() => {
             setIsCalling(false);
             stopCall();
@@ -218,8 +221,8 @@ export default function App() {
             />
           </Stack>
         </CardContent>
-        <CardActions>
-          <Stack direction="row" spacing={2} justifyContent="center">
+        <CardActions  >
+          <Stack direction="row" spacing={2}  >
             <Fab onClick={() => {
               call(welcomeMessage, prompt, includeProduct ? products : {});
               setIsCalling(true);
