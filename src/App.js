@@ -25,14 +25,16 @@ import {
   Stop as StopIcon,
   Textsms as TextsmsIcon
 } from '@mui/icons-material';
-import { call, stopCall } from "./libs/util.js";
+import { call, stopCall, setCallback } from "./libs/util.js";
 import { roles } from "./libs/roles.js";
-import { callLLM } from "./libs/llm.mjs";
+import { callLLM, checkSentiment } from "./libs/llm.mjs";
 import { getID, updateData, getData, getUsers } from "./libs/state.mjs";
 import { products } from "./libs/products.js";
 import Vapi from "@vapi-ai/web";
 import "./App.css";
-import Markdown from 'react-markdown'
+
+import { CallUI } from "./ui/CallUI.js";
+import { TextUI } from "./ui/TextUI.js";
 
 export default function App() {
   // State variables for managing various application states
@@ -52,6 +54,12 @@ export default function App() {
   const [includeProduct, setIncludeProduct] = useState(false);
   const [image, setImage] = useState(null);
   const [history, setHistory] = useState([]);
+  const [transcripts, setTranscripts] = useState([])
+  const [currentMessage, setCurrentMessage] = useState("");
+  const [sentiment, setSentiment] = useState("Neutral");
+
+
+
 
   // useEffect hook to initialize data on component mount
   useEffect(() => {
@@ -71,6 +79,26 @@ export default function App() {
     init();
   }, [name]);
 
+  const callback = async (message) => {
+
+    if (message.type == "transcript") {
+
+      console.log(message.transcript)
+      setCurrentMessage(message.transcript)
+
+      if (message.transcriptType == "final") {
+        setTranscripts(transcripts.concat([{
+          role: message.role,
+          transcript: currentMessage
+        }]))
+        setCurrentMessage("");
+        const sentimentReply = await checkSentiment(JSON.stringify(transcripts));
+        setSentiment(sentimentReply)
+      }
+    }
+  }
+
+  setCallback(callback)
   // Function to render role buttons
   const renderRole = (role) => (
     <Button key={role} onClick={() => setPrompt(roles[role].prompt)}>
@@ -127,103 +155,12 @@ export default function App() {
     <div className="App">
       {/* Modal for texting interaction */}
       <Modal open={isTexting}>
-        <div className="fullscreen">
-          <Stack justifyContent="center" style={{ padding: "10px" }}>
-            <TextField
-              label="Ask a question"
-              fullWidth
-              value={userPrompt}
-              onChange={(e) => setUserPrompt(e.target.value)}
-              onKeyDown={async (e) => {
-                if (e.keyCode === 13) {
-                  var answerPart = '';
-                  setUserPrompt("");
-                  setAnswer(".....")
-                  const answer = await callLLM(prompt, userPrompt, image,
-                    data => {
-                      if (data) {
-                        answerPart += data;
-                        setAnswer(answerPart)
-                      }
-                    }, history);
-                  const newHistory = history;
-                  history.push(
-                    {
-                      role: "user",
-                      content:
-                        [
-                          {
-                            type: "text",
-                            text: userPrompt
-                          }
-                        ]
-
-                    })
-                  history.push({
-                    role: "assistant",
-                    content:
-                      [
-                        {
-                          type: "text",
-                          text: answerPart
-                        }
-                      ]
-
-                  })
-                  setHistory([...history]);
-                  //console.log(history)
-                }
-              }}
-            />
-            <input type="file" accept="image/*" capture="environment" onChange={async (evt) => {
-              const convertBase64 = (file) => {
-                return new Promise((resolve, reject) => {
-                  const fileReader = new FileReader();
-                  fileReader.readAsDataURL(file)
-                  fileReader.onload = () => {
-                    resolve(fileReader.result);
-                  }
-                  fileReader.onerror = (error) => {
-                    reject(error);
-                  }
-                })
-              }
-              const file = evt.target.files[0];
-              const base64 = await convertBase64(file);
-              setImage(base64);
-              //console.log({ base64 })
-
-
-
-            }} />
-
-            <Stack direction="row" justifyContent="center">
-
-              <Button onClick={() => setIsTexting(false)}>Close</Button>
-            </Stack>
-            <Typography style={{ width: '100vw', height: '50vh', overflow: 'scroll' }}>Answer:
-              <Markdown>{
-
-                answer}</Markdown></Typography>
-
-            <img style={{ width: '10vh' }} src={image} />
-          </Stack>
-        </div>
+        <TextUI args={{ setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, history, setHistory, setIsTexting, setImage, answer }} />
       </Modal>
 
       {/* Modal for calling interaction */}
       <Modal open={isCalling}>
-        <Stack className="overlay" spacing={2} style={{ "textAlign": "middle" }}>
-          <div>
-            {prompt}
-          </div>
-          <Fab onClick={() => {
-            setIsCalling(false);
-            stopCall();
-          }}>
-            <StopIcon />
-          </Fab>
-        </Stack>
+        <CallUI args={{ prompt, transcripts, currentMessage, sentiment, setIsCalling }} />
       </Modal>
 
       {/* AppBar with login and user selection */}
@@ -280,6 +217,7 @@ export default function App() {
         <CardActions  >
           <Stack direction="row" spacing={2}  >
             <Fab onClick={() => {
+              setTranscripts([]);
               call(welcomeMessage, prompt, includeProduct ? products : {});
               setIsCalling(true);
             }}>
