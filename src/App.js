@@ -49,6 +49,7 @@ export default function App() {
   const [inputName, setInputName] = useState(name);
   const [userlist, setUserlist] = useState([]);
   const [includeProduct, setIncludeProduct] = useState(false);
+  const [image, setImage] = useState(null);
 
   // useEffect hook to initialize data on component mount
   useEffect(() => {
@@ -133,12 +134,42 @@ export default function App() {
               onChange={(e) => setUserPrompt(e.target.value)}
               onKeyDown={async (e) => {
                 if (e.keyCode === 13) {
+                  var answerPart = '';
                   setUserPrompt("");
-                  const answer = await callLLM(prompt, userPrompt);
-                  setAnswer(answer);
+                  setAnswer(".....")
+                  const answer = await callLLM(prompt, userPrompt, image,
+                    data => {
+                      if(data) {
+                        answerPart += data;
+                        setAnswer(answerPart)
+                      }
+                    });
+                  //setAnswer(answer);
                 }
               }}
             />
+            <input type="file" onChange={async (evt) => {
+              const convertBase64 = (file) => {
+                return new Promise((resolve, reject) => {
+                  const fileReader = new FileReader();
+                  fileReader.readAsDataURL(file)
+                  fileReader.onload = () => {
+                    resolve(fileReader.result);
+                  }
+                  fileReader.onerror = (error) => {
+                    reject(error);
+                  }
+                })
+              }
+              const file = evt.target.files[0];
+              const base64 = await convertBase64(file);
+              setImage(base64);
+              //console.log({ base64 })
+
+
+
+            }} />
+            <img style={{ width: '50vh' }} src={image} />
             <Stack direction="row" justifyContent="center">
               <Button
                 onClick={async () => {
@@ -157,7 +188,7 @@ export default function App() {
 
       {/* Modal for calling interaction */}
       <Modal open={isCalling}>
-        <Stack className="overlay" spacing={2} style={{"textAlign": "middle"}}>
+        <Stack className="overlay" spacing={2} style={{ "textAlign": "middle" }}>
           <div>
             {prompt}
           </div>

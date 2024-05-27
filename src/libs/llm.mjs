@@ -1,13 +1,14 @@
 import "axios";
 import { OpenAIClient, AzureKeyCredential } from "@azure/openai";
 import { AssistantsClient } from "@azure/openai-assistants";
-import * as fs from "fs";
+import { Stream } from "@mui/icons-material";
+//import * as fs from "fs";
 
 const endpoint = "https://ik-oai-eastus-2.openai.azure.com/";
 const apiKey = "b3e819600fbe4981be34ef2aa79943e2"
 const deployment = "gpt-4o";
 
-export const callLLM = async (systemPrompt, userPrompt, imageUrl) => {
+export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb) => {
     //The deployment name for your completions API model. The instruct model is the only new model that supports the legacy API.
     const messages = [
         {
@@ -34,11 +35,18 @@ export const callLLM = async (systemPrompt, userPrompt, imageUrl) => {
                     }
                 ],
         },
+
     ];
     const client = new OpenAIClient(endpoint, new AzureKeyCredential(apiKey));
-    const output = await client.getChatCompletions(deployment, messages);
+    const events = await client.streamChatCompletions(deployment, messages, { stream: true });
 
-    return output.choices[0].message.content;
+    for await (const event of events) {
+        for (const choice of event.choices) {
+            cb(choice.delta?.content);
+        }
+    }
+    return "OK"
+    //return output.choices[0].message.content;
 }
 
 export const createAssistant = async (cb) => {
@@ -47,7 +55,7 @@ export const createAssistant = async (cb) => {
     vital financial ratios, and tracking financial growth trends, also you need to step by step to come up with the answer`;
 
     const name = 'financial analyst'
-    tools: [{ type: "code_interpreter" }];
+
     const assistantsClient = new AssistantsClient(endpoint, new AzureKeyCredential(apiKey));
     const assistant = await assistantsClient.createAssistant({
         model: deployment,
@@ -62,13 +70,13 @@ export const createAssistant = async (cb) => {
 
 const uploadFile = async (filePath) => {
 
-    const fileStream = fs.createReadStream(filePath);
+    /*const fileStream = fs.createReadStream(filePath);
 
     const assistantsClient = new AssistantsClient(endpoint, new AzureKeyCredential(apiKey));
 
     const uploadAssistantFile = await assistantsClient.uploadFile(fileStream, "assistants", { filename: "2023 result" });
     return uploadAssistantFile.id
-
+*/
 }
 
 
@@ -119,8 +127,15 @@ export const callAssistant = async (assistantId, fileId, cb) => {
 }
 
 async function testLLM() {
-    const data = await callLLM("you are a bot", "what is in the image?", "https://dotblogsfile.blob.core.windows.net/user/anyun/fb2960c4-6f84-435b-a6d7-b82ccb2e1c72/1710599879.png.png");
-    console.log({ data })
+    await callLLM(
+        "you are a bot",
+        "what is in the image?",
+        "https://dotblogsfile.blob.core.windows.net/user/anyun/fb2960c4-6f84-435b-a6d7-b82ccb2e1c72/1710599879.png.png",
+        data => {
+            console.log({ data })
+        }
+    )
+
 }
 async function main() {
 
