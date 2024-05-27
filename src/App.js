@@ -26,7 +26,7 @@ import {
   Textsms as TextsmsIcon
 } from '@mui/icons-material';
 import { call, stopCall, setCallback } from "./libs/util.js";
-import { roles } from "./libs/roles.js";
+import { loadRoles } from "./libs/roles.js";
 import { callLLM, checkSentiment } from "./libs/llm.mjs";
 import { getID, updateData, getData, getUsers } from "./libs/state.mjs";
 import { products } from "./libs/products.js";
@@ -57,6 +57,7 @@ export default function App() {
   const [transcripts, setTranscripts] = useState([])
   const [currentMessage, setCurrentMessage] = useState("");
   const [sentiment, setSentiment] = useState("Neutral");
+  const [roles, setRoles] = useState([])
 
 
 
@@ -66,6 +67,8 @@ export default function App() {
     async function init() {
       const params = new URLSearchParams(document.location.search);
       const sid = params.get("sid");
+      setRoles(await loadRoles());
+
       if (sid) {
         const data = await getData(sid);
         setName(data[0].username);
