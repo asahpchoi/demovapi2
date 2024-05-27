@@ -148,7 +148,7 @@ export default function App() {
                 }
               }}
             />
-            <input type="file" accept="image/*" onChange={async (evt) => {
+            <input type="file" accept="image/*"  capture="environment" onChange={async (evt) => {
               const convertBase64 = (file) => {
                 return new Promise((resolve, reject) => {
                   const fileReader = new FileReader();
