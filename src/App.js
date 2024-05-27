@@ -32,6 +32,7 @@ import { getID, updateData, getData, getUsers } from "./libs/state.mjs";
 import { products } from "./libs/products.js";
 import Vapi from "@vapi-ai/web";
 import "./App.css";
+import Markdown from 'react-markdown'
 
 export default function App() {
   // State variables for managing various application states
@@ -50,6 +51,7 @@ export default function App() {
   const [userlist, setUserlist] = useState([]);
   const [includeProduct, setIncludeProduct] = useState(false);
   const [image, setImage] = useState(null);
+  const [history, setHistory] = useState([]);
 
   // useEffect hook to initialize data on component mount
   useEffect(() => {
@@ -139,16 +141,41 @@ export default function App() {
                   setAnswer(".....")
                   const answer = await callLLM(prompt, userPrompt, image,
                     data => {
-                      if(data) {
+                      if (data) {
                         answerPart += data;
                         setAnswer(answerPart)
                       }
-                    });
-                  //setAnswer(answer);
+                    }, history);
+                  const newHistory = history;
+                  history.push(
+                    {
+                      role: "user",
+                      content:
+                        [
+                          {
+                            type: "text",
+                            text: userPrompt
+                          }
+                        ]
+
+                    })
+                  history.push({
+                    role: "assistant",
+                    content:
+                      [
+                        {
+                          type: "text",
+                          text: answerPart
+                        }
+                      ]
+
+                  })
+                  setHistory([...history]);
+                  //console.log(history)
                 }
               }}
             />
-            <input type="file" accept="image/*"  capture="environment" onChange={async (evt) => {
+            <input type="file" accept="image/*" capture="environment" onChange={async (evt) => {
               const convertBase64 = (file) => {
                 return new Promise((resolve, reject) => {
                   const fileReader = new FileReader();
@@ -169,19 +196,17 @@ export default function App() {
 
 
             }} />
-            <img style={{ width: '50vh' }} src={image} />
+
             <Stack direction="row" justifyContent="center">
-              <Button
-                onClick={async () => {
-                  const answer = await callLLM(prompt, userPrompt);
-                  setAnswer(answer);
-                }}
-              >
-                Ask
-              </Button>
+
               <Button onClick={() => setIsTexting(false)}>Close</Button>
             </Stack>
-            <Typography>Answer: {answer}</Typography>
+            <Typography style={{ width: '100vw', height: '50vh', overflow: 'scroll' }}>Answer:
+              <Markdown>{
+
+                answer}</Markdown></Typography>
+
+            <img style={{ width: '10vh' }} src={image} />
           </Stack>
         </div>
       </Modal>
