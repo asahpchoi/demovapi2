@@ -20,15 +20,16 @@ import {
   Textsms as TextsmsIcon
 } from '@mui/icons-material';
 import { call, setCallback } from "./libs/util.js";
-import { loadRoles } from "./libs/roles.js";
+
 import { callLLM, checkSentiment } from "./libs/llm.mjs";
 import { getID, updateData, getData, getUsers } from "./libs/state.mjs";
 import { products } from "./libs/products.js";
 import "./App.css";
-import Drawer from '@mui/material/Drawer';
+
 import { CallUI } from "./ui/CallUI.js";
 import { TextUI } from "./ui/TextUI.js";
-
+import { PromptTemplate } from "./ui/PromptTemplate.js";
+import { Login } from "./ui/Login.js";
 export default function App() {
   // State variables for managing various application states
   const [loading, setLoading] = useState(true);
@@ -40,9 +41,6 @@ export default function App() {
   const [answer, setAnswer] = useState("");
   const [sessionId, setSessionId] = useState(null);
   const [name, setName] = useState();
-  const [loginOpen, setLoginOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [inputName, setInputName] = useState(name);
   const [userlist, setUserlist] = useState([]);
   const [includeProduct, setIncludeProduct] = useState(false);
   const [image, setImage] = useState(null);
@@ -50,19 +48,16 @@ export default function App() {
   const [transcripts, setTranscripts] = useState([])
   const [currentMessage, setCurrentMessage] = useState("");
   const [sentiment, setSentiment] = useState("Neutral");
-  const [roles, setRoles] = useState([])
-  const [open, setOpen] = React.useState(false);
 
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-  };
+
+
 
   // useEffect hook to initialize data on component mount
   useEffect(() => {
     async function init() {
       const params = new URLSearchParams(document.location.search);
       const sid = params.get("sid");
-      setRoles(await loadRoles());
+
 
       if (sid) {
         const data = await getData(sid);
@@ -78,7 +73,6 @@ export default function App() {
   }, [name]);
 
   const callback = async (message) => {
-
     if (message.type == "transcript") {
       setCurrentMessage(message.transcript)
       if (message.transcriptType == "final") {
@@ -94,50 +88,9 @@ export default function App() {
   }
 
   setCallback(callback)
-  // Function to render role buttons
-  const renderRole = (role) => (
-    <Button key={role} onClick={() => {
-      setPrompt(roles[role].prompt);
-      setOpen(false);
-    }}>
-      {role}
-    </Button>
-  );
 
-  // Function to display the login popper
-  const showLogin = () => {
-    const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-      setLoginOpen((previousOpen) => !previousOpen);
-    };
 
-    return (
-      <div>
-        <Button onClick={handleClick}>Tell me your name</Button>
-        <Popper open={loginOpen} anchorEl={anchorEl}>
-          <Stack direction="row" style={{ backgroundColor: 'white', padding: '10px', margin: '10px' }}>
-            <TextField
-              fullWidth
-              label="Your Name"
-              value={inputName}
-              onChange={(e) => setInputName(e.target.value)}
-            />
-            <Button
-              onClick={async () => {
-                setName(inputName);
-                setLoginOpen(false);
-                const sid = await getID();
-                updateData(sid, inputName, prompt);
-                window.location.replace("?sid=" + sid);
-              }}
-            >
-              Update
-            </Button>
-          </Stack>
-        </Popper>
-      </div>
-    );
-  };
+
 
   // Render loading spinner if data is still being fetched
   if (loading) {
@@ -151,6 +104,7 @@ export default function App() {
 
   return (
     <div className="App">
+
       {/* Modal for texting interaction */}
       <Modal open={isTexting}>
         <TextUI args={{ setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, history, setHistory, setIsTexting, setImage, answer }} />
@@ -167,7 +121,7 @@ export default function App() {
           <Toolbar>
             FWD AI Demo
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {!sessionId ? showLogin() : <Button>{name}</Button>}
+              {!sessionId ? <Login /> : <Button>{name}</Button>}
             </Typography>
             Change to
             <Select
@@ -189,12 +143,7 @@ export default function App() {
 
       {/* Main card for prompt and role selection */}
       <Stack style={{ margin: '10px' }}>
-        <Button onClick={toggleDrawer(true)}>Select role template</Button>
-        <Drawer open={open} onClose={toggleDrawer(false)}>
-          <Stack style={{ padding: "3px", overflow: "scroll", width: "100vw" }}>
-            {Object.keys(roles).map(renderRole)}
-          </Stack>
-        </Drawer>
+        <PromptTemplate args={{ setPrompt }} />
         <Stack spacing={2} style={{ margin: '10px' }}>
           <TextField
             fullWidth
