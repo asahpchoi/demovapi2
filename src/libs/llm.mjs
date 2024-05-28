@@ -1,8 +1,6 @@
 import "axios";
 import { OpenAIClient, AzureKeyCredential } from "@azure/openai";
 import { AssistantsClient } from "@azure/openai-assistants";
-import { Stream } from "@mui/icons-material";
-//import * as fs from "fs";
 
 const endpoint = "https://ik-oai-eastus-2.openai.azure.com/";
 const apiKey = "b3e819600fbe4981be34ef2aa79943e2"
@@ -88,8 +86,6 @@ export const createAssistant = async (cb) => {
     return assistant.id;
 }
 
-
-
 const uploadFile = async (filePath) => {
 
     /*const fileStream = fs.createReadStream(filePath);
@@ -100,9 +96,6 @@ const uploadFile = async (filePath) => {
     return uploadAssistantFile.id
 */
 }
-
-
-
 
 export const callAssistant = async (assistantId, fileId, cb) => {
 
@@ -148,17 +141,6 @@ export const callAssistant = async (assistantId, fileId, cb) => {
 
 }
 
-async function testLLM() {
-    await callLLM(
-        "you are a bot",
-        "what is in the image?",
-        "https://dotblogsfile.blob.core.windows.net/user/anyun/fb2960c4-6f84-435b-a6d7-b82ccb2e1c72/1710599879.png.png",
-        data => {
-            console.log({ data })
-        }
-    )
-
-}
 async function main() {
 
     const assistantsClient = new AssistantsClient(endpoint, new AzureKeyCredential(apiKey));

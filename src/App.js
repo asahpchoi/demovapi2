@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {
   AppBar,
-  Box,
   Button,
   Checkbox,
   Fab,
   MenuItem,
   Modal,
-  Popper,
   Select,
   Stack,
   TextField,
@@ -22,7 +20,7 @@ import {
 import { call, setCallback } from "./libs/util.js";
 
 import { callLLM, checkSentiment } from "./libs/llm.mjs";
-import { getID, updateData, getData, getUsers } from "./libs/state.mjs";
+import {  updateData, getData, getUsers } from "./libs/state.mjs";
 import { products } from "./libs/products.js";
 import "./App.css";
 
@@ -68,9 +66,9 @@ export default function App() {
   }, [name]);
 
   const callback = async (message) => {
-    if (message.type == "transcript") {
+    if (message.type === "transcript") {
       setCurrentMessage(message.transcript)
-      if (message.transcriptType == "final") {
+      if (message.transcriptType === "final") {
         setTranscripts(transcripts.concat([{
           role: message.role,
           transcript: currentMessage
