@@ -59,9 +59,6 @@ export default function App() {
   const [sentiment, setSentiment] = useState("Neutral");
   const [roles, setRoles] = useState([])
 
-
-
-
   // useEffect hook to initialize data on component mount
   useEffect(() => {
     async function init() {
