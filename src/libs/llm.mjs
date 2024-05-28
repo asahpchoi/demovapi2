@@ -22,7 +22,7 @@ export const checkSentiment = async (content) => {
         }]
     const client = new OpenAIClient(endpoint, new AzureKeyCredential(apiKey));
     const reply = await client.getChatCompletions(deployment, messages);
- 
+
     return reply.choices[0].message.content;
 }
 

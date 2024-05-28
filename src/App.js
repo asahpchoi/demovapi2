@@ -32,7 +32,7 @@ import { getID, updateData, getData, getUsers } from "./libs/state.mjs";
 import { products } from "./libs/products.js";
 import Vapi from "@vapi-ai/web";
 import "./App.css";
-
+import Drawer from '@mui/material/Drawer';
 import { CallUI } from "./ui/CallUI.js";
 import { TextUI } from "./ui/TextUI.js";
 
@@ -58,6 +58,11 @@ export default function App() {
   const [currentMessage, setCurrentMessage] = useState("");
   const [sentiment, setSentiment] = useState("Neutral");
   const [roles, setRoles] = useState([])
+  const [open, setOpen] = React.useState(false);
+
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
 
   // useEffect hook to initialize data on component mount
   useEffect(() => {
@@ -101,7 +106,9 @@ export default function App() {
   setCallback(callback)
   // Function to render role buttons
   const renderRole = (role) => (
-    <Button key={role} onClick={() => setPrompt(roles[role].prompt)}>
+    <Button key={role} onClick={() => { 
+      setPrompt(roles[role].prompt); 
+      setOpen(false); }}>
       {role}
     </Button>
   );
@@ -115,7 +122,7 @@ export default function App() {
 
     return (
       <div>
-        <Button onClick={handleClick}>Provide your name</Button>
+        <Button onClick={handleClick}>Tell me your name</Button>
         <Popper open={loginOpen} anchorEl={anchorEl}>
           <Stack direction="row" style={{ backgroundColor: 'white', padding: '10px', margin: '10px' }}>
             <TextField
@@ -190,56 +197,56 @@ export default function App() {
       </Box>
 
       {/* Main card for prompt and role selection */}
-      <Card>
-        <CardMedia />
-        <CardContent>
-          {Object.keys(roles).map(renderRole)}
-          <Stack spacing={2}>
-            <TextField
-              fullWidth
-              label="Welcome Message"
-              value={welcomeMessage}
-              onChange={(e) => setWelcomeMessage(e.target.value)}
-            />
-            <TextField
-              multiline
-              rows="5"
-              label="Prompt / Instruction"
-              fullWidth
-              value={prompt}
-              onChange={(e) => {
-                setPrompt(e.target.value);
-                updateData(sessionId, name, e.target.value);
-              }}
-            />
+      <Stack style={{ margin: '10px' }}>
+        <Button onClick={toggleDrawer(true)}>Select role template</Button>
+        <Drawer open={open} onClose={toggleDrawer(false)}>
+          <Stack style={{ padding: "3px", overflow: "scroll", width: "100vw" }}>
+            {Object.keys(roles).map(renderRole)}
           </Stack>
-        </CardContent>
-        <CardActions  >
-          <Stack direction="row" spacing={2}  >
-            <Fab onClick={() => {
-              setTranscripts([]);
-              call(welcomeMessage, prompt, includeProduct ? products : {});
-              setIsCalling(true);
-            }}>
-              <CallIcon />
-            </Fab>
-            <Fab onClick={() => setIsTexting(true)}>
-              <TextsmsIcon />
-            </Fab>
-          </Stack>
-        </CardActions>
-      </Card>
+        </Drawer>
 
-      {/* Checkbox for including product knowledge */}
-      <Card>
+
+        <Stack spacing={2} style={{ margin: '10px' }}>
+          <TextField
+            fullWidth
+            label="Welcome Message"
+            value={welcomeMessage}
+            onChange={(e) => setWelcomeMessage(e.target.value)}
+          />
+          <TextField
+            multiline
+            rows="5"
+            label="Prompt / Instruction"
+            fullWidth
+            value={prompt}
+            onChange={(e) => {
+              setPrompt(e.target.value);
+              updateData(sessionId, name, e.target.value);
+            }}
+          />
+        </Stack>
         <Stack direction="row">
           <Checkbox
             checked={includeProduct}
             onChange={() => setIncludeProduct(!includeProduct)}
           />
-          <Typography variant="h6">Include Product Knowledge (Set for Life)</Typography>
+          <span>Include Product Knowledge (Set for Life)</span>
         </Stack>
-      </Card>
+        <Stack direction="row" justifyContent="center" spacing={2}>
+          <Fab onClick={() => {
+            setTranscripts([]);
+            call(welcomeMessage, prompt, includeProduct ? products : {});
+            setIsCalling(true);
+          }}>
+            <CallIcon />
+          </Fab>
+          <Fab onClick={() => setIsTexting(true)}>
+            <TextsmsIcon />
+          </Fab>
+        </Stack>
+
+      </Stack>
+
     </div>
   );
 }

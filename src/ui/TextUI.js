@@ -1,34 +1,23 @@
 import {
-    AppBar,
-    Box,
+
     Button,
-    Card,
-    CardActions,
-    CardContent,
-    CardMedia,
-    Checkbox,
     Fab,
-    FormControl,
-    MenuItem,
-    Modal,
-    Popper,
-    Select,
     Stack,
     TextField,
-    Toolbar,
+
     Typography,
-    CircularProgress
+
 } from "@mui/material";
 import {
-    Call as CallIcon,
+
     Stop as StopIcon,
-    Textsms as TextsmsIcon
+
 } from '@mui/icons-material';
 import Markdown from 'react-markdown';
 
-export const TextUI = ({args}) => {
-    
-    const {setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, history, setHistory, setIsTexting, setImage, answer} = args
+export const TextUI = ({ args }) => {
+
+    const { setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, history, setHistory, setIsTexting, setImage, answer } = args
     return <div className="fullscreen">
         <Stack justifyContent="center" style={{ padding: "10px" }}>
             <TextField
@@ -93,22 +82,19 @@ export const TextUI = ({args}) => {
                 const file = evt.target.files[0];
                 const base64 = await convertBase64(file);
                 setImage(base64);
-                //console.log({ base64 })
-
-
-
             }} />
 
-            <Stack direction="row" justifyContent="center">
-
-                <Button onClick={() => setIsTexting(false)}>Close</Button>
-            </Stack>
             <Typography style={{ width: '100vw', height: '50vh', overflow: 'scroll' }}>Answer:
                 <Markdown>{
 
                     answer}</Markdown></Typography>
 
             <img style={{ width: '10vh' }} src={image} />
+
+            <Stack direction="row" justifyContent="center">
+
+                <Fab onClick={() => setIsTexting(false)}><StopIcon /></Fab>
+            </Stack>
         </Stack>
     </div>
 }
