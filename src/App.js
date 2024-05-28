@@ -131,7 +131,7 @@ export default function App() {
 
       {/* Main card for prompt and role selection */}
       <Stack style={{ margin: '10px' }}>
-        <PromptTemplate args={{ setPrompt }} />
+        
         <Stack spacing={2} style={{ margin: '10px' }}>
           <TextField
             fullWidth
@@ -169,6 +169,7 @@ export default function App() {
           <Fab onClick={() => setIsTexting(true)}>
             <TextsmsIcon />
           </Fab>
+          <PromptTemplate args={{ setPrompt }} />
         </Stack>
       </Stack>
     </div>

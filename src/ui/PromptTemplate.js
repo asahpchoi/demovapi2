@@ -3,9 +3,10 @@ import { loadRoles } from "../libs/roles.js";
 import {
     Button,
     Stack,
+    Fab
 } from "@mui/material";
 import Drawer from '@mui/material/Drawer';
-
+import WorkIcon from '@mui/icons-material/Work';
 export const PromptTemplate = ({ args }) => {
     const { setPrompt } = args;
     const [roles, setRoles] = useState([])
@@ -29,9 +30,10 @@ export const PromptTemplate = ({ args }) => {
         </Button>
     );
 
-    return <> <Button onClick={toggleDrawer(true)}>Select role template</Button>
+    return <>
+        <Fab onClick={toggleDrawer(true)}><WorkIcon /></Fab>
         <Drawer open={open} onClose={toggleDrawer(false)}>
-            <Stack style={{ padding: "3px" ,width: "100vw" }}>
+            <Stack style={{ padding: "3px", width: "100vw" }}>
                 {Object.keys(roles).map(renderRole)}
             </Stack>
         </Drawer></>
