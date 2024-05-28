@@ -18,14 +18,16 @@ import {
   Textsms as TextsmsIcon
 } from '@mui/icons-material';
 import { call, setCallback } from "./libs/util.js";
-
+import SettingsIcon from '@mui/icons-material/Settings';
 import { callLLM, checkSentiment } from "./libs/llm.mjs";
-import {  updateData, getData, getUsers } from "./libs/state.mjs";
+import { updateData, getData, getUsers } from "./libs/state.mjs";
 import { products } from "./libs/products.js";
 import "./App.css";
 
 import { CallUI } from "./ui/CallUI.js";
 import { TextUI } from "./ui/TextUI.js";
+import { SettingUI } from "./ui/SettingUI.js";
+
 import { PromptTemplate } from "./ui/PromptTemplate.js";
 import { Login } from "./ui/Login.js";
 export default function App() {
@@ -35,6 +37,7 @@ export default function App() {
   const [prompt, setPrompt] = useState("you are a professional agent");
   const [isCalling, setIsCalling] = useState(false);
   const [isTexting, setIsTexting] = useState(false);
+  const [isSetting, setIsSetting] = useState(false);
   const [userPrompt, setUserPrompt] = useState("");
   const [answer, setAnswer] = useState("");
   const [sessionId, setSessionId] = useState(null);
@@ -102,6 +105,10 @@ export default function App() {
         <CallUI args={{ prompt, transcripts, currentMessage, sentiment, setIsCalling }} />
       </Modal>
 
+      <Modal open={isSetting}>
+        <SettingUI args={{setIsSetting, setUserlist}}/>
+      </Modal>
+
       {/* AppBar with login and user selection */}
       <AppBar position="static" style={{ backgroundColor: "#FF7900" }}>
         <Toolbar>
@@ -129,7 +136,7 @@ export default function App() {
 
       {/* Main card for prompt and role selection */}
       <Stack style={{ margin: '10px' }}>
-        
+
         <Stack spacing={2} style={{ margin: '10px' }}>
           <TextField
             fullWidth
@@ -168,6 +175,7 @@ export default function App() {
             <TextsmsIcon />
           </Fab>
           <PromptTemplate args={{ setPrompt }} />
+          <Fab onClick={() => setIsSetting(true)}><SettingsIcon /></Fab>
         </Stack>
       </Stack>
     </div>

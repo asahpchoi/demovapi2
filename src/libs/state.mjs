@@ -34,9 +34,27 @@ export const updateData = async (id, username, systemPrompt) => {
     .from('session')
     .upsert({ id, username, systemPrompt })
     .select()
+
   return data;
 }
 
+export const removeData = async () => {
+  const { data, error } = await supabase
+    .from('session')
+    .select("id")
+
+  data.forEach(async record => {
+    const id = record.id;
+     
+    const { error2 } = await supabase
+      .from('session')
+      .delete()
+      .match({id})
+  })
+
+
+
+}
 
 async function mtry() {
   const id = await getID();
