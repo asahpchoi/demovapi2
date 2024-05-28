@@ -10,7 +10,7 @@ import { getID, updateData } from "../libs/state.mjs";
 
 export const Login = ({ args }) => {
     const [open, setOpen] = useState(false);
-    const [inputName, setInputName] = useState(name);
+    const [inputName, setInputName] = useState("");
 
     return <Stack>
         <Button onClick={() => { setOpen(true) }}>Login</Button>
