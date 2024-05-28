@@ -31,7 +31,7 @@ export const PromptTemplate = ({ args }) => {
 
     return <> <Button onClick={toggleDrawer(true)}>Select role template</Button>
         <Drawer open={open} onClose={toggleDrawer(false)}>
-            <Stack style={{ padding: "3px", overflow: "scroll", width: "100vw" }}>
+            <Stack style={{ padding: "3px" ,width: "100vw" }}>
                 {Object.keys(roles).map(renderRole)}
             </Stack>
         </Drawer></>

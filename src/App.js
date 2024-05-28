@@ -49,16 +49,11 @@ export default function App() {
   const [currentMessage, setCurrentMessage] = useState("");
   const [sentiment, setSentiment] = useState("Neutral");
 
-
-
-
   // useEffect hook to initialize data on component mount
   useEffect(() => {
     async function init() {
       const params = new URLSearchParams(document.location.search);
       const sid = params.get("sid");
-
-
       if (sid) {
         const data = await getData(sid);
         setName(data[0].username);
@@ -86,12 +81,7 @@ export default function App() {
       }
     }
   }
-
   setCallback(callback)
-
-
-
-
   // Render loading spinner if data is still being fetched
   if (loading) {
     return (
@@ -101,7 +91,6 @@ export default function App() {
       </div>
     );
   }
-
   return (
     <div className="App">
 
@@ -116,30 +105,29 @@ export default function App() {
       </Modal>
 
       {/* AppBar with login and user selection */}
-      <Box>
-        <AppBar position="static" style={{ backgroundColor: "#FF7900" }}>
-          <Toolbar>
-            FWD AI Demo
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {!sessionId ? <Login /> : <Button>{name}</Button>}
-            </Typography>
-            Change to
-            <Select
-              onChange={(event) => {
-                const id = event.target.value;
-                window.location.replace(`?sid=${id}`);
-              }}
-              value={sessionId}
-            >
-              {userlist.map((user) => (
-                <MenuItem key={user.id} value={user.id}>
-                  {user.username}
-                </MenuItem>
-              ))}
-            </Select>
-          </Toolbar>
-        </AppBar>
-      </Box>
+      <AppBar position="static" style={{ backgroundColor: "#FF7900" }}>
+        <Toolbar>
+          FWD AI Demo
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            {!sessionId ? <Login /> : <Button>{name}</Button>}
+          </Typography>
+          Change to
+          <Select
+            onChange={(event) => {
+              const id = event.target.value;
+              window.location.replace(`?sid=${id}`);
+            }}
+            value={sessionId}
+          >
+            {userlist.map((user) => (
+              <MenuItem key={user.id} value={user.id}>
+                {user.username}
+              </MenuItem>
+            ))}
+          </Select>
+        </Toolbar>
+      </AppBar>
+
 
       {/* Main card for prompt and role selection */}
       <Stack style={{ margin: '10px' }}>
@@ -170,7 +158,7 @@ export default function App() {
           />
           <span>Include Product Knowledge (Set for Life)</span>
         </Stack>
-        <Stack direction="row" justifyContent="center" spacing={2}>
+        <Stack direction="row" justifyContent="center" spacing={2} className="footer">
           <Fab onClick={() => {
             setTranscripts([]);
             call(welcomeMessage, prompt, includeProduct ? products : {});

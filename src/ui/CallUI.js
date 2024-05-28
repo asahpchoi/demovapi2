@@ -11,11 +11,12 @@ export const CallUI = ({ args }) => {
     const { prompt, transcripts, currentMessage, sentiment, setIsCalling } = args;
     console.log({ args })
     return <>
-        <Stack className="overlay" spacing={2} style={{ "textAlign": "middle" }}>
+        <Stack className="overlay"  >
             <div>
-                {prompt}
+                Role Prompt: {prompt}
             </div>
             <div style={{ height: "50vh", overflow: "scroll" }}>
+                Transcript:
                 {
                     transcripts.map(
                         (t, i) => <div id={i}>{t.role}: {t.transcript}</div>
@@ -25,8 +26,9 @@ export const CallUI = ({ args }) => {
                     currentMessage
                 }
             </div>
-            Sentiment: {sentiment}
-            <Stack direction="row" justifyContent="center">
+            <div>  Sentiment: {sentiment} </div>
+
+            <Stack direction="row" justifyContent="center" className="footer">
                 <Fab onClick={() => {
                     setIsCalling(false);
                     stopCall();

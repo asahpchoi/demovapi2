@@ -9,13 +9,14 @@ import {
     Stop as StopIcon,
 
 } from '@mui/icons-material';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import Markdown from 'react-markdown';
 
 export const TextUI = ({ args }) => {
 
     const { setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, history, setHistory, setIsTexting, setImage, answer } = args
     return <div className="fullscreen">
-        <Stack justifyContent="center" style={{ padding: "10px" }}>
+        <Stack justifyContent="center" className="overlay">
             <TextField
                 label="Ask a question"
                 fullWidth
@@ -62,7 +63,7 @@ export const TextUI = ({ args }) => {
                     }
                 }}
             />
-            <input type="file" accept="image/*" capture="environment" onChange={async (evt) => {
+            <input type="file" id="imageCapture" accept="image/*" capture="environment" style={{ display: 'none' }} onChange={async (evt) => {
                 const convertBase64 = (file) => {
                     return new Promise((resolve, reject) => {
                         const fileReader = new FileReader();
@@ -79,16 +80,17 @@ export const TextUI = ({ args }) => {
                 const base64 = await convertBase64(file);
                 setImage(base64);
             }} />
-            <Typography style={{ width: '100vw', height: '50vh', overflow: 'scroll' }}>Answer:
-                <Markdown>{
-
-                    answer}</Markdown></Typography>
-
-            <img style={{ width: '10vh' }} src={image} />
-
-            <Stack direction="row" justifyContent="center">
-
+            <div>             
+                <Markdown>{answer}</Markdown>
+            </div>
+            <div>
+                <img style={{ width: '10vh' }} src={image} />
+            </div>
+            <Stack direction="row" justifyContent="center" spacing={2} className="footer">
                 <Fab onClick={() => setIsTexting(false)}><StopIcon /></Fab>
+                <Fab onClick={() => {
+                    document.getElementById("imageCapture").click();
+                }}><CameraAltIcon /></Fab>
             </Stack>
         </Stack>
     </div>
