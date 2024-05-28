@@ -32,7 +32,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "yarn build & firebase deploy"
+    "deploy": "curl https://api.netlify.com/build_hooks/66557bfc1cb83ab2328dbdd1 --data {}"
   },
   "eslintConfig": {
     "extends": [

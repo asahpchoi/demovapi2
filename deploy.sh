@@ -1,1 +1,0 @@
-curl https://api.netlify.com/build_hooks/66557bfc1cb83ab2328dbdd1 --data {}
