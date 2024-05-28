@@ -1,14 +1,9 @@
 import {
- 
     Fab,
- 
     Stack,
- 
 } from "@mui/material";
 import {
-    Call as CallIcon,
     Stop as StopIcon,
-    Textsms as TextsmsIcon
 } from '@mui/icons-material';
 import { stopCall } from "../libs/util.js";
 
@@ -31,7 +26,7 @@ export const CallUI = ({ args }) => {
                 }
             </div>
             Sentiment: {sentiment}
-            <Stack direction="row" justifyContent="center"> 
+            <Stack direction="row" justifyContent="center">
                 <Fab onClick={() => {
                     setIsCalling(false);
                     stopCall();

@@ -1,12 +1,8 @@
 import {
-
-    Button,
     Fab,
     Stack,
     TextField,
-
     Typography,
-
 } from "@mui/material";
 import {
 
@@ -83,7 +79,6 @@ export const TextUI = ({ args }) => {
                 const base64 = await convertBase64(file);
                 setImage(base64);
             }} />
-
             <Typography style={{ width: '100vw', height: '50vh', overflow: 'scroll' }}>Answer:
                 <Markdown>{
 

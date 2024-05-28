@@ -3,13 +3,8 @@ import {
   AppBar,
   Box,
   Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
   Checkbox,
   Fab,
-  FormControl,
   MenuItem,
   Modal,
   Popper,
@@ -22,15 +17,13 @@ import {
 } from "@mui/material";
 import {
   Call as CallIcon,
-  Stop as StopIcon,
   Textsms as TextsmsIcon
 } from '@mui/icons-material';
-import { call, stopCall, setCallback } from "./libs/util.js";
+import { call, setCallback } from "./libs/util.js";
 import { loadRoles } from "./libs/roles.js";
 import { callLLM, checkSentiment } from "./libs/llm.mjs";
 import { getID, updateData, getData, getUsers } from "./libs/state.mjs";
 import { products } from "./libs/products.js";
-import Vapi from "@vapi-ai/web";
 import "./App.css";
 import Drawer from '@mui/material/Drawer';
 import { CallUI } from "./ui/CallUI.js";
@@ -87,10 +80,7 @@ export default function App() {
   const callback = async (message) => {
 
     if (message.type == "transcript") {
-
-      console.log(message.transcript)
       setCurrentMessage(message.transcript)
-
       if (message.transcriptType == "final") {
         setTranscripts(transcripts.concat([{
           role: message.role,
@@ -106,9 +96,10 @@ export default function App() {
   setCallback(callback)
   // Function to render role buttons
   const renderRole = (role) => (
-    <Button key={role} onClick={() => { 
-      setPrompt(roles[role].prompt); 
-      setOpen(false); }}>
+    <Button key={role} onClick={() => {
+      setPrompt(roles[role].prompt);
+      setOpen(false);
+    }}>
       {role}
     </Button>
   );
@@ -204,8 +195,6 @@ export default function App() {
             {Object.keys(roles).map(renderRole)}
           </Stack>
         </Drawer>
-
-
         <Stack spacing={2} style={{ margin: '10px' }}>
           <TextField
             fullWidth
@@ -244,9 +233,7 @@ export default function App() {
             <TextsmsIcon />
           </Fab>
         </Stack>
-
       </Stack>
-
     </div>
   );
 }
