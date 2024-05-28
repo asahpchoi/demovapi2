@@ -12,7 +12,7 @@ export const CallUI = ({ args }) => {
     console.log({ args })
     return <>
         <Stack className="overlay"  >
-            <div>
+            <div style={{ height: "10vh", overflow: "scroll" }}>
                 Role Prompt: {prompt}
             </div>
             <div style={{ height: "50vh", overflow: "scroll" }}>
