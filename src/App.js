@@ -27,6 +27,8 @@ import "./App.css";
 import { CallUI } from "./ui/CallUI.js";
 import { TextUI } from "./ui/TextUI.js";
 import { SettingUI } from "./ui/SettingUI.js";
+import { AgentUI} from "./ui/AgentUI.js";
+
 
 import { PromptTemplate } from "./ui/PromptTemplate.js";
 import { Login } from "./ui/Login.js";
@@ -108,6 +110,7 @@ export default function App() {
       <Modal open={isSetting}>
         <SettingUI args={{setIsSetting, setUserlist}}/>
       </Modal>
+      
 
       {/* AppBar with login and user selection */}
       <AppBar position="static" style={{ backgroundColor: "#FF7900" }}>
@@ -178,6 +181,7 @@ export default function App() {
           <Fab onClick={() => setIsSetting(true)}><SettingsIcon /></Fab>
         </Stack>
       </Stack>
+      <AgentUI args={{ prompt, transcripts, currentMessage, sentiment, setIsCalling }} />
     </div>
   );
 }
