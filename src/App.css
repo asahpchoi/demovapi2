@@ -23,13 +23,24 @@
   font-size: calc(10px + 2vmin);
   color: white;
 
-  
+
 }
 
+.middle {
+  max-height: "70vh";
+  overflow: "scroll";
+  padding: "1em";
+  margin: "1em"
+}
+
+.top {
+  padding: "1em";
+  margin: "1em"
+}
 .content {
-  max-height: 70vh;
   overflow: auto;
   padding: 1em;
+  vertical-align: top;
 }
 
 .App-link {
@@ -85,11 +96,4 @@
   left: 50%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
-}
-
-.fullscreen {
-  height: 100vh;
-  margin: 0px;
-  background-color: white;
-  width: 100vw;
 }
