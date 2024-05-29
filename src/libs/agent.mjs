@@ -4,8 +4,10 @@ const endpoint = "https://ik-oai-eastus-2.openai.azure.com/";
 const apiKey = "b3e819600fbe4981be34ef2aa79943e2"
 const deployment = "gpt-4o";
 
+const assistantsClient = new AssistantsClient(endpoint, new AzureKeyCredential(apiKey));
+
 export const createAssistant = async ({ name, prompt }) => {
-    const assistantsClient = new AssistantsClient(endpoint, new AzureKeyCredential(apiKey));
+
     const assistant = await assistantsClient.createAssistant({
         model: deployment,
         name: name,
@@ -15,8 +17,10 @@ export const createAssistant = async ({ name, prompt }) => {
     return assistant.id;
 }
 
+
+
 export const listAssistants = async (setAssistants) => {
-    const assistantsClient = new AssistantsClient(endpoint, new AzureKeyCredential(apiKey));
+
 
     const assistants = (await assistantsClient.listAssistants()).data.map(d => {
         return {
@@ -29,13 +33,11 @@ export const listAssistants = async (setAssistants) => {
 }
 
 export const removeAssisant = async (id) => {
-    const assistantsClient = new AssistantsClient(endpoint, new AzureKeyCredential(apiKey));
+
     assistantsClient.deleteAssistant(id)
 }
 
 export const updateAssistant = async (id, name, prompt) => {
-    const assistantsClient = new AssistantsClient(endpoint, new AzureKeyCredential(apiKey));
-    console.log({ id, name, prompt })
     assistantsClient.updateAssistant(id, {
         model: deployment,
         name: name,
@@ -44,8 +46,15 @@ export const updateAssistant = async (id, name, prompt) => {
     })
 }
 
+export const uploadFile = async (id, fileStream, filename) => {
+    const uploadAssistantFile = await assistantsClient.uploadFile(fileStream, "assistants", { filename: "2023 result" });
+    const file_id = uploadAssistantFile.id;
+
+    const assistant = await assistantsClient.getAssistant(id);
+    assistantsClient.uploadAssistantFile(assistant.id, file_id);
+}
+
 async function housekeep() {
-    const assistantsClient = new AssistantsClient(endpoint, new AzureKeyCredential(apiKey));
     const a = await assistantsClient.listAssistants();
     const f = await assistantsClient.listFiles();
 
@@ -60,7 +69,7 @@ async function housekeep() {
 }
 
 export const callAssistant = async (assistantId, question, username, cb) => {
-    const assistantsClient = new AssistantsClient(endpoint, new AzureKeyCredential(apiKey));
+
     const assistant = await assistantsClient.getAssistant(assistantId);
     const assistantThread = await assistantsClient.createThread();
 
@@ -72,7 +81,7 @@ export const callAssistant = async (assistantId, question, username, cb) => {
         instructions: `Please address the user as ${username}.`
     });
 
-    cb(null, "Agent Created");
+    cb(null, "Agent activated");
     do {
         await new Promise((resolve) => setTimeout(resolve, 2000));
         runResponse = await assistantsClient.getRun(assistantThread.id, runResponse.id);
@@ -129,13 +138,3 @@ async function main() {
 
 
 
-const uploadFile = async (filePath) => {
-
-    /*const fileStream = fs.createReadStream(filePath);
-
-    const assistantsClient = new AssistantsClient(endpoint, new AzureKeyCredential(apiKey));
-
-    const uploadAssistantFile = await assistantsClient.uploadFile(fileStream, "assistants", { filename: "2023 result" });
-    return uploadAssistantFile.id
-*/
-}

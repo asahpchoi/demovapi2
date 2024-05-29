@@ -27,7 +27,7 @@ import "./App.css";
 import { CallUI } from "./ui/CallUI.js";
 import { TextUI } from "./ui/TextUI.js";
 import { SettingUI } from "./ui/SettingUI.js";
-import { AgentUI} from "./ui/AgentUI.js";
+ 
 
 
 import { PromptTemplate } from "./ui/PromptTemplate.js";
@@ -181,7 +181,7 @@ export default function App() {
           <Fab onClick={() => setIsSetting(true)}><SettingsIcon /></Fab>
         </Stack>
       </Stack>
-      <AgentUI args={{ prompt, transcripts, currentMessage, sentiment, setIsCalling }} />
+       
     </div>
   );
 }

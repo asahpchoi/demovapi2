@@ -63,10 +63,10 @@ export const AgentUI = ({ args }) => {
                 {mode == "edit" ? editAssistant() : ''}
             </Stack>
             {mode==="select"&&<Stack>
-            Question: <Textfield value={question} onChange={(e) => setQuestion(e.target.value)}/>
-            username: <Textfield value={username} onChange={(e) => setUsername(e.target.value)}/>
+            Question: <TextField value={question} onChange={(e) => setQuestion(e.target.value)}/>
+            username: <TextField value={username} onChange={(e) => setUsername(e.target.value)}/>
             <Button onClick={() => {
-                callAssistant(id, question, username, (error, data, obj) => {
+                callAssistant(assistant.id, question, username, (error, data, obj) => {
                     console.log({
                         data, obj
                     })
