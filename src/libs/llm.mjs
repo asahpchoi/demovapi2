@@ -7,7 +7,13 @@ const deployment = "gpt-4o";
 
 export const checkSentiment = async (content) => {
     const systemPrompt = `you are a bot to analysis the conversation sentiment, and provide a feedback what is the customer feedback
-                        *you can only reply Positive, Neutral, Positive, Sad, Angry`
+                         you can reply in markdown, with setimention option of Positive, Neutral, Positive, Sad, Angry
+                         example output: 
+                            ##Overall sentitement: *Positive*
+                            ##Summary: the conversation is about a product enquiry
+                            ##Suggestion: the conversation can be shorten and more precise to address the questions
+                            ##Overall Scoring: *8* 
+                         `
     const messages = [
         {
             role: "system",
