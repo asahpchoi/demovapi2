@@ -10,7 +10,7 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 export const getID = async () => {
   const { data, error } = await supabase
     .from('session')
-    .upsert({ username: 'someValue', systemPrompt: "123" })
+    .upsert({ username: '[newuser]', systemPrompt: "[temporary]" })
     .select()
   return data[0].id;
 }
@@ -21,6 +21,7 @@ export const getUsers = async (id) => {
     .select()
   return data;
 }
+
 export const getData = async (id) => {
   const { data, error } = await supabase
     .from('session')
@@ -29,10 +30,10 @@ export const getData = async (id) => {
   return data;
 }
 
-export const updateData = async (id, username, systemPrompt) => {
+export const updateData = async (id, username, systemPrompt, photo) => {
   const { data, error } = await supabase
     .from('session')
-    .upsert({ id, username, systemPrompt })
+    .upsert({ id, username, systemPrompt, photo })
     .select()
 
   return data;

@@ -12,6 +12,19 @@ export const setCallback = (cb) => {
   callback = cb;
 }
 
+export const convertBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file)
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    }
+    fileReader.onerror = (error) => {
+      reject(error);
+    }
+  })
+}
+
 export function call(welcomeMessage, prompt, rag) {
   const context = JSON.stringify(rag)
   const assistantOverrides = {
@@ -33,7 +46,7 @@ export function call(welcomeMessage, prompt, rag) {
       ],
     },
   };
-  console.log({assistantOverrides})
+  console.log({ assistantOverrides })
   vapi.start("cb6e3612-eb7e-463e-9041-ad17021669d7", assistantOverrides);
 }
 

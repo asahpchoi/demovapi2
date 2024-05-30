@@ -17,17 +17,18 @@ import {
   Call as CallIcon,
   Textsms as TextsmsIcon
 } from '@mui/icons-material';
-import { call, setCallback } from "./libs/util.js";
+import { call, setCallback, convertBase64 } from "./libs/util.js";
 import SettingsIcon from '@mui/icons-material/Settings';
 import { callLLM, checkSentiment } from "./libs/llm.mjs";
 import { updateData, getData, getUsers } from "./libs/state.mjs";
 import { products } from "./libs/products.js";
 import "./App.css";
-
+import QRCode from "react-qr-code";
 import { CallUI } from "./ui/CallUI.js";
 import { TextUI } from "./ui/TextUI.js";
 import { SettingUI } from "./ui/SettingUI.js";
- 
+import Paper from '@mui/material/Paper';
+
 
 
 import { PromptTemplate } from "./ui/PromptTemplate.js";
@@ -51,21 +52,28 @@ export default function App() {
   const [transcripts, setTranscripts] = useState([])
   const [currentMessage, setCurrentMessage] = useState("");
   const [sentiment, setSentiment] = useState("Neutral");
+  const [uploadMode, setUploadMode] = useState(false);
+  const [isShowQR, setIsShowQR] = useState(false);
 
   // useEffect hook to initialize data on component mount
   useEffect(() => {
     async function init() {
       const params = new URLSearchParams(document.location.search);
       const sid = params.get("sid");
+
       if (sid) {
         const data = await getData(sid);
         setName(data[0].username);
         setPrompt(data[0].systemPrompt);
+        setImage(data[0].photo)
         setSessionId(sid);
       }
       const userl = await getUsers();
       setUserlist(userl);
       setLoading(false); // Set loading to false once data is fetched
+
+      setUploadMode(params.get("upload"));
+
     }
     init();
   }, [name]);
@@ -97,28 +105,49 @@ export default function App() {
   return (
     <div className="App">
 
-      {/* Modal for texting interaction */}
-      <Modal open={isTexting}>
-        <TextUI args={{ setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, history, setHistory, setIsTexting, setImage, answer }} />
-      </Modal>
+
 
       {/* Modal for calling interaction */}
       <Modal open={isCalling}>
         <CallUI args={{ prompt, transcripts, currentMessage, sentiment, setIsCalling }} />
       </Modal>
+      <Modal open={isShowQR}>
+        <Stack className="overlay">
+          <div style={{ height: "auto", margin: "0 auto", maxWidth: "50vh", width: "100%" }}>
+            <h3>You can use your mobile to scan the QR code and upload an image</h3>
+            <QRCode
+              size={256}
+              style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+              value={`${window.location.href}&upload=1`}
+              viewBox={`0 0 256 256`}
+            />
+
+            <Button onClick={()=>{setIsShowQR(false)}}>Close</Button>
+          </div> 
+        </Stack>
+      </Modal>
+
+      {uploadMode && <Modal open={true}>
+        <Stack className="overlay"><Button onClick={() => {
+          document.getElementById("imageCapture").click();
+        }}>Upload</Button>
+          {image && <img style={{height: "10vh", width: "10vw"}} src={image} />}
+
+          <Button onClick={() => { window.close() }}>Close</Button>
+        </Stack>
+      </Modal>
+      }
 
       <Modal open={isSetting}>
-        <SettingUI args={{setIsSetting, setUserlist}}/>
+        <SettingUI args={{ setIsSetting, setUserlist }} />
       </Modal>
-      
 
+      {!sessionId ? <Modal open={true}><Login /></Modal> : ""}
       {/* AppBar with login and user selection */}
       <AppBar position="static" style={{ backgroundColor: "#FF7900" }}>
         <Toolbar>
           FWD AI Demo
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {!sessionId ? <Login /> : <Button>{name}</Button>}
-          </Typography>
+          <div />
           Change to
           <Select
             onChange={(event) => {
@@ -138,50 +167,67 @@ export default function App() {
 
 
       {/* Main card for prompt and role selection */}
-      <Stack style={{ margin: '10px' }}>
-
-        <Stack spacing={2} style={{ margin: '10px' }}>
-          <TextField
-            fullWidth
-            label="Welcome Message"
-            value={welcomeMessage}
-            onChange={(e) => setWelcomeMessage(e.target.value)}
-          />
-          <TextField
-            multiline
-            rows="5"
-            label="Prompt / Instruction"
-            fullWidth
-            value={prompt}
-            onChange={(e) => {
-              setPrompt(e.target.value);
-              updateData(sessionId, name, e.target.value);
-            }}
-          />
-        </Stack>
-        <Stack direction="row">
-          <Checkbox
-            checked={includeProduct}
-            onChange={() => setIncludeProduct(!includeProduct)}
-          />
-          <span>Include Product Knowledge (Set for Life)</span>
-        </Stack>
-        <Stack direction="row" justifyContent="center" spacing={2} className="footer">
-          <Fab onClick={() => {
-            setTranscripts([]);
-            call(welcomeMessage, prompt, includeProduct ? products : {});
-            setIsCalling(true);
-          }}>
-            <CallIcon />
-          </Fab>
-          <Fab onClick={() => setIsTexting(true)}>
-            <TextsmsIcon />
-          </Fab>
-          <PromptTemplate args={{ setPrompt }} />
-          <Fab onClick={() => setIsSetting(true)}><SettingsIcon /></Fab>
-        </Stack>
+      <Stack direction="row">
+        <Paper className="halfpage" elevation="3">
+          <Stack spacing={2}>
+            <h3>Setup the bot</h3>
+            <TextField
+              multiline
+              rows="10"
+              label="Prompt / Instruction"
+              fullWidth
+              value={prompt}
+              onChange={(e) => {
+                setPrompt(e.target.value);
+                updateData(sessionId, name, e.target.value, image);
+              }}
+            />
+          </Stack>
+          <input type="file" id="imageCapture" accept="image/*" capture="environment" onChange={async (evt) => {
+            const file = evt.target.files[0];
+            const base64 = await convertBase64(file);
+            setImage(base64);
+            updateData(sessionId, name, prompt, base64);
+          }} />
+          <Button onClick={() => {
+            setIsShowQR(true);
+            while(isShowQR) {
+              setTimeout(async () => {
+                const data = await getData(sessionId);
+                if(data.photo != image) {
+                  setImage(data.photo)
+                }
+                setIsShowQR(false);
+              }, 1000)
+            }
+           
+          }}>Show QR</Button>
+          <Stack direction="row">
+            <Checkbox
+              checked={includeProduct}
+              onChange={() => setIncludeProduct(!includeProduct)}
+            />
+            <span>Include Product Knowledge (Set for Life)</span>
+          </Stack>
+          <Stack direction="row" justifyContent="center" spacing={2} className="footer">
+            <Fab onClick={() => {
+              setTranscripts([]);
+              call(welcomeMessage, prompt, includeProduct ? products : {});
+              setIsCalling(true);
+            }}>
+              <CallIcon />
+            </Fab>
+            <Fab onClick={() => setIsTexting(true)}>
+              <TextsmsIcon />
+            </Fab>
+            <PromptTemplate args={{ setPrompt }} />
+            <Fab onClick={() => setIsSetting(true)}><SettingsIcon /></Fab>
+          </Stack>
+        </Paper>
+        <Paper className="halfpage" elevation="3">
+          <TextUI args={{ setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, history, setHistory, setIsTexting, setImage, answer }} />
+        </Paper>
       </Stack>
-       
     </div>
   );
 }

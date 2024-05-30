@@ -30,13 +30,10 @@
   max-height: "70vh";
   overflow: "scroll";
   padding: "1em";
-  margin: "1em"
+  margin: "0.5em"
 }
 
-.top {
-  padding: "1em";
-  margin: "1em"
-}
+ 
 .content {
   overflow: auto;
   padding: 1em;
@@ -74,6 +71,13 @@
   padding: 40vh 0;
 }
 
+.halfpage {
+  width: 50vw;
+  margin: 0.5em;
+  padding: 1em;
+  height: 70vh;
+  
+}
 .overlay {
   background-color: #e8e8e8;
   padding: 10px;
