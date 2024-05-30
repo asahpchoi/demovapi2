@@ -37,7 +37,7 @@ export default function App() {
   // State variables for managing various application states
   const [loading, setLoading] = useState(true);
   const [welcomeMessage, setWelcomeMessage] = useState("how are you?");
-  const [prompt, setPrompt] = useState("you are a professional agent");
+  const [prompt, setPrompt] = useState(null);
   const [isCalling, setIsCalling] = useState(false);
   const [isTexting, setIsTexting] = useState(false);
   const [isSetting, setIsSetting] = useState(false);
@@ -53,7 +53,7 @@ export default function App() {
   const [currentMessage, setCurrentMessage] = useState("");
   const [sentiment, setSentiment] = useState("Neutral");
   const [uploadMode, setUploadMode] = useState(false);
-  const [isShowQR, setIsShowQR] = useState(false);
+  const [displayMode, setDisplayMode] = useState("info");
 
   // useEffect hook to initialize data on component mount
   useEffect(() => {
@@ -104,14 +104,11 @@ export default function App() {
   }
   return (
     <div className="App">
-
-
-
       {/* Modal for calling interaction */}
       <Modal open={isCalling}>
         <CallUI args={{ prompt, transcripts, currentMessage, sentiment, setIsCalling }} />
       </Modal>
-      <Modal open={isShowQR}>
+      <Modal open={displayMode == "QR"}>
         <Stack className="overlay">
           <div style={{ height: "auto", margin: "0 auto", maxWidth: "50vh", width: "100%" }}>
             <h3>You can use your mobile to scan the QR code and upload an image</h3>
@@ -122,12 +119,10 @@ export default function App() {
               viewBox={`0 0 256 256`}
             />
 
-            <Button onClick={async () => { 
-              setIsShowQR(false);
+            <Button onClick={async () => {
+              setDisplayMode("info");
               document.location.reload();
-             
-
-             }}>Close</Button>
+            }}>Close</Button>
           </div>
         </Stack>
       </Modal>
@@ -195,8 +190,8 @@ export default function App() {
             updateData(sessionId, name, prompt, base64);
           }} />
           <Button onClick={async () => {
-            setIsShowQR(true);
- 
+            setDisplayMode("QR");
+
 
           }}>Upload from your mobile</Button>
           <Stack direction="row">
@@ -219,9 +214,22 @@ export default function App() {
             <Fab onClick={() => setIsSetting(true)}><SettingsIcon /></Fab>
           </Stack>
         </Paper>
-        <Paper className="halfpage" elevation="3">
+        {displayMode == "test" && <Paper className="halfpage" elevation="3">
+
           <TextUI args={{ setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, setImage, history, setHistory, setImage, answer }} />
-        </Paper>
+          <Button onClick={() => {
+            setDisplayMode("info")
+          }} className="corner">Show prompt intructions</Button>
+        </Paper>}
+        {displayMode == "info" && <Paper className="halfpage" elevation="3">
+
+          <h3>Instructios of creating prompt:</h3>
+          <Button onClick={() => {
+            setDisplayMode("test")
+          }}
+
+            className="corner">Test the prompt</Button>
+        </Paper>}
       </Stack>
     </div>
   );

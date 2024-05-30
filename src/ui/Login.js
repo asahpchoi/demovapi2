@@ -25,9 +25,11 @@ export const Login = ({ args }) => {
             onClick={async () => {
                 //setName(inputName);
                 if (inputName) {
-
                     const sid = await getID();
-                    updateData(sid, inputName, prompt);
+                    await updateData(sid, inputName);
+                    console.log({
+                        sid, inputName
+                    })
                     window.location.replace("?sid=" + sid);
                 }
             }}

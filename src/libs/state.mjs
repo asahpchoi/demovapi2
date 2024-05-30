@@ -8,9 +8,10 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 
 
 export const getID = async () => {
+ 
   const { data, error } = await supabase
     .from('session')
-    .upsert({ username: '[newuser]', systemPrompt: "[temporary]" })
+    .insert({})
     .select()
   return data[0].id;
 }
@@ -57,10 +58,4 @@ export const removeData = async () => {
 
 }
 
-async function mtry() {
-  const id = await getID();
-  console.log(id);
-
-  const data = await updateData(id, "Asa Choi", "{Testing}");
-  console.log(data)
-}
+ 
