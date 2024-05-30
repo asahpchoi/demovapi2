@@ -113,7 +113,7 @@ export default function App() {
     <div className="App">
       {/* Modal for calling interaction */}
       <Modal open={isCalling}>
-        <CallUI args={{ prompt, transcripts, currentMessage, sentiment, setIsCalling }} />
+        <CallUI args={{ prompt, transcripts, currentMessage, sentiment, setIsCalling, rag }} />
       </Modal>
       <Modal open={displayMode == "QR"}>
         <Stack className="overlay">
@@ -207,7 +207,7 @@ export default function App() {
           <Stack direction="row" justifyContent="center" spacing={2} className="footer">
             <Fab onClick={() => {
               setTranscripts([]);
-              call(name, prompt, includeProduct ? products : {});
+              call(name, prompt, rag);
               setIsCalling(true);
             }}>
               <CallIcon />
