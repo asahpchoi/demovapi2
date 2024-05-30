@@ -9,7 +9,7 @@ import { stopCall } from "../libs/util.js";
 import Markdown from 'react-markdown';
 export const CallUI = ({ args }) => {
     const { prompt, transcripts, currentMessage, sentiment, setIsCalling } = args;
-    console.log({ args })
+
     return <Stack className="overlay content"  >
         <Stack style={{ height: "10vh", overflow: "scroll" }}>
             Role Prompt: {prompt}

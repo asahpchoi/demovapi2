@@ -204,7 +204,7 @@ export default function App() {
           <Stack direction="row" justifyContent="center" spacing={2} className="footer">
             <Fab onClick={() => {
               setTranscripts([]);
-              call(welcomeMessage, prompt, includeProduct ? products : {});
+              call(name, prompt, includeProduct ? products : {});
               setIsCalling(true);
             }}>
               <CallIcon />
