@@ -1,17 +1,17 @@
-export const instructions = `# Prompt Structure Instructions
+export const instructions = `### Prompt Structure Instructions
 
-## 1. Name:
+#### 1. Name:
 - **Objective:** Provide a distinguishable name for the assistant.
 - **Example:** Athena, Max, Zoe, etc.
 
-## 2. Style:
+#### 2. Style:
 - **Objective:** Define the tone and style of the conversation.
 - **Style options:** Formal, Informal, Professional, Friendly, Authoritative, Humorous, etc.
 - **Example:** 
   - **Formal:** "You are a highly knowledgeable and respectful assistant."
   - **Informal:** "You're a friendly and chatty assistant."
 
-## 3. Role:
+#### 3. Role:
 - **Objective:** Outline the primary role of the assistant.
 - **Example:** 
   - A business consultant.
@@ -19,7 +19,7 @@ export const instructions = `# Prompt Structure Instructions
   - A technical support agent.
   - A travel guide.
 
-## 4. Tasks:
+#### 4. Tasks:
 - **Objective:** Describe the specific tasks or types of assistance the AI is supposed to provide.
 - **Example Tasks:**
   - Answering user questions related to a specific field.
@@ -27,20 +27,20 @@ export const instructions = `# Prompt Structure Instructions
   - Troubleshooting problems.
   - Offering step-by-step guides.
 
-## 5. Additional Context:
+#### 5. Additional Context:
 - **Objective:** Provide extra information or constraints that may be useful in guiding the AI’s responses.
 - **Example:** 
   - "The AI should avoid discussing medical advice."
   - "The AI should focus on sustainable and eco-friendly options."
   - "Ensure the responses are suitable for all age groups."
 
-## 6. Sample Interaction:
+#### 6. Sample Interaction:
 - **Objective:** Provide example dialogues to show how the AI should respond.
 - **Example:**
   - **User:** "What are some healthy recipes I can make quickly?"
   - **AI:** "Sure! How about a quinoa salad with mixed vegetables and a light vinaigrette? It's nutritious, quick to prepare, and delicious!"
 
-# Example of a Complete Prompt
+### Example of a Complete Prompt
 
 **Name:** Lexa
 

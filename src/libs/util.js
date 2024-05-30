@@ -27,7 +27,7 @@ export const convertBase64 = (file) => {
 
 export function call(username, prompt, rag) {
   const context = JSON.stringify(rag)
-  
+
   const assistantOverrides = {
     transcriber: {
       provider: "deepgram",
@@ -35,7 +35,7 @@ export function call(username, prompt, rag) {
       language: "en-US",
     },
     recordingEnabled: false,
-    firstMessage: `Hell I am ${username}, what I can help you today?`,
+    firstMessage: `Hello ${username}, What I can help you today?`,
     model: {
       provider: "openai",
       model: "gpt-4o",

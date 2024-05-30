@@ -38,7 +38,7 @@ import Markdown from "react-markdown";
 export default function App() {
   // State variables for managing various application states
   const [loading, setLoading] = useState(true);
-  const [welcomeMessage, setWelcomeMessage] = useState("how are you?");
+ 
   const [prompt, setPrompt] = useState(null);
   const [isCalling, setIsCalling] = useState(false);
   const [isTexting, setIsTexting] = useState(false);
