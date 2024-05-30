@@ -122,7 +122,7 @@ export default function App() {
               viewBox={`0 0 256 256`}
             />
 
-            <Button onClick={() => { setIsShowQR(false) }}>Close</Button>
+            <Button onClick={() => { setIsShowQR(false); window.location.reload(); }}>Close</Button>
           </div>
         </Stack>
       </Modal>
@@ -191,17 +191,9 @@ export default function App() {
           }} />
           <Button onClick={async () => {
             setIsShowQR(true);
-            while (isShowQR) {
-              await setTimeout(async () => {
-                const data = await getData(sessionId);
-                if (data.photo != image) {
-                  setImage(data.photo);
-                  setIsShowQR(false);
-                }
-                console.log({image})
-                
-              }, 1000)
-            }
+
+             
+
 
           }}>Show QR</Button>
           <Stack direction="row">
