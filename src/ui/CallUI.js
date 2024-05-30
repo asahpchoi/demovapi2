@@ -26,7 +26,7 @@ export const CallUI = ({ args }) => {
             }
         </Stack>
         <Stack style={{ height: "30vh", overflow: "scroll" }}>
-            <Markdown>##Sentiment: {sentiment}</Markdown>
+            {sentiment}
         </Stack>
         <Stack direction="row" justifyContent="center" className="footer">
             <Fab onClick={() => {

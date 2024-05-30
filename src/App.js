@@ -122,16 +122,16 @@ export default function App() {
               viewBox={`0 0 256 256`}
             />
 
-            <Button onClick={()=>{setIsShowQR(false)}}>Close</Button>
-          </div> 
+            <Button onClick={() => { setIsShowQR(false) }}>Close</Button>
+          </div>
         </Stack>
       </Modal>
 
       {uploadMode && <Modal open={true}>
         <Stack className="overlay"><Button onClick={() => {
           document.getElementById("imageCapture").click();
-        }}>Upload</Button>
-          {image && <img style={{height: "10vh", width: "10vw"}} src={image} />}
+        }}>Take a photo</Button>
+          {image && <img style={{ height: "10vh", width: "10vw" }} src={image} />}
 
           <Button onClick={() => { window.close() }}>Close</Button>
         </Stack>
@@ -191,16 +191,16 @@ export default function App() {
           }} />
           <Button onClick={() => {
             setIsShowQR(true);
-            while(isShowQR) {
+            while (isShowQR) {
               setTimeout(async () => {
                 const data = await getData(sessionId);
-                if(data.photo != image) {
+                if (data.photo != image) {
                   setImage(data.photo)
                 }
                 setIsShowQR(false);
               }, 1000)
             }
-           
+
           }}>Show QR</Button>
           <Stack direction="row">
             <Checkbox
@@ -217,9 +217,7 @@ export default function App() {
             }}>
               <CallIcon />
             </Fab>
-            <Fab onClick={() => setIsTexting(true)}>
-              <TextsmsIcon />
-            </Fab>
+
             <PromptTemplate args={{ setPrompt }} />
             <Fab onClick={() => setIsSetting(true)}><SettingsIcon /></Fab>
           </Stack>

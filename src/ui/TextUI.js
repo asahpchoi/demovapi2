@@ -21,7 +21,7 @@ export const TextUI = ({ args }) => {
     const [open, setOpen] = useState(false);
 
     return <Stack>
-<h3>Test the bot</h3>
+        <h3>Test the bot</h3>
         <TextField
             label="Ask a question"
             fullWidth
@@ -69,21 +69,20 @@ export const TextUI = ({ args }) => {
             }}
         />
 
-        <Stack className="middle" >
-
-            <div>
-                <Markdown>{answer}</Markdown>
+        <Stack className="middle" direction="row">
+            <div style={{ width: image?'70%':'100%', height: '50vh', overflow: 'auto', textAlign: "left" }}>
+                <Markdown  >{answer}</Markdown>
             </div>
             <div>
-                <img style={{ width: '10vw' }} src={image} onClick={() => setOpen(true)} />
+                <img style={{ width: '10vw', padding: "1em" }} src={image} onClick={() => setOpen(true)} />
             </div>
             <Dialog open={open} style={{ width: '90vw' }}>
                 <img style={{ width: '90vw' }} src={image} onClick={() => setOpen(false)} />
             </Dialog>
         </Stack>
         <Stack direction="row" justifyContent="center" spacing={2} className="footer">
-             
-   
+
+
         </Stack>
     </Stack>
 
