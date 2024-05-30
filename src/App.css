@@ -79,6 +79,12 @@
 
 }
 
+.markdown {
+  text-align: left;
+  overflow: auto;
+  height: 60vh;
+}
+
 .corner {
   position: relative;
   right: 5;

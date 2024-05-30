@@ -14,6 +14,7 @@ import {
   CircularProgress
 } from "@mui/material";
 import {
+  AlignHorizontalLeft,
   Call as CallIcon,
   Textsms as TextsmsIcon
 } from '@mui/icons-material';
@@ -28,11 +29,12 @@ import { CallUI } from "./ui/CallUI.js";
 import { TextUI } from "./ui/TextUI.js";
 import { SettingUI } from "./ui/SettingUI.js";
 import Paper from '@mui/material/Paper';
-
+import { instructions } from "./libs/instruction.js";
 
 
 import { PromptTemplate } from "./ui/PromptTemplate.js";
 import { Login } from "./ui/Login.js";
+import Markdown from "react-markdown";
 export default function App() {
   // State variables for managing various application states
   const [loading, setLoading] = useState(true);
@@ -223,7 +225,10 @@ export default function App() {
         </Paper>}
         {displayMode == "info" && <Paper className="halfpage" elevation="3">
 
-          <h3>Instructios of creating prompt:</h3>
+
+          <Markdown className="markdown">
+            {instructions}
+          </Markdown>
           <Button onClick={() => {
             setDisplayMode("test")
           }}
