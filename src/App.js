@@ -124,9 +124,9 @@ export default function App() {
 
             <Button onClick={async () => { 
               setIsShowQR(false);
-              const data  = await getData(sessionId);
-              setImage(data.photo);
-              
+              document.location.reload();
+             
+
              }}>Close</Button>
           </div>
         </Stack>
