@@ -1,26 +1,17 @@
 import {
-    Fab,
     Stack,
     TextField,
-    Typography,
-    Dialog
 } from "@mui/material";
 import { useState } from "react";
-
-import {
-
-    Stop as StopIcon,
-
-} from '@mui/icons-material';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import Markdown from 'react-markdown';
+import { ImageControl } from "./ImageControl";
 
 export const TextUI = ({ args }) => {
 
-    const { setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, history, setHistory, setIsTexting, answer } = args
-    const [open, setOpen] = useState(false);
+    const { setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, setImage, history, setHistory, answer } = args
 
-    return <Stack>
+
+    return <Stack >
         <h3>Test the bot</h3>
         <TextField
             label="Ask a question"
@@ -68,22 +59,15 @@ export const TextUI = ({ args }) => {
                 }
             }}
         />
-
-        <Stack className="middle" direction="row">
-            <div style={{ width: image?'70%':'100%', height: '50vh', overflow: 'auto', textAlign: "left" }}>
+        <Stack direction="row"
+        >
+            <div style={{ width: image ? '70%' : '100%', height: '50vh', overflow: 'auto', textAlign: "left" }}>
                 <Markdown  >{answer}</Markdown>
             </div>
-            <div>
-                <img style={{ width: '10vw', padding: "1em" }} src={image} onClick={() => setOpen(true)} />
-            </div>
-            <Dialog open={open} style={{ width: '90vw' }}>
-                <img style={{ width: '90vw' }} src={image} onClick={() => setOpen(false)} />
-            </Dialog>
-        </Stack>
-        <Stack direction="row" justifyContent="center" spacing={2} className="footer">
+            { image && <div>
+                <ImageControl image={image} setImage={setImage} />
+            </div>}
 
-
-        </Stack>
+        </Stack> 
     </Stack>
-
 }

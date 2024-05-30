@@ -167,7 +167,7 @@ export default function App() {
 
 
       {/* Main card for prompt and role selection */}
-      <Stack direction="row">
+      <Stack direction={{ xs: 'column', sm: 'row' }}>
         <Paper className="halfpage" elevation="3">
           <Stack spacing={2}>
             <h3>Setup the bot</h3>
@@ -189,15 +189,17 @@ export default function App() {
             setImage(base64);
             updateData(sessionId, name, prompt, base64);
           }} />
-          <Button onClick={() => {
+          <Button onClick={async () => {
             setIsShowQR(true);
             while (isShowQR) {
-              setTimeout(async () => {
+              await setTimeout(async () => {
                 const data = await getData(sessionId);
                 if (data.photo != image) {
-                  setImage(data.photo)
+                  setImage(data.photo);
+                  setIsShowQR(false);
                 }
-                setIsShowQR(false);
+                console.log({image})
+                
               }, 1000)
             }
 
@@ -223,7 +225,7 @@ export default function App() {
           </Stack>
         </Paper>
         <Paper className="halfpage" elevation="3">
-          <TextUI args={{ setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, history, setHistory, setIsTexting, setImage, answer }} />
+          <TextUI args={{ setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, setImage, history, setHistory, setImage, answer }} />
         </Paper>
       </Stack>
     </div>
