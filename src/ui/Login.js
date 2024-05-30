@@ -13,21 +13,23 @@ export const Login = ({ args }) => {
     const [inputName, setInputName] = useState("");
 
     return <Stack className="overlay">
-    
+
         <TextField
             fullWidth
             label="Your Name"
             value={inputName}
             onChange={(e) => setInputName(e.target.value)}
-            
+            required="true"
         />
         <Button
             onClick={async () => {
                 //setName(inputName);
-            
-                const sid = await getID();
-                updateData(sid, inputName, prompt);
-                window.location.replace("?sid=" + sid);
+                if (inputName) {
+
+                    const sid = await getID();
+                    updateData(sid, inputName, prompt);
+                    window.location.replace("?sid=" + sid);
+                }
             }}
         >
             Go

@@ -122,7 +122,12 @@ export default function App() {
               viewBox={`0 0 256 256`}
             />
 
-            <Button onClick={() => { setIsShowQR(false); window.location.reload(); }}>Close</Button>
+            <Button onClick={async () => { 
+              setIsShowQR(false);
+              const data  = await getData(sessionId);
+              setImage(data.photo);
+              
+             }}>Close</Button>
           </div>
         </Stack>
       </Modal>
@@ -191,11 +196,9 @@ export default function App() {
           }} />
           <Button onClick={async () => {
             setIsShowQR(true);
+ 
 
-             
-
-
-          }}>Show QR</Button>
+          }}>Upload from your mobile</Button>
           <Stack direction="row">
             <Checkbox
               checked={includeProduct}
