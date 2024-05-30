@@ -30,15 +30,17 @@ import { TextUI } from "./ui/TextUI.js";
 import { SettingUI } from "./ui/SettingUI.js";
 import Paper from '@mui/material/Paper';
 import { instructions } from "./libs/instruction.js";
-
+import { RagSection } from "./ui/RagSection.js";
 
 import { PromptTemplate } from "./ui/PromptTemplate.js";
 import { Login } from "./ui/Login.js";
 import Markdown from "react-markdown";
+
+
 export default function App() {
   // State variables for managing various application states
   const [loading, setLoading] = useState(true);
- 
+
   const [prompt, setPrompt] = useState(null);
   const [isCalling, setIsCalling] = useState(false);
   const [isTexting, setIsTexting] = useState(false);
@@ -56,6 +58,7 @@ export default function App() {
   const [sentiment, setSentiment] = useState("Neutral");
   const [uploadMode, setUploadMode] = useState(false);
   const [displayMode, setDisplayMode] = useState("info");
+  const [rag, setRAG] = useState("");
 
   // useEffect hook to initialize data on component mount
   useEffect(() => {
@@ -63,6 +66,7 @@ export default function App() {
       const params = new URLSearchParams(document.location.search);
       const sid = params.get("sid");
 
+    
       if (sid) {
         const data = await getData(sid);
         setName(data[0].username);
@@ -104,6 +108,7 @@ export default function App() {
       </div>
     );
   }
+
   return (
     <div className="App">
       {/* Modal for calling interaction */}
@@ -175,7 +180,7 @@ export default function App() {
             <h3>Setup the bot</h3>
             <TextField
               multiline
-              rows="10"
+              rows="6"
               label="Prompt / Instruction"
               fullWidth
               value={prompt}
@@ -197,11 +202,7 @@ export default function App() {
 
           }}>Upload from your mobile</Button>
           <Stack direction="row">
-            <Checkbox
-              checked={includeProduct}
-              onChange={() => setIncludeProduct(!includeProduct)}
-            />
-            <span>Include Product Knowledge (Set for Life)</span>
+            <RagSection setRAG={setRAG}></RagSection>
           </Stack>
           <Stack direction="row" justifyContent="center" spacing={2} className="footer">
             <Fab onClick={() => {

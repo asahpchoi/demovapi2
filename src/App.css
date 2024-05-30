@@ -79,6 +79,10 @@
 
 }
 
+h2 h3 h4 {
+  text-align: left;
+}
+
 .markdown {
   text-align: left;
   overflow: auto;
