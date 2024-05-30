@@ -29,12 +29,12 @@ export const checkSentiment = async (content) => {
     return reply.choices[0].message.content;
 }
 
-export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history) => {
+export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, rag) => {
     //The deployment name for your completions API model. The instruct model is the only new model that supports the legacy API.
     const messages = [
         {
             role: "system",
-            content: systemPrompt
+            content: systemPrompt + `context: ${rag}`
         }]
         .concat(
             history ? history : [],

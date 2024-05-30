@@ -219,7 +219,7 @@ export default function App() {
         </Paper>
         {displayMode == "test" && <Paper className="halfpage" elevation="3">
 
-          <TextUI args={{ setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, setImage, history, setHistory, setImage, answer }} />
+          <TextUI args={{ setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, setImage, history, setHistory, setImage, answer, rag }} />
           <Button onClick={() => {
             setDisplayMode("info")
           }} className="corner">Show prompt intructions</Button>

@@ -7,12 +7,11 @@ import Markdown from 'react-markdown';
 import { ImageControl } from "./ImageControl";
 
 export const TextUI = ({ args }) => {
-
-    const { setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, setImage, history, setHistory, answer } = args
-
+    const { setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, setImage, history, setHistory, answer, rag } = args
 
     return <Stack >
         <h3>Test the bot</h3>
+   
         <TextField
             label="Ask a question"
             fullWidth
@@ -29,7 +28,7 @@ export const TextUI = ({ args }) => {
                                 answerPart += data;
                                 setAnswer(answerPart)
                             }
-                        }, history);
+                        }, history, rag);
                     const newHistory = history;
                     history.push(
                         {
@@ -64,10 +63,10 @@ export const TextUI = ({ args }) => {
             <div style={{ width: image ? '70%' : '100%', height: '50vh', overflow: 'auto', textAlign: "left" }}>
                 <Markdown  >{answer}</Markdown>
             </div>
-            { image && <div>
+            {image && <div>
                 <ImageControl image={image} setImage={setImage} />
             </div>}
 
-        </Stack> 
+        </Stack>
     </Stack>
 }
