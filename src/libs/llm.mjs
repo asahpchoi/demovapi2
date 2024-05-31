@@ -1,11 +1,12 @@
 import "axios";
 import { OpenAIClient, AzureKeyCredential } from "@azure/openai";
+import { Groq } from "groq-sdk";
 import axios from "axios";
 import MistralClient from '@mistralai/mistralai';
 const endpoint = "https://ik-oai-eastus-2.openai.azure.com/";
 const apiKey = "b3e819600fbe4981be34ef2aa79943e2"
 const deployment = "gpt-4o";
-import { Groq } from "groq-sdk";
+
 
 export const checkSentiment = async (content) => {
     const systemPrompt = `you are a bot to analysis the conversation sentiment, and provide a feedback what is the customer feedback
@@ -155,7 +156,6 @@ const mistralLLM = async (messages, cb) => {
         }
     }
 }
-
 const groqLLM = async (messages, cb) => {
     const groq = new Groq({
         apiKey: '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'
