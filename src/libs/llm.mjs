@@ -60,7 +60,16 @@ export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, r
                     ],
             },
             ]);
-    !LLMmodel ? azureLLM(messages, cb) : minimaxLLM(messages, cb);
+
+    !LLMmodel ?
+        azureLLM(messages, cb) :
+        minimaxLLM([
+            {
+                role: "system",
+                content: systemPrompt + `context: ${rag}`
+            },
+            { role: "user", content: userPrompt }
+        ], cb);
 }
 
 const azureLLM = async (messages, cb) => {
@@ -81,14 +90,23 @@ const minimaxLLM = async (messages, cb) => {
     const url = "https://api.minimax.chat/v1/text/chatcompletion_v2"
     const headers = { "Content-Type": "application/json", "Authorization": `Bearer ${api_key}` }
 
-
+    
     const m = messages.map(m => {
+        let c2 = "";
+
+        if (typeof m.content == "object") {
+            c2 = m.content[0].text
+        }
+        else {
+            c2 = m.content
+        }
+
         return {
             role: m.role,
-            content: Array.isArray(m.content) ? m.content[0].text : m.content
+            content: c2
         }
     })
-
+    console.log({ m })
     const data = {
         "model": "abab6.5s-chat",
         messages: m,
@@ -100,10 +118,10 @@ const minimaxLLM = async (messages, cb) => {
         "top_p": 0.9
     }
 
+    console.log("Calling minimax")
 
     const reply = axios.post(url, data, { headers });
     reply.then(d => {
-        console.log({ messages, d: d.data })
         const content = d.data.choices[0].message.content;
         cb(content)
         /*
@@ -128,12 +146,13 @@ const minimaxLLM = async (messages, cb) => {
 }
 
 function main() {
+    /*
     callLLM("you are an AI bot", "how are you?", null, (data) => {
         console.log({ data })
-    }, [], null);
+    }, [], null);*/
     callLLM("you are an AI bot", "how are you?", null, (data) => {
         console.log({ data })
     }, [], null, "minimax");
 }
 
-//main();
+main();

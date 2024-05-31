@@ -28,7 +28,7 @@ export const TextUI = ({ args }) => {
                                 answerPart += data;
                                 setAnswer(answerPart)
                             }
-                        }, history, rag);
+                        }, history, rag );
                     const newHistory = history;
                     history.push(
                         {
@@ -54,7 +54,7 @@ export const TextUI = ({ args }) => {
 
                     })
                     setHistory([...history]);
-                    //console.log(history)
+               
                 }
             }}
         />
