@@ -7,7 +7,6 @@ const deployment = "gpt-4o";
 const assistantsClient = new AssistantsClient(endpoint, new AzureKeyCredential(apiKey));
 
 export const createAssistant = async ({ name, prompt }) => {
-
     const assistant = await assistantsClient.createAssistant({
         model: deployment,
         name: name,
@@ -20,16 +19,12 @@ export const createAssistant = async ({ name, prompt }) => {
 
 
 export const listAssistants = async (setAssistants) => {
-
-
     const assistants = (await assistantsClient.listAssistants()).data.map(d => {
         return {
             id: d.id, name: d.name, instructions: d.instructions
         }
     });
-
     setAssistants(assistants)
-
 }
 
 export const removeAssisant = async (id) => {
@@ -37,7 +32,8 @@ export const removeAssisant = async (id) => {
     assistantsClient.deleteAssistant(id)
 }
 
-export const updateAssistant = async (id, name, prompt) => {
+export const updateAssistant = async ({ id, name, prompt }) => {
+
     assistantsClient.updateAssistant(id, {
         model: deployment,
         name: name,
@@ -70,6 +66,7 @@ async function housekeep() {
 
 export const callAssistant = async (assistantId, question, username, cb) => {
 
+    console.log({ assistantId, question, username })
     const assistant = await assistantsClient.getAssistant(assistantId);
     const assistantThread = await assistantsClient.createThread();
 
@@ -109,32 +106,16 @@ export const callAssistant = async (assistantId, question, username, cb) => {
 async function main() {
     console.log("Start")
     const id = await createAssistant({ name: 'financial planner', prompt: 'you are a bot' })
-    await updateAssistant({ id, name: 'financial planner 2', prompt: 'you are a bot 2' })
-    //const asst = await listAssistants()
-    //console.log({ data: asst })
-    //console.log({a,f});
-    //a.data.forEach(a1 => console.log(a1));
-    // await housekeep();
-    /*
-
-    const assistantsClient = new AssistantsClient(endpoint, new AzureKeyCredential(apiKey));
-    const id = await createAssistant()
-    console.log({ id })
-
-    //const id = 'asst_9HCRQavlIoAfbaSjNR0Dli5r';
-    const report_id = await uploadFile('./src/docs/NVDA.csv');
-    console.log({ report_id })
-    //const report_id = 'assistant-H4VNZ1NolfRwri4pfmr63PF0';  
+    // await updateAssistant({ id, name: 'financial planner 2', prompt: 'you are a bot 2' })
 
 
-    callAssistant(id, report_id, (error, data, obj) => {
+    callAssistant(id, "calculate 1 + 2", "peter", (error, data, obj) => {
         console.log({
             error, data, obj, detail: obj?.value?.annotations
         })
     })
-    */
+
 
 }
 
-
-
+main();
