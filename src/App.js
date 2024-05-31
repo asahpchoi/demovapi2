@@ -35,7 +35,8 @@ import { RagSection } from "./ui/RagSection.js";
 import { PromptTemplate } from "./ui/PromptTemplate.js";
 import { Login } from "./ui/Login.js";
 import Markdown from "react-markdown";
-
+import bg2 from "./images/bg2.svg"
+import logo from "./images/logo.svg";
 
 export default function App() {
   // State variables for managing various application states
@@ -66,7 +67,7 @@ export default function App() {
       const params = new URLSearchParams(document.location.search);
       const sid = params.get("sid");
 
-    
+
       if (sid) {
         const data = await getData(sid);
         setName(data[0].username);
@@ -110,50 +111,15 @@ export default function App() {
   }
 
   return (
-    <div className="App">
-      {/* Modal for calling interaction */}
-      <Modal open={isCalling}>
-        <CallUI args={{ prompt, transcripts, currentMessage, sentiment, setIsCalling, rag }} />
-      </Modal>
-      <Modal open={displayMode == "QR"}>
-        <Stack className="overlay">
-          <div style={{ height: "auto", margin: "0 auto", maxWidth: "50vh", width: "100%" }}>
-            <h3>You can use your mobile to scan the QR code and upload an image</h3>
-            <QRCode
-              size={256}
-              style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-              value={`${window.location.href}&upload=1`}
-              viewBox={`0 0 256 256`}
-            />
+    <div className="App" style={{ "background-image": { bg2 } }}>
+      <img src={bg2} loading="lazy" className="absolute bottom-0 -z-0" />
 
-            <Button onClick={async () => {
-              setDisplayMode("info");
-              document.location.reload();
-            }}>Close</Button>
-          </div>
-        </Stack>
-      </Modal>
-
-      {uploadMode && <Modal open={true}>
-        <Stack className="overlay"><Button onClick={() => {
-          document.getElementById("imageCapture").click();
-        }}>Take a photo</Button>
-          {image && <img style={{ height: "10vh", width: "10vw" }} src={image} />}
-
-          <Button onClick={() => { window.close() }}>Close</Button>
-        </Stack>
-      </Modal>
-      }
-
-      <Modal open={isSetting}>
-        <SettingUI args={{ setIsSetting, setUserlist }} />
-      </Modal>
-
-      {!sessionId ? <Modal open={true}><Login /></Modal> : ""}
       {/* AppBar with login and user selection */}
-      <AppBar position="static" style={{ backgroundColor: "#FF7900" }}>
-        <Toolbar>
-  
+      <div position="static">
+        <Toolbar className="flex ">
+          <img src={logo} className="w-40" />
+          <h2 className="p-10 font-bold">FWD Gen AI build your bot</h2>
+          <div className="flex-grow"></div>
           FWD GenAI profile
           <Select
             onChange={(event) => {
@@ -161,6 +127,7 @@ export default function App() {
               window.location.replace(`?sid=${id}`);
             }}
             value={sessionId}
+            className="m-2"
           >
             {userlist.map((user) => (
               <MenuItem key={user.id} value={user.id}>
@@ -169,14 +136,13 @@ export default function App() {
             ))}
           </Select>
         </Toolbar>
-      </AppBar>
-
+      </div>
 
       {/* Main card for prompt and role selection */}
-      <Stack direction={{ xs: 'column', sm: 'row' }}>
-        <Paper className="halfpage" elevation="3">
-          <Stack spacing={2}>
-            <h3>Setup the bot</h3>
+      <Stack className="bg-zinc-100 z-1" direction={{ xs: 'column', sm: 'row' }}>
+        <Paper className="halfpage " elevation="3">
+          <Stack spacing={2} className="bg-white" >
+            <div className="text-xl font-bold   text-left">Setup your agent bot</div>
             <TextField
               multiline
               rows="6"
@@ -236,6 +202,44 @@ export default function App() {
             className="corner">Test the prompt</Button>
         </Paper>}
       </Stack>
+
+      {/* Modal for calling interaction */}
+      <Modal open={isCalling}>
+        <CallUI args={{ prompt, transcripts, currentMessage, sentiment, setIsCalling, rag }} />
+      </Modal>
+      <Modal open={displayMode == "QR"}>
+        <Stack className="overlay">
+          <div style={{ height: "auto", margin: "0 auto", maxWidth: "50vh", width: "100%" }}>
+            <h3>You can use your mobile to scan the QR code and upload an image</h3>
+            <QRCode
+              size={256}
+              style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+              value={`${window.location.href}&upload=1`}
+              viewBox={`0 0 256 256`}
+            />
+
+            <Button onClick={async () => {
+              setDisplayMode("info");
+              document.location.reload();
+            }}>Close</Button>
+          </div>
+        </Stack>
+      </Modal>
+      {uploadMode && <Modal open={true}>
+        <Stack className="overlay"><Button onClick={() => {
+          document.getElementById("imageCapture").click();
+        }}>Take a photo</Button>
+          {image && <img style={{ height: "10vh", width: "10vw" }} src={image} />}
+
+          <Button onClick={() => { window.close() }}>Close</Button>
+        </Stack>
+      </Modal>
+      }
+
+      <Modal open={isSetting}>
+        <SettingUI args={{ setIsSetting, setUserlist }} />
+      </Modal>
+      {!sessionId ? <Modal open={true}><Login /></Modal> : ""}
     </div>
   );
 }
