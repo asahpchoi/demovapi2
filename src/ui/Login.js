@@ -24,8 +24,9 @@ export const Login = ({ args }) => {
             <img src={listen} className="h-40"/>
             <div className="text-3xl w-auto font-bold">Hello, Nice to have you here.</div>
             <div className="text-5xl w-auto font-bold py-6">What is your name?</div>
-            <div className="flex px-96" >
-                <TextField className="flex-grow" 
+            <div className="flex" >
+                <div className="flex-grow"></div>
+                <TextField className="w200" 
                     label="Your Name"
                     value={inputName}
                     onChange={(e) => setInputName(e.target.value)}
@@ -45,6 +46,7 @@ export const Login = ({ args }) => {
                 >
                     Go
                 </Button>
+                <div className="flex-grow"></div>
             </div>
         </div>
     </Stack>
