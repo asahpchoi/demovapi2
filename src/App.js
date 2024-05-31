@@ -153,9 +153,8 @@ export default function App() {
       {/* AppBar with login and user selection */}
       <AppBar position="static" style={{ backgroundColor: "#FF7900" }}>
         <Toolbar>
-          FWD AI Demo
-          <div />
-          Change to
+  
+          FWD GenAI profile
           <Select
             onChange={(event) => {
               const id = event.target.value;

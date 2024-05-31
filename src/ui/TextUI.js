@@ -8,6 +8,7 @@ import { ImageControl } from "./ImageControl";
 
 export const TextUI = ({ args }) => {
     const { setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, setImage, history, setHistory, answer, rag } = args
+    const [model, setModel] = useState("azure");
 
     return <Stack >
         <h3>Test the bot</h3>
@@ -28,7 +29,7 @@ export const TextUI = ({ args }) => {
                                 answerPart += data;
                                 setAnswer(answerPart)
                             }
-                        }, history, rag );
+                        }, history, rag, model);
                     const newHistory = history;
                     history.push(
                         {
@@ -40,7 +41,6 @@ export const TextUI = ({ args }) => {
                                         text: userPrompt
                                     }
                                 ]
-
                         })
                     history.push({
                         role: "assistant",
@@ -54,10 +54,18 @@ export const TextUI = ({ args }) => {
 
                     })
                     setHistory([...history]);
-               
+
                 }
             }}
         />
+        <select onChange={(e) => {
+            setModel(e.target.value);
+            console.log({ model })
+        }}>
+            <option value="azure">gpt-4o</option>
+            <option value="minimax">minimax</option>
+            <option value="groq">llama3</option>
+        </select>
         <Stack direction="row"
         >
             <div style={{ width: image ? '70%' : '100%', height: '50vh', overflow: 'auto', textAlign: "left" }}>
