@@ -83,7 +83,7 @@ const azureLLM = async (messages, cb) => {
 
     for await (const event of events) {
         for (const choice of event.choices) {
-            cb(choice.delta?.content);
+            cb(choice.delta?.content, choice.finishReason);
         }
     }
     return "OK"
@@ -102,6 +102,7 @@ const minimaxLLM = async (systemPrompt, userPrompt, cb) => {
             role: "user",
             content: userPrompt
         }];
+
     const data = {
         "model": "abab6.5s-chat",
         messages: messages,
@@ -116,25 +117,11 @@ const minimaxLLM = async (systemPrompt, userPrompt, cb) => {
     console.log("Calling minimax", data)
 
     const reply = axios.post(url, data, { headers });
+
     reply.then(d => {
-        const content = d.data.choices[0].message.content;
-        cb(content)
-        /*
-        console.log({d: d.data})
-       
-        d.data.on('data', data => {
-             
-           
-            const chunk = JSON.parse(data.toString().replace('data: ', ''));
-            
-            const choice = chunk.choices[0];
-            if (choice.delta) {
-                cb(choice.delta.content);
-            }
-           
-            //console.log({c: choice.delta?choice.delta.content:choice.message.content})
-        })
-        */
+
+        const content = d.data.base_resp.status_msg != "" ? d.data.base_resp.status_msg : d.data.choices[0].message.content;
+        cb(content, "stop")
     })
 
 
@@ -181,7 +168,8 @@ const groqLLM = async (messages, cb) => {
     const stream = await getGroqChatStream();
     for await (const chunk of stream) {
         // Print the completion returned by the LLM.
-        cb(chunk.choices[0]?.delta?.content || "");
+        cb(chunk.choices[0]?.delta?.content || "", chunk.choices[0]?.finish_reason);
+
     }
 
 

@@ -67,7 +67,13 @@ export default function App() {
   const [model, setModel] = useState("azure");
   // useEffect hook to initialize data on component mount
   useEffect(() => {
+
     async function init() {
+      if (false) {
+        while (window.prompt('Enter Password') != "fwdstrategy2024") {
+
+        }
+      }
       const params = new URLSearchParams(document.location.search);
       const sid = params.get("sid");
 
@@ -116,7 +122,7 @@ export default function App() {
 
   return (
     <div className="App" style={{ "background-image": { bg2 } }}>
-      <img src={bg2} loading="lazy" className="absolute bottom-0" style={{ zIndex: -1 }} />
+      <img src={bg2} loading="lazy" className="background absolute" />
 
       {/* AppBar with login and user selection */}
       <div position="static">
@@ -143,10 +149,10 @@ export default function App() {
       </div>
 
       {/* Main card for prompt and role selection */}
-      <Stack className="bg-zinc-100 z-1" direction={{ xs: 'column', sm: 'row' }} >
-        <Paper className="halfpage pt-5" elevation="3" >
+      <Stack className="bg-zinc-100" direction={{ xs: 'column', sm: 'row' }}
+      >
+        <Paper className="halfpage pt-5 z1" elevation="3">
           <Stack spacing={2} >
-
             <div className="flex">
               <div className="text-xl font-bold text-left flex-grow">Setup yoru agent bot</div>
               <HelpIcon onClick={() => {
