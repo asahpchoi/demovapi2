@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {
-  AppBar,
+
   Button,
-  Checkbox,
+
   Fab,
   MenuItem,
   Modal,
@@ -11,18 +11,19 @@ import {
   TextField,
   Toolbar,
   Typography,
-  CircularProgress
+  CircularProgress,
+  Radio, RadioGroup, FormControlLabel
 } from "@mui/material";
 import {
-  AlignHorizontalLeft,
+
   Call as CallIcon,
-  Textsms as TextsmsIcon
+
 } from '@mui/icons-material';
 import { call, setCallback, convertBase64 } from "./libs/util.js";
 import SettingsIcon from '@mui/icons-material/Settings';
 import { callLLM, checkSentiment } from "./libs/llm.mjs";
 import { updateData, getData, getUsers } from "./libs/state.mjs";
-import { products } from "./libs/products.js";
+
 import "./App.css";
 
 import { CallUI } from "./ui/CallUI.js";
@@ -38,7 +39,8 @@ import { Login } from "./ui/Login.js";
 import bg2 from "./images/bg2.svg"
 import logo from "./images/logo.svg";
 import { ShowQR } from "./ui/ShowQR.js";
-import {showInstruction} from "./ui/showInstruction.js";
+import { ShowInstructions } from "./ui/ShowInstructions.js";
+import HelpIcon from '@mui/icons-material/Help';
 
 export default function App() {
   /// State variables for managing various application states
@@ -46,7 +48,7 @@ export default function App() {
 
   const [prompt, setPrompt] = useState(null);
   const [isCalling, setIsCalling] = useState(false);
-  const [isTexting, setIsTexting] = useState(false);
+
   const [isSetting, setIsSetting] = useState(false);
   const [userPrompt, setUserPrompt] = useState("");
   const [answer, setAnswer] = useState("");
@@ -62,7 +64,7 @@ export default function App() {
   const [uploadMode, setUploadMode] = useState(false);
   const [displayMode, setDisplayMode] = useState("info");
   const [rag, setRAG] = useState("");
-
+  const [model, setModel] = useState("azure");
   // useEffect hook to initialize data on component mount
   useEffect(() => {
     async function init() {
@@ -142,9 +144,15 @@ export default function App() {
 
       {/* Main card for prompt and role selection */}
       <Stack className="bg-zinc-100 z-1" direction={{ xs: 'column', sm: 'row' }} >
-        <Paper className="halfpage " elevation="3" >
-          <Stack spacing={2}  >
-            <div className="text-xl font-bold   text-left">Setup your agent bot</div>
+        <Paper className="halfpage pt-5" elevation="3" >
+          <Stack spacing={2} >
+
+            <div className="flex">
+              <div className="text-xl font-bold text-left flex-grow">Setup yoru agent bot</div>
+              <HelpIcon onClick={() => {
+                setDisplayMode("info")
+              }}> </HelpIcon>
+            </div>
             <TextField
               multiline
               rows="6"
@@ -156,6 +164,19 @@ export default function App() {
                 updateData(sessionId, name, e.target.value, image);
               }}
             />
+
+            <RadioGroup
+              row
+              defaultValue="azure"
+              onChange={(e) => {
+                setModel(e.target.value);
+                console.log({ model })
+              }}
+            >
+              <FormControlLabel value="azure" control={<Radio />} label="gpt-4o" />
+              <FormControlLabel value="minimax" control={<Radio />} label="minimax" />
+              <FormControlLabel value="groq" control={<Radio />} label="llama3" />
+            </RadioGroup>
           </Stack>
           <input type="file" id="imageCapture" accept="image/*" capture="environment" onChange={async (evt) => {
             const file = evt.target.files[0];
@@ -184,12 +205,10 @@ export default function App() {
         </Paper>
         {displayMode == "test" && <Paper className="halfpage" elevation="3">
 
-          <TextUI args={{ setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, setImage, history, setHistory, setImage, answer, rag }} />
-          <Button onClick={() => {
-            setDisplayMode("info")
-          }} className="corner">Show prompt intructions</Button>
+          <TextUI args={{ setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, setImage, history, setHistory, setImage, answer, rag, model }} />
+
         </Paper>}
-        {displayMode == "info" && showInstruction()}
+        {displayMode == "info" && <ShowInstructions setDisplayMode={setDisplayMode} />}
       </Stack>
 
       {/* Modal for calling interaction */}

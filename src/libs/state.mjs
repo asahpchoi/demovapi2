@@ -1,5 +1,3 @@
-
-import { ConnectingAirportsOutlined } from '@mui/icons-material'
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = 'https://ymfbypjbsgujebgrezpu.supabase.co'
@@ -8,7 +6,6 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 
 
 export const getID = async () => {
- 
   const { data, error } = await supabase
     .from('session')
     .insert({})
@@ -31,6 +28,15 @@ export const getData = async (id) => {
   return data;
 }
 
+export const getSettings = async (key) => {
+  const { data, error } = await supabase
+    .from('content')
+    .select()
+    .eq('key', key);
+
+  return (await data)[0].value;
+}
+
 export const updateData = async (id, username, systemPrompt, photo) => {
   const { data, error } = await supabase
     .from('session')
@@ -47,15 +53,14 @@ export const removeData = async () => {
 
   data.forEach(async record => {
     const id = record.id;
-     
+
     const { error2 } = await supabase
       .from('session')
       .delete()
-      .match({id})
+      .match({ id })
   })
 
 
 
 }
 
- 
