@@ -24,22 +24,24 @@ import { callLLM, checkSentiment } from "./libs/llm.mjs";
 import { updateData, getData, getUsers } from "./libs/state.mjs";
 import { products } from "./libs/products.js";
 import "./App.css";
-import QRCode from "react-qr-code";
+
 import { CallUI } from "./ui/CallUI.js";
 import { TextUI } from "./ui/TextUI.js";
 import { SettingUI } from "./ui/SettingUI.js";
 import Paper from '@mui/material/Paper';
-import { instructions } from "./libs/instruction.js";
+
 import { RagSection } from "./ui/RagSection.js";
 
 import { PromptTemplate } from "./ui/PromptTemplate.js";
 import { Login } from "./ui/Login.js";
-import Markdown from "react-markdown";
+
 import bg2 from "./images/bg2.svg"
 import logo from "./images/logo.svg";
+import { ShowQR } from "./ui/ShowQR.js";
+import {showInstruction} from "./ui/showInstruction.js";
 
 export default function App() {
-  // State variables for managing various application states
+  /// State variables for managing various application states
   const [loading, setLoading] = useState(true);
 
   const [prompt, setPrompt] = useState(null);
@@ -112,7 +114,7 @@ export default function App() {
 
   return (
     <div className="App" style={{ "background-image": { bg2 } }}>
-      <img src={bg2} loading="lazy" className="absolute bottom-0 -z-0" />
+      <img src={bg2} loading="lazy" className="absolute bottom-0" style={{ zIndex: -1 }} />
 
       {/* AppBar with login and user selection */}
       <div position="static">
@@ -139,9 +141,9 @@ export default function App() {
       </div>
 
       {/* Main card for prompt and role selection */}
-      <Stack className="bg-zinc-100 z-1" direction={{ xs: 'column', sm: 'row' }}>
-        <Paper className="halfpage " elevation="3">
-          <Stack spacing={2} className="bg-white" >
+      <Stack className="bg-zinc-100 z-1" direction={{ xs: 'column', sm: 'row' }} >
+        <Paper className="halfpage " elevation="3" >
+          <Stack spacing={2}  >
             <div className="text-xl font-bold   text-left">Setup your agent bot</div>
             <TextField
               multiline
@@ -163,8 +165,6 @@ export default function App() {
           }} />
           <Button onClick={async () => {
             setDisplayMode("QR");
-
-
           }}>Upload from your mobile</Button>
           <Stack direction="row">
             <RagSection setRAG={setRAG}></RagSection>
@@ -189,42 +189,18 @@ export default function App() {
             setDisplayMode("info")
           }} className="corner">Show prompt intructions</Button>
         </Paper>}
-        {displayMode == "info" && <Paper className="halfpage" elevation="3">
-
-
-          <Markdown className="markdown">
-            {instructions}
-          </Markdown>
-          <Button onClick={() => {
-            setDisplayMode("test")
-          }}
-
-            className="corner">Test the prompt</Button>
-        </Paper>}
+        {displayMode == "info" && showInstruction()}
       </Stack>
 
       {/* Modal for calling interaction */}
       <Modal open={isCalling}>
         <CallUI args={{ prompt, transcripts, currentMessage, sentiment, setIsCalling, rag }} />
       </Modal>
-      <Modal open={displayMode == "QR"}>
-        <Stack className="overlay">
-          <div style={{ height: "auto", margin: "0 auto", maxWidth: "50vh", width: "100%" }}>
-            <h3>You can use your mobile to scan the QR code and upload an image</h3>
-            <QRCode
-              size={256}
-              style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-              value={`${window.location.href}&upload=1`}
-              viewBox={`0 0 256 256`}
-            />
 
-            <Button onClick={async () => {
-              setDisplayMode("info");
-              document.location.reload();
-            }}>Close</Button>
-          </div>
-        </Stack>
+      <Modal open={displayMode == "QR"}>
+        <ShowQR />
       </Modal>
+
       {uploadMode && <Modal open={true}>
         <Stack className="overlay"><Button onClick={() => {
           document.getElementById("imageCapture").click();

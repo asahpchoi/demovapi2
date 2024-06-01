@@ -17,7 +17,7 @@ export const Login = ({ args }) => {
     return <Stack className="overlay flex justify-center" >
         <img alt="BG" loading="lazy" src={bg} className="absolute z-0 bottom-0" />
         <div className="absolute top-0 left-0 flex align-middle   ">
-            <img src={logo} className="w-40" />
+            <img src={logo} className="w-40 ml-7" />
             <h2 className="p-10 font-bold">FWD Gen AI build your bot</h2>
         </div>
         <div className="flex flex-col text-center">
