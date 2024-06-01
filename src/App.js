@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
-
   Button,
-
-  Fab,
   MenuItem,
   Modal,
   Select,
@@ -14,28 +11,16 @@ import {
   CircularProgress,
   Radio, RadioGroup, FormControlLabel
 } from "@mui/material";
-import {
-
-  Call as CallIcon,
-
-} from '@mui/icons-material';
 import { call, setCallback, convertBase64 } from "./libs/util.js";
-import SettingsIcon from '@mui/icons-material/Settings';
 import { callLLM, checkSentiment } from "./libs/llm.mjs";
-import { updateData, getData, getUsers } from "./libs/state.mjs";
-
+import { updateData, getUser, getUsers } from "./libs/state.mjs";
 import "./App.css";
-
 import { CallUI } from "./ui/CallUI.js";
 import { TextUI } from "./ui/TextUI.js";
 import { SettingUI } from "./ui/SettingUI.js";
 import Paper from '@mui/material/Paper';
-
 import { RagSection } from "./ui/RagSection.js";
-
-import { PromptTemplate } from "./ui/PromptTemplate.js";
 import { Login } from "./ui/Login.js";
-
 import bg2 from "./images/bg2.svg"
 import logo from "./images/logo.svg";
 import { ShowQR } from "./ui/ShowQR.js";
@@ -84,7 +69,8 @@ export default function App() {
 
 
       if (sid) {
-        const data = await getData(sid);
+        const data = await getUser(sid);
+
         setName(data[0].username);
         setPrompt(data[0].systemPrompt);
         setImage(data[0].photo)

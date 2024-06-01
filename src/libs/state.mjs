@@ -13,18 +13,19 @@ export const getID = async () => {
   return data[0].id;
 }
 
-export const getUsers = async (id) => {
+export const getUsers = async () => {
   const { data, error } = await supabase
     .from('session')
     .select()
   return data;
 }
 
-export const getData = async (id) => {
+export const getUser = async (id) => {
   const { data, error } = await supabase
     .from('session')
     .select()
     .eq("id", id)
+  console.log({ data })
   return data;
 }
 
@@ -46,6 +47,13 @@ export const updateData = async (id, username, systemPrompt, photo) => {
   return data;
 }
 
+export const removeUser = async (id) => {
+  const { error2 } = await supabase
+    .from('session')
+    .delete()
+    .match({ id })
+}
+
 export const removeData = async () => {
   const { data, error } = await supabase
     .from('session')
@@ -53,11 +61,8 @@ export const removeData = async () => {
 
   data.forEach(async record => {
     const id = record.id;
+    await removeUser(id)
 
-    const { error2 } = await supabase
-      .from('session')
-      .delete()
-      .match({ id })
   })
 
 
