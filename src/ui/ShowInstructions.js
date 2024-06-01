@@ -12,7 +12,7 @@ export const ShowInstructions = (args) => {
     getSettings("instruction").then(data => {
         setInstruction(data)
     })
-    return <Paper className="halfpage pt-5" style={{ backgroundColor: '#FEF9F4' }} elevation="3">
+    return <Paper className="halfpage pt-5" style={{ backgroundColor: '#FEF9F4', zIndex: 1 }} elevation="3">
         <div className="flex">
             <div className="text-xl font-bold text-left flex-grow">Tips for for your instructions</div>
             <CloseIcon onClick={() => {

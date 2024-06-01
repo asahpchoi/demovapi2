@@ -11,8 +11,12 @@ import { LLMIcon } from "./LLMIcon"
 import PersonIcon from '@mui/icons-material/Person';
 
 export const TextUI = ({ args }) => {
-    const { setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, setImage, history, setHistory, answer, rag, setDisplayMode, model } = args
+    const { setUserPrompt, setAnswer, callLLM, 
+        prompt, userPrompt, image, setImage, 
+        history, setHistory, answer, rag, 
+        setDisplayMode, model, openImageCapture} = args
 
+        console.log({args})
     function buildMessages() {
     }
 
@@ -82,13 +86,13 @@ export const TextUI = ({ args }) => {
                     {history.map(h => {
                         const data = h.content[0].text
                         return <Stack direction="row" className="pt-2">
-                            {h.model ? <LLMIcon name={h.model} /> : <PersonIcon className="h-10 w-10" />}
-                            <Markdown className="pl-2">{data}</Markdown>
+                            {h.model ? <LLMIcon name={h.model} /> : <LLMIcon name="user" />}
+                            <Markdown className="pl-2 pt-2">{data}</Markdown>
                         </Stack>
                     })}
                     {answer && <Stack direction="row" className="pt-2">
                         <LLMIcon name={model} ></LLMIcon>
-                        <Markdown className="pl-2">{answer}</Markdown>
+                        <Markdown className="pl-2 pt-2">{answer}</Markdown>
                     </Stack>}
                 </Stack>
             </div>
@@ -111,6 +115,8 @@ export const TextUI = ({ args }) => {
                 }}
             />
             <Button onClick={handleSubmit}>Ask</Button>
+            <Button onClick={openImageCapture}>Upload</Button>
+            <Button onClick={()=>{setDisplayMode("QR");}}>QR</Button>
 
         </Stack>
 

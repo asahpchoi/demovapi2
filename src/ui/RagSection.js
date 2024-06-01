@@ -13,6 +13,7 @@ import { ragdata } from '../libs/ragdata';
 
 export const RagSection = (args) => {
     const [files, setFiles] = useState(ragdata);
+    
 
     return <div style={{ width: "100%" }}><h4>Select files for RAG</h4>
         <Stack direction="row" spacing={2} style={{ width: "100%", padding: "1em" }}>
@@ -31,6 +32,7 @@ export const RagSection = (args) => {
                     </Stack>
                     )}
                 </Stack>
+                <Button onClick={()=>{args.setDisplayMode("info")}}>Close</Button>
             </Paper >
             <Paper style={{ width: "100%" }}>
                 <Stack spacing={2}>

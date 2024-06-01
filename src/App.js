@@ -100,6 +100,10 @@ export default function App() {
       }
     }
   }
+
+  function openImageCapture() {
+    document.getElementById("imageCapture").click();
+  }
   setCallback(callback)
   // Render loading spinner if data is still being fetched
   if (loading) {
@@ -199,23 +203,34 @@ export default function App() {
               <div className="grow"></div>
             </div>
           </Stack>
-          <input type="file" id="imageCapture" accept="image/*" capture="environment" onChange={async (evt) => {
-            const file = evt.target.files[0];
-            const base64 = await convertBase64(file);
-            setImage(base64);
-            updateData(sessionId, name, prompt, base64);
-          }} />
-          <Button onClick={async () => {
-            setDisplayMode("QR");
-          }}>Upload from your mobile</Button>
-          <Stack direction="row">
-            <RagSection setRAG={setRAG}></RagSection>
-          </Stack>
+          <input type="file" id="imageCapture" accept="image/*" capture="environment"
+            className="hidden"
+            onChange={async (evt) => {
+              const file = evt.target.files[0];
+              const base64 = await convertBase64(file);
+              setImage(base64);
+              updateData(sessionId, name, prompt, base64);
+            }} />
+          <Button onClick={() => {
+            setDisplayMode("rag")
+          }}>RAG</Button>
+
+
 
         </Paper>
+        {displayMode == "rag" && <Modal open={true}>
+          <RagSection setRAG={setRAG} setDisplayMode={setDisplayMode}></RagSection>
+        </Modal>
+
+        }
         {displayMode == "test" && <Paper className="halfpage" elevation="3">
 
-          <TextUI args={{ setUserPrompt, setAnswer, callLLM, prompt, userPrompt, image, setImage, history, setHistory, setImage, answer, rag, model }} />
+          <TextUI args={{
+            setUserPrompt, setAnswer, callLLM, prompt,
+            userPrompt, image, setImage, history,
+            setHistory, setImage, answer, rag,
+            model, setDisplayMode, openImageCapture
+          }} />
 
         </Paper>}
         {displayMode == "info" && <ShowInstructions setDisplayMode={setDisplayMode} />}
