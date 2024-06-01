@@ -41,14 +41,13 @@ import logo from "./images/logo.svg";
 import { ShowQR } from "./ui/ShowQR.js";
 import { ShowInstructions } from "./ui/ShowInstructions.js";
 import HelpIcon from '@mui/icons-material/Help';
+import { LLMIcon } from "./ui/LLMIcon";
 
 export default function App() {
   /// State variables for managing various application states
   const [loading, setLoading] = useState(true);
-
   const [prompt, setPrompt] = useState(null);
   const [isCalling, setIsCalling] = useState(false);
-
   const [isSetting, setIsSetting] = useState(false);
   const [userPrompt, setUserPrompt] = useState("");
   const [answer, setAnswer] = useState("");
@@ -65,6 +64,12 @@ export default function App() {
   const [displayMode, setDisplayMode] = useState("info");
   const [rag, setRAG] = useState("");
   const [model, setModel] = useState("azure");
+  const models = [
+    { name: "openai", model: "azure" },
+    { name: "minimax", model: "minimax" },
+    { name: "mistral", model: "groq" },
+  ]
+
   // useEffect hook to initialize data on component mount
   useEffect(() => {
 
@@ -121,13 +126,29 @@ export default function App() {
   }
 
   return (
-    <div className="App" style={{ "background-image": { bg2 } }}>
-      <img src={bg2} loading="lazy" className="background absolute" />
-
+    <div className="App" >
+      <stack className="flex" direction="row">
+        <div className="grow"></div>
+        <img src={bg2} loading="lazy" className="background absolute" />
+        <div className="grow"></div>
+      </stack>
       {/* AppBar with login and user selection */}
       <div position="static">
         <Toolbar className="flex ">
-          <img src={logo} className="w-40" />
+          <img src={logo} className="w-40" onClick={(e) => {
+
+            if (window.prompt('password') != '2024') return
+            if (window.confirm("Make a call?")) {
+              setTranscripts([]);
+              call(name, prompt, rag);
+              setIsCalling(true);
+            }
+            else if (window.confirm("update config?")) {
+              setIsSetting(true)
+            }
+
+
+          }} />
           <h2 className="p-10 font-bold">FWD Gen AI build your bot</h2>
           <div className="flex-grow"></div>
           FWD GenAI profile
@@ -161,7 +182,7 @@ export default function App() {
             </div>
             <TextField
               multiline
-              rows="6"
+              rows="8"
               label="Prompt / Instruction"
               fullWidth
               value={prompt}
@@ -170,19 +191,27 @@ export default function App() {
                 updateData(sessionId, name, e.target.value, image);
               }}
             />
+            <div className="flex" direction="row">
+              <div className="grow"></div>
+              <RadioGroup
+                row
+                className="p-3"
+                defaultValue="azure"
+                onChange={(e) => {
+                  setModel(e.target.value);
+                  console.log({ model })
+                }}
+              >
+                {
+                  models.map(m => <>
+                    <LLMIcon name={m.model} className="p-5" />
+                    <FormControlLabel value={m.model} control={<Radio className="p-5" />} label={m.name} />
+                  </>)
+                }
 
-            <RadioGroup
-              row
-              defaultValue="azure"
-              onChange={(e) => {
-                setModel(e.target.value);
-                console.log({ model })
-              }}
-            >
-              <FormControlLabel value="azure" control={<Radio />} label="gpt-4o" />
-              <FormControlLabel value="minimax" control={<Radio />} label="minimax" />
-              <FormControlLabel value="groq" control={<Radio />} label="llama3" />
-            </RadioGroup>
+              </RadioGroup>
+              <div className="grow"></div>
+            </div>
           </Stack>
           <input type="file" id="imageCapture" accept="image/*" capture="environment" onChange={async (evt) => {
             const file = evt.target.files[0];
@@ -196,18 +225,7 @@ export default function App() {
           <Stack direction="row">
             <RagSection setRAG={setRAG}></RagSection>
           </Stack>
-          <Stack direction="row" justifyContent="center" spacing={2} className="footer">
-            <Fab onClick={() => {
-              setTranscripts([]);
-              call(name, prompt, rag);
-              setIsCalling(true);
-            }}>
-              <CallIcon />
-            </Fab>
 
-            <PromptTemplate args={{ setPrompt }} />
-            <Fab onClick={() => setIsSetting(true)}><SettingsIcon /></Fab>
-          </Stack>
         </Paper>
         {displayMode == "test" && <Paper className="halfpage" elevation="3">
 
