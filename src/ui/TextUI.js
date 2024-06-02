@@ -79,9 +79,8 @@ export const TextUI = ({ args }) => {
     }
 
     return <Stack className="halfpage">
-
         <Stack className="z1 flex mb-5" direction="row">
-            <div id="chatbox" style={{ width: image ? '70%' : '100%', height: '65vh', overflow: 'auto', textAlign: "left" }}>
+            <div id="chatbox" style={{ width: image ? '70%' : '100%', height: '60vh', overflow: 'auto', textAlign: "left" }}>
                 <Stack className="p-2">
                     {history.map(h => {
                         const data = h.content[0].text
@@ -101,7 +100,7 @@ export const TextUI = ({ args }) => {
             </div>}
 
         </Stack>
-        <Stack direction="row">
+        <Stack direction="row" className="p-3">
             <TextField
                 label="Ask a question"
                 fullWidth

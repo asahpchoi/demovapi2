@@ -116,12 +116,8 @@ export default function App() {
   }
 
   return (
-    <div className="App" >
-      <stack className="flex" direction="row">
-        <div className="grow"></div>
-        <img src={bg2} loading="lazy" className="background absolute" />
-        <div className="grow"></div>
-      </stack>
+    <div className="App">
+
       {/* AppBar with login and user selection */}
       <div position="static">
         <Toolbar className="flex ">
@@ -160,7 +156,13 @@ export default function App() {
       </div>
 
       {/* Main card for prompt and role selection */}
-      <Stack className="bg-zinc-100" direction={{ xs: 'column', sm: 'row' }}
+      <Stack className="bg" direction={{ xs: 'column', sm: 'row' }}
+        style={{
+          backgroundImage: `url(${bg2}`,
+          width: `100vw`,
+          height: '85vh',
+        }}
+
       >
         <Paper className="halfpage pt-5 z1" elevation="3">
           <Stack spacing={2} >
@@ -181,6 +183,9 @@ export default function App() {
                 updateData(sessionId, name, e.target.value, image);
               }}
             />
+            <Button onClick={()=>{
+              setDisplayMode("test")
+            }}>Testing the bot</Button>
             <div className="flex" direction="row">
               <div className="grow"></div>
               <RadioGroup
