@@ -167,7 +167,7 @@ export default function App() {
         <Paper className="halfpage pt-5 z1" elevation="3">
           <Stack spacing={2} >
             <div className="flex">
-              <div className="text-xl font-bold text-left flex-grow">Setup yoru agent bot</div>
+              <div className="text-xl font-bold text-left flex-grow">Setup your agent bot</div>
               <HelpIcon onClick={() => {
                 setDisplayMode("info")
               }}> </HelpIcon>
