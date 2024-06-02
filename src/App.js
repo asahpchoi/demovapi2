@@ -62,6 +62,7 @@ export default function App() {
 
     async function init() {
       if (false) {
+        console.log("ci",process.env.CI)
         while (window.prompt('Enter Password') != "fwdstrategy2024") {
 
         }
@@ -188,8 +189,8 @@ export default function App() {
                 <InputAdornment position="end">
                   <Button
                     aria-label=""
-                    onClick={()=>{setDisplayMode("test")}}
-                    onMouseDown={()=>{setDisplayMode("test")}}
+                    onClick={() => { setDisplayMode("test"); window.scrollTo(10000); }}
+                    onMouseDown={() => { setDisplayMode("test"); window.scrollTo(10000);}}
                     edge="end"
                   >
                     Test the bot
@@ -197,7 +198,7 @@ export default function App() {
                 </InputAdornment>
               }
             />
- 
+
             <div className="flex" direction="row">
               <div className="grow"></div>
               <RadioGroup
