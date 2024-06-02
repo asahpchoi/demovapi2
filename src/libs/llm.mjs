@@ -64,7 +64,7 @@ export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, r
             },
             ]);
 
- 
+
     if (model == "azure" || !model)
         azureLLM(messages, cb, useTools);
 
@@ -103,22 +103,22 @@ const azureLLM = async (messages, cb, useTools) => {
         const choice = reply.choices[0];
         if (choice.finishReason === 'tool_calls') {
             const tool = choice.message.toolCalls[0];
-            const requestedToolCalls = func[tool.function.name](tool.function.arguments, tool.id);
+            const requestedToolCalls = await func[tool.function.name](tool.function.arguments, tool.id);
             const replyMessage = reply.choices[0].message;
 
-          
+
             const toolCallResolutionMessages = [
                 ...messages,
                 replyMessage,
                 requestedToolCalls,
-              ];
-              
-         console.log({toolCallResolutionMessages})
+            ];
+
+            console.log({ toolCallResolutionMessages })
             const result = await client.getChatCompletions(deployment, toolCallResolutionMessages);
-            try{
-            cb(result.choices[0].message.content, null)
+            try {
+                cb(result.choices[0].message.content, null)
             }
-            catch(e) {
+            catch (e) {
 
             }
         }
@@ -152,7 +152,7 @@ const minimaxLLM = async (systemPrompt, userPrompt, cb) => {
         "temperature": 0.1,
         "top_p": 0.9
     }
- 
+
 
     const reply = axios.post(url, data, { headers });
 
@@ -173,7 +173,7 @@ const mistralLLM = async (messages, cb) => {
         messages: messages,
     });
 
- 
+
     for await (const chunk of chatStreamResponse) {
         if (chunk.choices[0].delta.content !== undefined) {
             const streamText = chunk.choices[0].delta.content;

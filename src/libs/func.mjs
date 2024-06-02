@@ -1,5 +1,5 @@
- 
-//import {sendEmail} from "./email.mjs";
+
+import { sendEmail } from "./email.mjs";
 
 //sendEmail("asa.choi@gmail.com", "Testing", "Hello Wolrd")
 
@@ -7,13 +7,20 @@ export const func = {
     send_email: async (args, id) => {
         const params = JSON.parse(args)
         try {
-            //sendEmail(params.to, params.subject, params.body);
-            return "Email sent"
+            await sendEmail(params.to, params.subject, params.body);
+            return {
+                role: "tool",
+                content: `Email sent to ${params.to}`,
+                toolCallId: id,
+            }
         }
         catch (e) {
-            return "Email cant sent"
+            return {
+                role: "tool",
+                content: `Email cant be sent`,
+                toolCallId: id,
+            }
         }
-        
     }
 }
 

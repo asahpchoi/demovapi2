@@ -1,24 +1,9 @@
-import nodemailer from 'nodemailer';
-
-
-const mailOption = {
-    service: "hotmail",
-    auth: {
-        user: "gpthktest@outlook.com",
-        pass: "hpchoi77hpchoi77"
-    }
-}
-
 export const sendEmail = async (to, subject, body) => {
-    const transporter = nodemailer.createTransport(mailOption);
+    console.log('sendmail', { to, subject, body })
+    try {
+        await fetch(`https://maize-persistent-license.glitch.me/?to=${to}&subject=${subject}&body=${body}`);
+    } catch (e) {
 
-
-    const options = {
-        from: 'gpthktest@outlook.com',
-        to: to,
-        subject: subject,
-        html: body,
-    };
-
-    await transporter.sendMail(options);
+    }
+    return "email sent"
 }
