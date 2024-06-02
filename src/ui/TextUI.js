@@ -3,6 +3,7 @@ import {
     TextField,
     Button,
     Paper,
+    Checkbox
 } from "@mui/material";
 import { useState } from "react";
 import Markdown from 'react-markdown';
@@ -11,12 +12,14 @@ import { LLMIcon } from "./LLMIcon"
 import PersonIcon from '@mui/icons-material/Person';
 
 export const TextUI = ({ args }) => {
-    const { setUserPrompt, setAnswer, callLLM, 
-        prompt, userPrompt, image, setImage, 
-        history, setHistory, answer, rag, 
-        setDisplayMode, model, openImageCapture} = args
+    const { setUserPrompt, setAnswer, callLLM,
+        prompt, userPrompt, image, setImage,
+        history, setHistory, answer, rag,
+        setDisplayMode, model, openImageCapture } = args
 
-        console.log({args})
+    const [useTool, setUseTool] = useState(false);
+
+    console.log({ args })
     function buildMessages() {
     }
 
@@ -63,7 +66,7 @@ export const TextUI = ({ args }) => {
                 const chatbox = document.getElementById("chatbox");
                 chatbox.scrollTop = 10000;
 
-            }, history, rag, model);
+            }, history, rag, model, useTool);
         const newHistory = history;
     }
 
@@ -115,8 +118,10 @@ export const TextUI = ({ args }) => {
             />
             <Button onClick={handleSubmit}>Ask</Button>
             <Button onClick={openImageCapture}>Upload</Button>
-            <Button onClick={()=>{setDisplayMode("QR");}}>QR</Button>
-
+            <Button onClick={() => { setDisplayMode("QR"); }}>QR</Button>
+            <Checkbox onClick={() => {
+                setUseTool(!useTool);
+            }}></Checkbox>
         </Stack>
 
     </Stack>

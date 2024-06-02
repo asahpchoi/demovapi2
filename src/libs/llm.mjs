@@ -3,7 +3,7 @@ import { OpenAIClient, AzureKeyCredential } from "@azure/openai";
 import { Groq } from "groq-sdk";
 import axios from "axios";
 import MistralClient from '@mistralai/mistralai';
-import { func } from "./func.mjs";
+import { func, tools } from "./func.mjs";
 const endpoint = "https://ik-oai-eastus-2.openai.azure.com/";
 const apiKey = "b3e819600fbe4981be34ef2aa79943e2"
 const deployment = "gpt-4o";
@@ -33,7 +33,7 @@ export const checkSentiment = async (content) => {
     return reply.choices[0].message.content;
 }
 
-export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, rag, model, tools, stream) => {
+export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, rag, model, useTools) => {
     //The deployment name for your completions API model. The instruct model is the only new model that supports the legacy API.
     const messages = [
         {
@@ -64,10 +64,9 @@ export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, r
             },
             ]);
 
-
-
+ 
     if (model == "azure" || !model)
-        azureLLM(messages, cb, tools);
+        azureLLM(messages, cb, useTools);
 
     if (model == "groq")
         groqLLM(messages, cb);
@@ -78,10 +77,10 @@ export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, r
 }
 
 
-const azureLLM = async (messages, cb, tools) => {
+const azureLLM = async (messages, cb, useTools) => {
     const client = new OpenAIClient(endpoint, new AzureKeyCredential(apiKey));
 
-    if (!tools) {
+    if (!useTools) {
         const events = await client.streamChatCompletions(deployment,
             messages,
             { stream: true }
@@ -149,8 +148,7 @@ const minimaxLLM = async (systemPrompt, userPrompt, cb) => {
         "temperature": 0.1,
         "top_p": 0.9
     }
-
-    console.log("Calling minimax", data)
+ 
 
     const reply = axios.post(url, data, { headers });
 
@@ -171,7 +169,7 @@ const mistralLLM = async (messages, cb) => {
         messages: messages,
     });
 
-    console.log('Chat Stream:');
+ 
     for await (const chunk of chatStreamResponse) {
         if (chunk.choices[0].delta.content !== undefined) {
             const streamText = chunk.choices[0].delta.content;
