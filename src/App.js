@@ -62,7 +62,7 @@ export default function App() {
 
     async function init() {
       if (false) {
-        console.log("ci",process.env.CI)
+        console.log("ci", process.env.CI)
         while (window.prompt('Enter Password') != "fwdstrategy2024") {
 
         }
@@ -189,8 +189,8 @@ export default function App() {
                 <InputAdornment position="end">
                   <Button
                     aria-label=""
-                    onClick={() => { setDisplayMode("test"); window.scrollTo(10000); }}
-                    onMouseDown={() => { setDisplayMode("test"); window.scrollTo(10000);}}
+                    onClick={() => { setDisplayMode("test"); window.scrollTo(0, document.body.scrollHeight); }}
+                    onMouseDown={() => { setDisplayMode("test"); window.scrollTo(0, document.body.scrollHeight); }}
                     edge="end"
                   >
                     Test the bot
