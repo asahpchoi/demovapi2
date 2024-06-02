@@ -3,6 +3,7 @@ import { OpenAIClient, AzureKeyCredential } from "@azure/openai";
 import { Groq } from "groq-sdk";
 import axios from "axios";
 import MistralClient from '@mistralai/mistralai';
+import { func } from "./func.mjs";
 const endpoint = "https://ik-oai-eastus-2.openai.azure.com/";
 const apiKey = "b3e819600fbe4981be34ef2aa79943e2"
 const deployment = "gpt-4o";
@@ -32,7 +33,7 @@ export const checkSentiment = async (content) => {
     return reply.choices[0].message.content;
 }
 
-export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, rag, model) => {
+export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, rag, model, tools, stream) => {
     //The deployment name for your completions API model. The instruct model is the only new model that supports the legacy API.
     const messages = [
         {
@@ -66,7 +67,7 @@ export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, r
 
 
     if (model == "azure" || !model)
-        azureLLM(messages, cb);
+        azureLLM(messages, cb, tools);
 
     if (model == "groq")
         groqLLM(messages, cb);
@@ -77,17 +78,52 @@ export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, r
 }
 
 
-const azureLLM = async (messages, cb) => {
+const azureLLM = async (messages, cb, tools) => {
     const client = new OpenAIClient(endpoint, new AzureKeyCredential(apiKey));
-    const events = await client.streamChatCompletions(deployment, messages, { stream: true });
 
-    for await (const event of events) {
-        for (const choice of event.choices) {
-            cb(choice.delta?.content, choice.finishReason);
+    if (!tools) {
+        const events = await client.streamChatCompletions(deployment,
+            messages,
+            { stream: true }
+        );
+        for await (const event of events) {
+            for (const choice of event.choices) {
+                cb(choice.delta?.content, choice.finishReason);
+            }
+        }
+    }
+    else {
+        const reply = await client.getChatCompletions(
+            deployment,
+            messages,
+            {
+                tools,
+
+            }
+        )
+        const choice = reply.choices[0];
+        if (choice.finishReason === 'tool_calls') {
+            const tool = choice.message.toolCalls[0];
+            const requestedToolCalls = func[tool.function.name](tool.function.arguments, tool.id);
+            const replyMessage = reply.choices[0].message;
+
+         
+
+          
+            const toolCallResolutionMessages = [
+                ...messages,
+                replyMessage,
+                requestedToolCalls,
+              ];
+            const result = await client.getChatCompletions(deployment, toolCallResolutionMessages);
+            cb(result.choices[0].message.content, null)
+        
+        }
+        else {
+            cb(choice.message.content, null)
         }
     }
     return "OK"
-
 }
 const minimaxLLM = async (systemPrompt, userPrompt, cb) => {
     const groupID = '1743503684043542894';
