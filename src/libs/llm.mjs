@@ -106,17 +106,21 @@ const azureLLM = async (messages, cb, useTools) => {
             const requestedToolCalls = func[tool.function.name](tool.function.arguments, tool.id);
             const replyMessage = reply.choices[0].message;
 
-         
-
           
             const toolCallResolutionMessages = [
                 ...messages,
                 replyMessage,
                 requestedToolCalls,
               ];
+              
+         console.log({toolCallResolutionMessages})
             const result = await client.getChatCompletions(deployment, toolCallResolutionMessages);
+            try{
             cb(result.choices[0].message.content, null)
-        
+            }
+            catch(e) {
+
+            }
         }
         else {
             cb(choice.message.content, null)

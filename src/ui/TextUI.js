@@ -18,10 +18,7 @@ export const TextUI = ({ args }) => {
         setDisplayMode, model, openImageCapture } = args
 
     const [useTool, setUseTool] = useState(false);
-
-    console.log({ args })
-    function buildMessages() {
-    }
+ 
 
     async function handleSubmit() {
         var answerPart = '';
