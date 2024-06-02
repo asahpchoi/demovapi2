@@ -9,7 +9,8 @@ import {
   Toolbar,
   Typography,
   CircularProgress,
-  Radio, RadioGroup, FormControlLabel
+  Radio, RadioGroup, FormControlLabel,
+  FilledInput
 } from "@mui/material";
 import { call, setCallback, convertBase64 } from "./libs/util.js";
 import { callLLM, checkSentiment } from "./libs/llm.mjs";
@@ -27,6 +28,7 @@ import { ShowQR } from "./ui/ShowQR.js";
 import { ShowInstructions } from "./ui/ShowInstructions.js";
 import HelpIcon from '@mui/icons-material/Help';
 import { LLMIcon } from "./ui/LLMIcon";
+import InputAdornment from '@mui/material/InputAdornment';
 
 export default function App() {
   /// State variables for managing various application states
@@ -172,7 +174,7 @@ export default function App() {
                 setDisplayMode("info")
               }}> </HelpIcon>
             </div>
-            <TextField
+            <FilledInput
               multiline
               rows="8"
               label="Prompt / Instruction"
@@ -182,10 +184,20 @@ export default function App() {
                 setPrompt(e.target.value);
                 updateData(sessionId, name, e.target.value, image);
               }}
+              endAdornment={
+                <InputAdornment position="end">
+                  <Button
+                    aria-label=""
+                    onClick={()=>{setDisplayMode("test")}}
+                    onMouseDown={()=>{setDisplayMode("test")}}
+                    edge="end"
+                  >
+                    Test the bot
+                  </Button>
+                </InputAdornment>
+              }
             />
-            <Button onClick={()=>{
-              setDisplayMode("test")
-            }}>Testing the bot</Button>
+ 
             <div className="flex" direction="row">
               <div className="grow"></div>
               <RadioGroup
