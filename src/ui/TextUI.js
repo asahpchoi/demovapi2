@@ -10,6 +10,7 @@ import Markdown from 'react-markdown';
 import { ImageControl } from "./ImageControl";
 import { LLMIcon } from "./LLMIcon"
 import PersonIcon from '@mui/icons-material/Person';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export const TextUI = ({ args }) => {
     const { setUserPrompt, setAnswer, callLLM,
@@ -18,6 +19,7 @@ export const TextUI = ({ args }) => {
         setDisplayMode, model, openImageCapture } = args
 
     const [useTool, setUseTool] = useState(false);
+    const [isLoading, setIsLoading] = useState(false)
  
 
     async function handleSubmit() {
@@ -34,12 +36,14 @@ export const TextUI = ({ args }) => {
                     ]
             })
         setUserPrompt("");
-        setAnswer(".....")
+        setAnswer("")
+        setIsLoading(true);
+        
 
         const answer = await callLLM(prompt, userPrompt, image,
             (data, fin) => {
                 if (data) {
-
+                    setIsLoading(false)
                     answerPart += data;
                     setAnswer(answerPart)
                 }
@@ -93,6 +97,7 @@ export const TextUI = ({ args }) => {
                         <LLMIcon name={model} ></LLMIcon>
                         <Markdown className="pl-2 pt-2">{answer}</Markdown>
                     </Stack>}
+                    {isLoading && <CircularProgress/>}
                 </Stack>
             </div>
             {image && <div>

@@ -1,35 +1,19 @@
-import emailjs from "@emailjs/browser";
+ 
+//import {sendEmail} from "./email.mjs";
+
+//sendEmail("asa.choi@gmail.com", "Testing", "Hello Wolrd")
 
 export const func = {
-    send_email: (args, id) => {
+    send_email: async (args, id) => {
         const params = JSON.parse(args)
-        emailjs.init("BUjeSh0QyqvF5oqDQ");
-
-
-        var templateParams = {
-            to: params.to,
-            subject: params.subject,
-            body: params.body,
-        };
-
-        console.log({
-            templateParams
-        })
-
-        emailjs.send('service_xu22a3h', 'template_qksoc5s', templateParams).then(
-            (response) => {
-                console.log('SUCCESS!', response.status, response.text);
-            },
-            (error) => {
-                console.log('FAILED...', error);
-            },
-        );
-
-        return {
-            role: "tool",
-            content: `Email send to ${params['to']} with body: ${params['body']}`,
-            toolCallId: id,
+        try {
+            //sendEmail(params.to, params.subject, params.body);
+            return "Email sent"
         }
+        catch (e) {
+            return "Email cant sent"
+        }
+        
     }
 }
 
