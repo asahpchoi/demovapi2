@@ -24,11 +24,12 @@ import logo from "./images/logo.svg";
 import { ShowQR } from "./ui/ShowQR.js";
 import { ShowInstructions } from "./ui/ShowInstructions.js";
 import { LLMIcon } from "./ui/LLMIcon";
-import InputAdornment from '@mui/material/InputAdornment';
+
 import bg from "./images/background.svg"
 import { Result } from "./ui/Result.js";
 import CloseIcon from '@mui/icons-material/Close';
 import { Loading } from "./ui/Loading.js";
+import { Header } from "./ui/Header.js";
 
 export default function App() {
   /// State variables for managing various application states
@@ -58,6 +59,7 @@ export default function App() {
     notdonewell: `not donewell`,
     score: 78,
   });
+
 
 
   // useEffect hook to initialize data on component mount
@@ -118,47 +120,6 @@ export default function App() {
   // Render loading spinner if data is still being fetched
 
 
-  function ShowLLMs() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
-    const handleClick = (event) => {
-      setAnchorEl(anchorEl ? null : event.currentTarget);
-    };
-
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popper' : undefined;
-
-    return <div>
-      <Button onClick={handleClick}>
-        Change Model
-      </Button>
-      <Popper id={id} open={open} anchorEl={anchorEl}>
-        <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
-          <div className="flex" direction="row">
-            <div className="grow"></div>
-            <RadioGroup
-              row
-              className="p-1"
-              defaultValue={model}
-              onChange={(e) => {
-                setModel(e.target.value);
-
-              }}
-            >
-              {
-                models.map((m, i) => <span key={i}>
-                  <LLMIcon name={m.model} className="p-3" />
-                  <FormControlLabel value={m.model} control={<Radio className="p-5" />} label={m.name} />
-                </span>)
-              }
-
-            </RadioGroup>
-            <div className="grow"></div>
-          </div>
-        </Box>
-      </Popper>
-    </div>
-  }
 
   function logoAction() {
     if (window.prompt('password') != '2024') return
@@ -199,40 +160,12 @@ export default function App() {
         <div className="w-6/12 bg p-3"
           style={{ backgroundImage: `url(${bg}` }}
         >
-          <div className="flex h-15">
-            <img src={logo} className="w-30 " onClick={logoAction} />
-            <div className="p-5 decoration-solid">FWD Gen AI build your bot</div>
-            <div className="flex-grow"></div>
-            <div className="p-5 decoration-solid">FWD GenAI profile</div>
-            <Select
-              onChange={(event) => {
-                const id = event.target.value;
-                window.location.replace(`?sid=${id}`);
-              }}
-              value={sessionId}
-              className="m-1"
-            >
-              {userlist.map((user) => (
-                <MenuItem key={user.id} value={user.id}>
-                  {user.username}
-                </MenuItem>
-              ))}
-            </Select>
-          </div>
-          <MainPrompt setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
-            model={model} setModel={setModel} models={models}/>
+          <Header logoAction={logoAction} userlist={userlist} sessionId={sessionId} />
 
-          <input type="file" id="imageCapture" accept="image/*" capture="environment"
-            className="hidden"
-            onChange={async (evt) => {
-              const file = evt.target.files[0];
-              const base64 = await convertBase64(file);
-              setImage(base64);
-              updateData(sessionId, name, prompt, base64);
-            }} />
-          <Button onClick={() => {
-            setDisplayMode("rag")
-          }}>RAG</Button>
+          <MainPrompt setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
+            model={model} setModel={setModel} models={models} />
+
+ 
         </div>
         {displayMode == "test" && <div className="w-6/12 bg-fwd-100"  >
           <TextUI args={{
@@ -257,6 +190,14 @@ export default function App() {
       <ModalTemplate isOpen={displayMode == 'result'} component={<Result result={result} />} />
       <ModalTemplate isOpen={displayMode == 'rag'} component={<RagSection setRAG={setRAG} setDisplayMode={setDisplayMode} />} />
       {loading && <Loading />}
+      <input type="file" id="imageCapture" accept="image/*" capture="environment"
+            className="hidden"
+            onChange={async (evt) => {
+              const file = evt.target.files[0];
+              const base64 = await convertBase64(file);
+              setImage(base64);
+              updateData(sessionId, name, prompt, base64);
+            }} />
     </div >
   );
 }
