@@ -1,12 +1,8 @@
 import {
-    Fab,
+ 
     Stack,
 } from "@mui/material";
-import {
-    Stop as StopIcon,
-} from '@mui/icons-material';
-import { stopCall } from "../libs/util.js";
-import Markdown from 'react-markdown';
+ 
 export const CallUI = ({ args }) => {
     const { prompt, transcripts, currentMessage, sentiment, rag } = args;
 

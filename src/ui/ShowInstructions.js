@@ -1,7 +1,3 @@
-import {
-    Paper, Fab, Button, Stack
-} from "@mui/material";
-import Markdown from "react-markdown";
 import { getSettings } from "../libs/state.mjs";
 import { useState } from "react";
 import CloseIcon from '@mui/icons-material/Close';

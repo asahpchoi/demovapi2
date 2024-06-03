@@ -4,7 +4,6 @@ import {
     Button,
     TextField
 } from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
 import { removeUser, getSettings, getUsers, updateData, updateValue } from "../libs/state.mjs"
 import { useState, useEffect } from 'react';
 

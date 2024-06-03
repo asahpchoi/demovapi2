@@ -6,11 +6,8 @@ import {
     Checkbox
 } from "@mui/material";
 import { useState } from "react";
-
 import { ImageControl } from "./ImageControl";
 import { LLMIcon } from "./LLMIcon"
-import PersonIcon from '@mui/icons-material/Person';
-
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';

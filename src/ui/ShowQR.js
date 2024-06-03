@@ -1,18 +1,4 @@
 import QRCode from "react-qr-code";
-import {
-    AppBar,
-    Button,
-    Checkbox,
-    Fab,
-    MenuItem,
-    Modal,
-    Select,
-    Stack,
-    TextField,
-    Toolbar,
-    Typography,
-    CircularProgress
-} from "@mui/material";
 
 export const ShowQR = () => {
     return <div className="bg-fwd-100 p-5" >
