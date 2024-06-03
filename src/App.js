@@ -157,7 +157,7 @@ export default function App() {
       {/* Main card for prompt and role selection */}
       <Stack direction={{ xs: 'column', sm: 'row' }}  >
         {displayMode == "info" && <ShowInstructions setDisplayMode={setDisplayMode} />}
-        <div className="w-6/12 bg p-3"
+        <div className="md:w-1/2 w-full bg p-3"
           style={{ backgroundImage: `url(${bg}` }}
         >
           <Header logoAction={logoAction} userlist={userlist} sessionId={sessionId} />
@@ -167,7 +167,7 @@ export default function App() {
 
 
         </div>
-        {displayMode == "test" && <div className="w-6/12 bg-fwd-100"  >
+        {displayMode == "test" && <div className="bg-fwd-100"  >
           <TextUI args={{
             setUserPrompt, setAnswer, callLLM, prompt,
             userPrompt, image, setImage, history,
