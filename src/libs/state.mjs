@@ -38,11 +38,23 @@ export const getSettings = async (key) => {
   return (await data)[0].value;
 }
 
+
+
 export const updateData = async (id, username, systemPrompt, photo) => {
   const { data, error } = await supabase
     .from('session')
     .upsert({ id, username, systemPrompt, photo })
     .select()
+
+  return data;
+}
+
+export const updateValue = async (key, value) => {
+  const { data, error } = await supabase
+    .from('content')
+    .update({ key, value })
+    .select()
+    .eq('key', key);
 
   return data;
 }
@@ -64,8 +76,5 @@ export const removeData = async () => {
     await removeUser(id)
 
   })
-
-
-
 }
 

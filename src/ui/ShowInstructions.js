@@ -19,8 +19,11 @@ export const ShowInstructions = (args) => {
                 args.setDisplayMode("test")
             }}> </CloseIcon>
         </div>
-        <Markdown className="markdown mt-5">
-            {instruction}
-        </Markdown>
+       
+            <pre style={{textAlign: "left", overflow:"auto", textWrap:"wrap", margin: '2em'}}>
+                {instruction}
+            </pre>
+           
+         
     </Paper>
 }

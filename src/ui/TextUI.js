@@ -71,6 +71,7 @@ export const TextUI = ({ args }) => {
         setUserPrompt("");
         setAnswer("")
         setIsLoading(true);
+        
 
 
         const answer = await callLLM(prompt, userPrompt, image,
@@ -116,8 +117,9 @@ export const TextUI = ({ args }) => {
     }
 
     return <Stack className="halfpage">
-        <Stack className="z1 flex mb-5" direction="row">
-            <div id="chatbox" style={{ width: image ? '70%' : '100%', height: '50vh', overflow: 'auto', textAlign: "left" }}>
+        <Stack className="z1 flex mb-5" direction="row" justifyContent="space-between"  
+            alignItems="baseline">
+            <div id="chatbox" style={{ width: image ? '70%' : '100%', overflow: 'auto', textAlign: "left", height: '65vh' }}>
                 <Stack className="p-2">
                     {history.map(h => {
                         const data = h.content[0].text
@@ -136,9 +138,8 @@ export const TextUI = ({ args }) => {
             {image && <div>
                 <ImageControl image={image} setImage={setImage} />
             </div>}
-
         </Stack>
-        <Stack direction="row" className="p-3">
+        <Stack direction="row" className="p-3"  >
             <TextField
                 label="Ask a question"
                 fullWidth
@@ -151,9 +152,6 @@ export const TextUI = ({ args }) => {
                     }
                 }}
             />
-
-
-
             <SpeedDial
                 ariaLabel="SpeedDial basic example"
                 sx={{ position: 'absolute', bottom: 16, right: 16 }}
