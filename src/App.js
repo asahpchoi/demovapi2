@@ -163,8 +163,8 @@ export default function App() {
       </div>
 
       {/* Main card for prompt and role selection */}
-      <Stack direction={{ xs: 'column', sm: 'row' }}>
-        <Paper className="halfpage pt-5 bg " elevation="3"
+      <Stack direction={{ xs: 'column', sm: 'row' }}  >
+        <Paper className="halfpage bg" elevation="3"
           style={{ backgroundImage: `url(${bg}` }}
         >
           <Stack spacing={2} >
@@ -176,7 +176,7 @@ export default function App() {
             </div>
             <FilledInput
               multiline
-              rows="15"
+
               label="Prompt / Instruction"
               fullWidth
               value={prompt}
@@ -240,7 +240,7 @@ export default function App() {
         </Modal>
 
         }
-        {displayMode == "test" && <Paper className="halfpage" elevation="3">
+        {displayMode == "test" && <Paper className="halfpage bg-fwd-100" elevation="3">
 
           <TextUI args={{
             setUserPrompt, setAnswer, callLLM, prompt,
@@ -262,21 +262,22 @@ export default function App() {
         <ShowQR />
       </Modal>
 
-      {uploadMode && <Modal open={true}>
-        <Stack className="overlay"><Button onClick={() => {
-          document.getElementById("imageCapture").click();
-        }}>Take a photo</Button>
-          {image && <img style={{ height: "10vh", width: "10vw" }} src={image} />}
+      {
+        uploadMode && <Modal open={true}>
+          <Stack className="overlay"><Button onClick={() => {
+            document.getElementById("imageCapture").click();
+          }}>Take a photo</Button>
+            {image && <img style={{ height: "10vh", width: "10vw" }} src={image} />}
 
-          <Button onClick={() => { window.close() }}>Close</Button>
-        </Stack>
-      </Modal>
+            <Button onClick={() => { window.close() }}>Close</Button>
+          </Stack>
+        </Modal>
       }
 
       <Modal open={isSetting}>
         <SettingUI args={{ setIsSetting, setUserlist }} />
       </Modal>
       {!sessionId ? <Modal open={true}><Login /></Modal> : ""}
-    </div>
+    </div >
   );
 }
