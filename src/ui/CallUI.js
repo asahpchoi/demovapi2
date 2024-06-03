@@ -8,9 +8,9 @@ import {
 import { stopCall } from "../libs/util.js";
 import Markdown from 'react-markdown';
 export const CallUI = ({ args }) => {
-    const { prompt, transcripts, currentMessage, sentiment, setIsCalling, rag } = args;
+    const { prompt, transcripts, currentMessage, sentiment, rag } = args;
 
-    return <Stack className="overlay content"  >
+    return <div className="flex flex-col max-w-[726px] bg-fwd-100"  >
         <Stack style={{ height: "10vh", overflow: "scroll" }}>
             Role Prompt: {prompt}
         </Stack>
@@ -25,15 +25,7 @@ export const CallUI = ({ args }) => {
                 currentMessage
             }
         </Stack>
- 
-        <Stack direction="row" justifyContent="center" className="footer">
-            <Fab onClick={() => {
-                setIsCalling(false);
-                stopCall();
-            }}>
-                <StopIcon />
-            </Fab>
-        </Stack>
-    </Stack>
+
+    </div>
 
 }

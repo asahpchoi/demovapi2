@@ -40,8 +40,8 @@ export default function App() {
   /// State variables for managing various application states
   const [loading, setLoading] = useState(true);
   const [prompt, setPrompt] = useState(null);
-  const [isCalling, setIsCalling] = useState(false);
-  const [isSetting, setIsSetting] = useState(false);
+
+
   const [userPrompt, setUserPrompt] = useState("");
   const [answer, setAnswer] = useState("");
   const [sessionId, setSessionId] = useState(null);
@@ -185,7 +185,7 @@ export default function App() {
         <CloseIcon
           className="fixed top-0  right-0 m-5"
           onClick={() => {
-             setDisplayMode("test")
+            setDisplayMode("test")
           }}>
 
         </CloseIcon>
@@ -197,16 +197,9 @@ export default function App() {
 
   return (
     <div className="App">
-      {displayMode}
-
+ 
       {/* Main card for prompt and role selection */}
-      <Stack direction={{ xs: 'column', sm: 'row' }}  >
-
-        {displayMode == "rag" && <Modal open={true}>
-          <RagSection setRAG={setRAG} setDisplayMode={setDisplayMode}></RagSection>
-        </Modal>
-        }
-
+      <Stack direction={{ xs: 'column', sm: 'row' }}  > 
         {displayMode == "info" && <ShowInstructions setDisplayMode={setDisplayMode} />}
         <div className="halfpage bg"
           style={{ backgroundImage: `url(${bg}` }}
@@ -219,10 +212,10 @@ export default function App() {
               if (window.confirm("Make a call?")) {
                 setTranscripts([]);
                 call(name, prompt, rag);
-                setIsCalling(true);
+                setDisplayMode("call")
               }
               else if (window.confirm("update config?")) {
-                setIsSetting(true)
+                setDisplayMode("setting")
               }
 
 
@@ -299,7 +292,7 @@ export default function App() {
             setUserPrompt, setAnswer, callLLM, prompt,
             userPrompt, image, setImage, history,
             setHistory, setImage, answer, rag,
-            model, setDisplayMode, openImageCapture
+            model, setDisplayMode, openImageCapture, setResult
           }} />
 
         </div>}
@@ -319,12 +312,14 @@ export default function App() {
           </Stack>
         </Modal>
       }
-      <ModalTemplate isOpen={isCalling} component={<CallUI args={{ prompt, transcripts, currentMessage, sentiment, setIsCalling, rag }} />} />
-      <ModalTemplate isOpen={displayMode == "QR"} component={<ShowQR />} />
-      <ModalTemplate isOpen={isSetting} component={<SettingUI args={{ setIsSetting, setUserlist }} />} />
-      <ModalTemplate isOpen={!sessionId} component={<Login />} />
-      <ModalTemplate isOpen={displayMode == 'result'} component={<Result result={result} />} />
 
+      <ModalTemplate isOpen={!sessionId} component={<Login />} />
+      <ModalTemplate isOpen={displayMode == "call"} component={<CallUI args={{ prompt, transcripts, currentMessage, sentiment, rag }} />} />
+      <ModalTemplate isOpen={displayMode == "QR"} component={<ShowQR />} />
+      <ModalTemplate isOpen={displayMode == "setting"} component={<SettingUI args={{ setUserlist }} />} />
+
+      <ModalTemplate isOpen={displayMode == 'result'} component={<Result result={result} />} />
+      <ModalTemplate isOpen={displayMode == 'rag'} component={<RagSection setRAG={setRAG} setDisplayMode={setDisplayMode} />} />
 
 
     </div >

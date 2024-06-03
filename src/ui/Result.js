@@ -71,7 +71,22 @@ const ImprovementsSection = ({ result }) => (
     </section>
 );
 
-export function Result({result}) {
+export function Result({ result }) {
+    const [data, setData] = React.useState({})
+    React.useEffect(
+        () => {
+            try {
+                const temp = JSON.parse(result.replace('```json', ''))
+                //setData(JSON.parse(temp));
+
+                setData(temp)
+            }
+            catch (e) {
+
+            }
+
+        }, [result]
+    )
 
 
     return (
@@ -83,10 +98,10 @@ export function Result({result}) {
             <main className="mt-6 w-full max-md:max-w-full">
                 <div className="flex gap-5 max-md:flex-col max-md:gap-0 ">
                     <article className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full bg-fwd-100">
-                        <ScoreSection result={result} />
+                        <ScoreSection result={data} />
                     </article>
                     <aside className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full bg-fwd-100">
-                        <ImprovementsSection result={result} />
+                        <ImprovementsSection result={data} />
                     </aside>
                 </div>
             </main>

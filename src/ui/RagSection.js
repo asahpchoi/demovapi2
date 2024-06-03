@@ -115,22 +115,22 @@ export function RagSection(args) {
     );
 
     return (
-        <div className='overlay '>
-            <div className='w-8/12 m-24' >
-                <Grid container spacing={2} justifyContent="center" alignItems="center" >
-                    <Grid item xs={12}>Select documents </Grid>
-                    <Grid item xs={6}>Available documents</Grid>
-                    <Grid item xs={6}>Selected documents</Grid>
-                    <Grid item xs={6}>{customList(files.filter(f => !f.selected))}</Grid>
-                    <Grid item xs={6}>{customList(files.filter(f => f.selected))}</Grid>
-                    <Grid item xs={12}><Button onClick={() => {
-                        const RAGdata = files.filter(x => x.selected).map(x => x.content).join(" ");
-                        args.setRAG(RAGdata)
-                        args.setDisplayMode("test");
-                    }}>Done</Button></Grid>
-                </Grid>
-            </div>
+
+        <div className='w-8/12 m-24 bg-fwd-100 p-5' >
+            <Grid container spacing={2} justifyContent="center" alignItems="center" >
+                <Grid item xs={12}>Select documents </Grid>
+                <Grid item xs={6}>Available documents</Grid>
+                <Grid item xs={6}>Selected documents</Grid>
+                <Grid item xs={6}>{customList(files.filter(f => !f.selected))}</Grid>
+                <Grid item xs={6}>{customList(files.filter(f => f.selected))}</Grid>
+                <Grid item xs={12}><Button onClick={() => {
+                    const RAGdata = files.filter(x => x.selected).map(x => x.content).join(" ");
+                    args.setRAG(RAGdata)
+                    args.setDisplayMode("test");
+                }}>Done</Button></Grid>
+            </Grid>
         </div>
+
 
     );
 }

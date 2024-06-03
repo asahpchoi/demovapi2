@@ -17,7 +17,7 @@ export const checkSentiment = async (content) => {
         what is not doing good in the conversation as *notdonewell,
         what should be improved next time as *nextime, 
         and what should be improvements as *improvement
-        in 1 level JSON format
+        in *1 level JSON format
         Example:
             {
                 improvement: "Consider starting the conversation with a friendly greeting, such as ”Good morning/afternoon, thank you for taking the time to meet with me today. I’m excited to discuss your insurance needs.”",

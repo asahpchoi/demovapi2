@@ -20,7 +20,7 @@ export const ShowInstructions = (args) => {
             }}> </CloseIcon>
         </div>
 
-        <pre style={{ textAlign: "left", overflow: "auto", textWrap: "wrap", margin: '2em', height: '60vh'}}>
+        <pre style={{ textAlign: "left", overflow: "auto", textWrap: "wrap", margin: '2em', height: '80vh' }}>
             {instruction}
         </pre>
 
