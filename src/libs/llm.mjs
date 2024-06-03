@@ -10,13 +10,21 @@ const deployment = "gpt-4o";
 
 
 export const checkSentiment = async (content) => {
-    const systemPrompt = `you are a bot to analysis the conversation sentiment, and provide a feedback what is the customer feedback
-                         you can reply in markdown, with setimention option of Positive, Neutral, Positive, Sad, Angry
-                         example output: 
-                            ##Overall sentitement: *Positive*
-                            ##Summary: the conversation is about a product enquiry
-                            ##Suggestion: the conversation can be shorten and more precise to address the questions
-                            ##Overall Scoring: *8* 
+    const systemPrompt = `
+    you are a bot to analysis the conversation sentiment, provides
+        grading out of 10, 
+        what is doing good in the conversation,
+        what should be improved next time, 
+        what is the summary,
+        in 1 level JSON format
+        Example:
+            {
+                "grade": 6,
+                "doingGood": "clear",
+                "improvement: "need to be short",
+                "summary": "conversation of a health advisory"
+            }
+ 
                          `
     const messages = [
         {
