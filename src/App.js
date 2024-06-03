@@ -185,7 +185,7 @@ export default function App() {
     }
   }
 
-  function ModalTemplate({ isOpen, component }) {
+  function ModalTemplate({ isOpen, component, refresh }) {
     return <Modal open={isOpen} >
 
       <Stack className="overlay bg" justifyContent="center"
@@ -194,7 +194,7 @@ export default function App() {
         <CloseIcon
           className="fixed top-0  right-0 m-5"
           onClick={() => {
-            setDisplayMode("test")
+            refresh ? window.location.reload() : setDisplayMode("test")
           }}>
 
         </CloseIcon>
@@ -299,8 +299,8 @@ export default function App() {
         {image && <img style={{ height: "10vh", width: "10vw" }} src={image} />}
 
       </Stack>} />
-      <ModalTemplate isOpen={displayMode == "call"} component={<CallUI args={{ prompt, transcripts, currentMessage }} />} />
-      <ModalTemplate isOpen={displayMode == "QR"} component={<ShowQR />} />
+      <ModalTemplate isOpen={displayMode == "call"} component={<CallUI args={{ prompt, transcripts, currentMessage }} />} refresh={true} />
+      <ModalTemplate isOpen={displayMode == "QR"} component={<ShowQR />} refresh={true} />
       <ModalTemplate isOpen={displayMode == "setting"} component={<SettingUI args={{ setUserlist }} />} />
       <ModalTemplate isOpen={displayMode == 'result'} component={<Result result={result} />} />
       <ModalTemplate isOpen={displayMode == 'rag'} component={<RagSection setRAG={setRAG} setDisplayMode={setDisplayMode} />} />

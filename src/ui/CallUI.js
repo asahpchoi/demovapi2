@@ -6,7 +6,7 @@ import {
 export const CallUI = ({ args }) => {
     const { prompt, transcripts, currentMessage } = args;
 
-    return <div className="flex flex-col max-w-[726px] bg-fwd-100"  >
+    return <div className="flex flex-col w-9/12 bg-fwd-100"  >
         <Stack style={{ height: "10vh", overflow: "scroll" }}>
             Role Prompt: {prompt}
         </Stack>
