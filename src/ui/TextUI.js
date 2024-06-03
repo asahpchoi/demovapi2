@@ -71,9 +71,9 @@ export const TextUI = ({ args }) => {
         setUserPrompt("");
         setAnswer("")
         setIsLoading(true);
+        const chatbox = document.getElementById("chatbox");
+        chatbox.scrollTop = 10000;
         
-
-
         const answer = await callLLM(prompt, userPrompt, image,
             (data, fin, toolCalls) => {
                 if (data) {
