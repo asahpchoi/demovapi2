@@ -4,7 +4,7 @@ import {
 } from "@mui/material";
  
 export const CallUI = ({ args }) => {
-    const { prompt, transcripts, currentMessage, sentiment, rag } = args;
+    const { prompt, transcripts, currentMessage } = args;
 
     return <div className="flex flex-col max-w-[726px] bg-fwd-100"  >
         <Stack style={{ height: "10vh", overflow: "scroll" }}>

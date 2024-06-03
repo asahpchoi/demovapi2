@@ -39,21 +39,16 @@ import CloseIcon from '@mui/icons-material/Close';
 export default function App() {
   /// State variables for managing various application states
   const [loading, setLoading] = useState(true);
-  const [prompt, setPrompt] = useState(null);
-
-
+  const [prompt, setPrompt] = useState("");
   const [userPrompt, setUserPrompt] = useState("");
   const [answer, setAnswer] = useState("");
   const [sessionId, setSessionId] = useState(null);
   const [name, setName] = useState();
   const [userlist, setUserlist] = useState([]);
-  const [includeProduct, setIncludeProduct] = useState(false);
   const [image, setImage] = useState(null);
   const [history, setHistory] = useState([]);
   const [transcripts, setTranscripts] = useState([])
   const [currentMessage, setCurrentMessage] = useState("");
-  const [sentiment, setSentiment] = useState("Neutral");
-
   const [displayMode, setDisplayMode] = useState("info");
   const [rag, setRAG] = useState("");
   const [model, setModel] = useState("azure");
@@ -164,10 +159,10 @@ export default function App() {
               }}
             >
               {
-                models.map(m => <>
+                models.map((m, i) => <span key={i}>
                   <LLMIcon name={m.model} className="p-3" />
                   <FormControlLabel value={m.model} control={<Radio className="p-5" />} label={m.name} />
-                </>)
+                </span>)
               }
 
             </RadioGroup>
@@ -304,7 +299,7 @@ export default function App() {
         {image && <img style={{ height: "10vh", width: "10vw" }} src={image} />}
 
       </Stack>} />
-      <ModalTemplate isOpen={displayMode == "call"} component={<CallUI args={{ prompt, transcripts, currentMessage, sentiment, rag }} />} />
+      <ModalTemplate isOpen={displayMode == "call"} component={<CallUI args={{ prompt, transcripts, currentMessage }} />} />
       <ModalTemplate isOpen={displayMode == "QR"} component={<ShowQR />} />
       <ModalTemplate isOpen={displayMode == "setting"} component={<SettingUI args={{ setUserlist }} />} />
       <ModalTemplate isOpen={displayMode == 'result'} component={<Result result={result} />} />
