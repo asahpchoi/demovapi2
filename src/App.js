@@ -135,7 +135,7 @@ export default function App() {
         >
           <div position="static">
             <Toolbar className="flex ">
-              <img src={logo} className="w-40" onClick={(e) => {
+              <img src={logo} className="w-30" onClick={(e) => {
 
                 if (window.prompt('password') != '2024') return
                 if (window.confirm("Make a call?")) {
@@ -149,7 +149,7 @@ export default function App() {
 
 
               }} />
-              <h2 className="p-10 font-bold">FWD Gen AI build your bot</h2>
+              <h2 className="p-1 font-bold">FWD Gen AI build your bot</h2>
               <div className="flex-grow"></div>
               FWD GenAI profile
               <Select
@@ -158,7 +158,7 @@ export default function App() {
                   window.location.replace(`?sid=${id}`);
                 }}
                 value={sessionId}
-                className="m-2"
+                className="m-1"
               >
                 {userlist.map((user) => (
                   <MenuItem key={user.id} value={user.id}>
@@ -177,9 +177,10 @@ export default function App() {
             </div>
             <FilledInput
               multiline
-
+              rows="5"
               label="Prompt / Instruction"
               fullWidth
+              style={{backgroundColor:'white'}}
               value={prompt}
               onChange={(e) => {
                 setPrompt(e.target.value);
@@ -203,7 +204,7 @@ export default function App() {
               <div className="grow"></div>
               <RadioGroup
                 row
-                className="p-3"
+                className="p-1"
                 defaultValue="azure"
                 onChange={(e) => {
                   setModel(e.target.value);
@@ -212,7 +213,7 @@ export default function App() {
               >
                 {
                   models.map(m => <>
-                    <LLMIcon name={m.model} className="p-5" />
+                    <LLMIcon name={m.model} className="p-3" />
                     <FormControlLabel value={m.model} control={<Radio className="p-5" />} label={m.name} />
                   </>)
                 }

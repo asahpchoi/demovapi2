@@ -8,7 +8,7 @@ module.exports = {
  
       fwd: {
         50: '#fdf8f6',
-        100: '#f2e8e5',
+        100: '#FEF9F4',
         200: '#eaddd7',
         300: '#e0cec7',
         400: '#d2bab0',
