@@ -51,7 +51,8 @@ export const TextUI = ({ args }) => {
         const data = history.map(h => `${h.role}: ${h.content}`).join();
 
         const sentimentReply = await checkSentiment(data);
-        alert(sentimentReply)
+        setDisplayMode("result")
+        //alert(sentimentReply)
         //setSentiment(sentimentReply)
     }
 

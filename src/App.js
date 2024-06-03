@@ -12,6 +12,7 @@ import {
   Radio, RadioGroup, FormControlLabel,
   FilledInput
 } from "@mui/material";
+
 import { call, setCallback, convertBase64 } from "./libs/util.js";
 import { callLLM, checkSentiment } from "./libs/llm.mjs";
 import { updateData, getUser, getUsers } from "./libs/state.mjs";
@@ -31,6 +32,9 @@ import HelpIcon from '@mui/icons-material/Help';
 import { LLMIcon } from "./ui/LLMIcon";
 import InputAdornment from '@mui/material/InputAdornment';
 import bg from "./images/background.svg"
+import { Result } from "./ui/Result.js";
+import CloseIcon from '@mui/icons-material/Close';
+
 
 export default function App() {
   /// State variables for managing various application states
@@ -58,10 +62,17 @@ export default function App() {
     { name: "minimax", model: "minimax" },
     { name: "mistral", model: "groq" },
   ]
+  const [result, setResult] = useState({
+    improvement: `Consider starting the conversation with a friendly greeting, such as "Good morning/afternoon, thank you for taking the time to meet with me today. I’m excited to discuss your insurance needs.”`,
+    nexttime: `Hi, thank you for coming in today. I’m looking forward to learning more about your insurance needs and how we can help you.`,
+    donewell: 'well done statement',
+    notdonewell: `not donewell`,
+    score: 78,
+  });
+
 
   // useEffect hook to initialize data on component mount
   useEffect(() => {
-
     async function init() {
       if (false) {
         console.log("ci", process.env.CI)
@@ -165,11 +176,28 @@ export default function App() {
     </div>
   }
 
+  function ModalTemplate({ isOpen, component }) {
+    return <Modal open={isOpen} >
+
+      <Stack className="overlay bg" justifyContent="center"
+        alignItems="center"
+        style={{ backgroundImage: `url(${bg}` }}>
+        <CloseIcon
+          className="fixed top-0  right-0 m-5"
+          onClick={() => {
+             setDisplayMode("test")
+          }}>
+
+        </CloseIcon>
+        {component}
+
+      </Stack>
+    </Modal>
+  }
+
   return (
     <div className="App">
-
-      {/* AppBar with login and user selection */}
-
+      {displayMode}
 
       {/* Main card for prompt and role selection */}
       <Stack direction={{ xs: 'column', sm: 'row' }}  >
@@ -277,14 +305,8 @@ export default function App() {
         </div>}
       </Stack>
 
-      {/* Modal for calling interaction */}
-      <Modal open={isCalling}>
-        <CallUI args={{ prompt, transcripts, currentMessage, sentiment, setIsCalling, rag }} />
-      </Modal>
 
-      <Modal open={displayMode == "QR"}>
-        <ShowQR />
-      </Modal>
+
 
       {
         uploadMode && <Modal open={true}>
@@ -297,11 +319,14 @@ export default function App() {
           </Stack>
         </Modal>
       }
+      <ModalTemplate isOpen={isCalling} component={<CallUI args={{ prompt, transcripts, currentMessage, sentiment, setIsCalling, rag }} />} />
+      <ModalTemplate isOpen={displayMode == "QR"} component={<ShowQR />} />
+      <ModalTemplate isOpen={isSetting} component={<SettingUI args={{ setIsSetting, setUserlist }} />} />
+      <ModalTemplate isOpen={!sessionId} component={<Login />} />
+      <ModalTemplate isOpen={displayMode == 'result'} component={<Result result={result} />} />
 
-      <Modal open={isSetting}>
-        <SettingUI args={{ setIsSetting, setUserlist }} />
-      </Modal>
-      {!sessionId ? <Modal open={true}><Login /></Modal> : ""}
+
+
     </div >
   );
 }

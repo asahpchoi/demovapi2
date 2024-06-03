@@ -12,20 +12,20 @@ const deployment = "gpt-4o";
 export const checkSentiment = async (content) => {
     const systemPrompt = `
     you are a bot to analysis the conversation sentiment, provides
-        grading out of 10, 
-        what is doing good in the conversation,
-        what should be improved next time, 
-        what is the summary,
+        grading out of 100 as *score, 
+        what is doing good in the conversation as *donewell,
+        what is not doing good in the conversation as *notdonewell,
+        what should be improved next time as *nextime, 
+        and what should be improvements as *improvement
         in 1 level JSON format
         Example:
             {
-                "grade": 6,
-                "doingGood": "clear",
-                "improvement: "need to be short",
-                "summary": "conversation of a health advisory"
-            }
- 
-                         `
+                improvement: "Consider starting the conversation with a friendly greeting, such as ”Good morning/afternoon, thank you for taking the time to meet with me today. I’m excited to discuss your insurance needs.”",
+                nexttime: "Hi, thank you for coming in today. I’m looking forward to learning more about your insurance needs and how we can help you.",
+                donewell: "well done statement",
+                notdonewell: "not donewell",
+                score: 78,
+            }  `
     const messages = [
         {
             role: "system",
