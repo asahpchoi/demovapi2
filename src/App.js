@@ -134,9 +134,9 @@ export default function App() {
     const id = open ? 'simple-popper' : undefined;
 
     return <div>
-      <button aria-describedby={id} type="button" onClick={handleClick}>
+      <Button onClick={handleClick}>
         Change Model
-      </button>
+      </Button>
       <Popper id={id} open={open} anchorEl={anchorEl}>
         <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
           <div className="flex" direction="row">
@@ -183,49 +183,50 @@ export default function App() {
         <div className="halfpage bg"
           style={{ backgroundImage: `url(${bg}` }}
         >
-          <div position="static">
-            <Toolbar className="flex ">
-              <img src={logo} className="w-30" onClick={(e) => {
 
-                if (window.prompt('password') != '2024') return
-                if (window.confirm("Make a call?")) {
-                  setTranscripts([]);
-                  call(name, prompt, rag);
-                  setIsCalling(true);
-                }
-                else if (window.confirm("update config?")) {
-                  setIsSetting(true)
-                }
+          <Toolbar className="flex ">
+            <img src={logo} className="w-30 -ml-8" onClick={(e) => {
+
+              if (window.prompt('password') != '2024') return
+              if (window.confirm("Make a call?")) {
+                setTranscripts([]);
+                call(name, prompt, rag);
+                setIsCalling(true);
+              }
+              else if (window.confirm("update config?")) {
+                setIsSetting(true)
+              }
 
 
-              }} />
-              <h2 className="p-1 font-bold">FWD Gen AI build your bot</h2>
-              <div className="flex-grow"></div>
-              FWD GenAI profile
-              <Select
-                onChange={(event) => {
-                  const id = event.target.value;
-                  window.location.replace(`?sid=${id}`);
-                }}
-                value={sessionId}
-                className="m-1"
-              >
-                {userlist.map((user) => (
-                  <MenuItem key={user.id} value={user.id}>
-                    {user.username}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Toolbar>
-          </div>
-          <Stack spacing={2} >
-            <div className="flex">
+            }} />
+            <h2 className="p-1 font-bold ">FWD Gen AI build your bot</h2>
+            <div className="flex-grow"></div>
+            FWD GenAI profile
+            <Select
+              onChange={(event) => {
+                const id = event.target.value;
+                window.location.replace(`?sid=${id}`);
+              }}
+              value={sessionId}
+              className="m-1"
+            >
+              {userlist.map((user) => (
+                <MenuItem key={user.id} value={user.id}>
+                  {user.username}
+                </MenuItem>
+              ))}
+            </Select>
+          </Toolbar>
+
+          <Stack spacing={2} className=" ">
+            <div className="flex ">
               <div className="text-xl font-bold text-left flex-grow">Setup your agent bot</div>
               <HelpIcon onClick={() => {
                 setDisplayMode("info")
               }}> </HelpIcon>
             </div>
             <FilledInput
+              className=" "
               multiline
               rows="5"
               label="Prompt / Instruction"

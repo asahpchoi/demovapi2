@@ -119,7 +119,7 @@ export const TextUI = ({ args }) => {
     return <Stack className="bg-fwd-100 ">
         <Stack className="z1 flex  bg-fwd-100" direction="row" justifyContent="space-between"  
             alignItems="baseline">
-            <div id="chatbox" style={{ width: image ? '70%' : '100%', overflow: 'auto', textAlign: "left", height: '50vh' }}>
+            <div id="chatbox" style={{ width: image ? '70%' : '100%', overflow: 'auto', textAlign: "left", height: '80vh' }}>
                 <Stack className="p-2">
                     {history.map(h => {
                         const data = h.content[0].text
