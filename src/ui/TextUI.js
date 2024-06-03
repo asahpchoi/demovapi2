@@ -11,6 +11,11 @@ import { ImageControl } from "./ImageControl";
 import { LLMIcon } from "./LLMIcon"
 import PersonIcon from '@mui/icons-material/Person';
 import CircularProgress from '@mui/material/CircularProgress';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 
 export const TextUI = ({ args }) => {
     const { setUserPrompt, setAnswer, callLLM,
@@ -20,7 +25,20 @@ export const TextUI = ({ args }) => {
 
     const [useTool, setUseTool] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
- 
+
+    const actions = [
+        { icon: <CameraAltIcon onClick={openImageCapture} />, name: 'Take photo' },
+        {
+            icon: <QrCodeScannerIcon onClick={() => {
+                setDisplayMode("QR");
+            }
+
+            } />, name: 'Use mobile to take photo'
+        },
+        {icon:             <Checkbox onClick={() => {
+            setUseTool(!useTool);
+        }}></Checkbox>, name: 'use Tool'}
+    ];
 
     async function handleSubmit() {
         var answerPart = '';
@@ -38,7 +56,7 @@ export const TextUI = ({ args }) => {
         setUserPrompt("");
         setAnswer("")
         setIsLoading(true);
-        
+
 
         const answer = await callLLM(prompt, userPrompt, image,
             (data, fin) => {
@@ -84,7 +102,7 @@ export const TextUI = ({ args }) => {
 
     return <Stack className="halfpage">
         <Stack className="z1 flex mb-5" direction="row">
-            <div id="chatbox" style={{ width: image ? '70%' : '100%', height: '60vh', overflow: 'auto', textAlign: "left" }}>
+            <div id="chatbox" style={{ width: image ? '70%' : '100%', height: '50vh', overflow: 'auto', textAlign: "left" }}>
                 <Stack className="p-2">
                     {history.map(h => {
                         const data = h.content[0].text
@@ -97,7 +115,7 @@ export const TextUI = ({ args }) => {
                         <LLMIcon name={model} ></LLMIcon>
                         <Markdown className="pl-2 pt-2">{answer}</Markdown>
                     </Stack>}
-                    {isLoading && <CircularProgress/>}
+                    {isLoading && <CircularProgress />}
                 </Stack>
             </div>
             {image && <div>
@@ -118,12 +136,22 @@ export const TextUI = ({ args }) => {
                     }
                 }}
             />
-            <Button onClick={handleSubmit}>Ask</Button>
-            <Button onClick={openImageCapture}>Upload</Button>
-            <Button onClick={() => { setDisplayMode("QR"); }}>QR</Button>
-            <Checkbox onClick={() => {
-                setUseTool(!useTool);
-            }}></Checkbox>
+ 
+ 
+
+            <SpeedDial
+                ariaLabel="SpeedDial basic example"
+                sx={{ position: 'absolute', bottom: 16, right: 16 }}
+                icon={<SpeedDialIcon />}
+            >
+                {actions.map((action) => (
+                    <SpeedDialAction
+                        key={action.name}
+                        icon={action.icon}
+                        tooltipTitle={action.name}
+                    />
+                ))}
+            </SpeedDial>
         </Stack>
 
     </Stack>
