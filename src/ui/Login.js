@@ -14,8 +14,8 @@ import listen from "../images/listen.svg";
 export const Login = ({ args }) => {
     const [inputName, setInputName] = useState("");
 
-    return <Stack className="flex justify-center overlay bg" style={{backgroundImage: `url(${bg}`}}>
- 
+    return <Stack className="flex justify-center overlay bg" style={{ backgroundImage: `url(${bg}` }}>
+
         <div className="absolute top-0 left-0 flex align-middle">
             <img src={logo} className="w-40 ml-7" />
             <h2 className="p-10 font-bold">FWD Gen AI build your bot</h2>
@@ -30,6 +30,18 @@ export const Login = ({ args }) => {
                     label="Name"
                     value={inputName}
                     onChange={(e) => setInputName(e.target.value)}
+                    onKeyDown={async (e) => {
+                        if (e.keyCode === 13) {
+                            if (inputName) {
+                                const sid = await getID();
+                                await updateData(sid, inputName);
+                                console.log({
+                                    sid, inputName
+                                })
+                                window.location.replace("?sid=" + sid);
+                            }
+                        }
+                    }}
                 />
                 <Button
                     onClick={async () => {

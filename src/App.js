@@ -29,6 +29,7 @@ import { ShowInstructions } from "./ui/ShowInstructions.js";
 import HelpIcon from '@mui/icons-material/Help';
 import { LLMIcon } from "./ui/LLMIcon";
 import InputAdornment from '@mui/material/InputAdornment';
+import bg from "./images/background.svg"
 
 export default function App() {
   /// State variables for managing various application states
@@ -73,11 +74,14 @@ export default function App() {
 
       if (sid) {
         const data = await getUser(sid);
+        if (data) {
+          setName(data[0].username);
+          setPrompt(data[0].systemPrompt);
+          setImage(data[0].photo)
+          setSessionId(sid);
+        }
 
-        setName(data[0].username);
-        setPrompt(data[0].systemPrompt);
-        setImage(data[0].photo)
-        setSessionId(sid);
+
       }
       const userl = await getUsers();
       setUserlist(userl);
@@ -159,15 +163,10 @@ export default function App() {
       </div>
 
       {/* Main card for prompt and role selection */}
-      <Stack className="bg" direction={{ xs: 'column', sm: 'row' }}
-        style={{
-          backgroundImage: `url(${bg2}`,
-          width: `100vw`,
-          height: '85vh',
-        }}
-
-      >
-        <Paper className="halfpage pt-5 z1" elevation="3">
+      <Stack direction={{ xs: 'column', sm: 'row' }}>
+        <Paper className="halfpage pt-5 bg " elevation="3"
+          style={{ backgroundImage: `url(${bg}` }}
+        >
           <Stack spacing={2} >
             <div className="flex">
               <div className="text-xl font-bold text-left flex-grow">Setup your agent bot</div>
@@ -177,7 +176,7 @@ export default function App() {
             </div>
             <FilledInput
               multiline
-              rows="8"
+              rows="15"
               label="Prompt / Instruction"
               fullWidth
               value={prompt}
