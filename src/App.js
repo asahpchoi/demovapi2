@@ -165,7 +165,7 @@ export default function App() {
           <MainPrompt setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
             model={model} setModel={setModel} models={models} />
 
- 
+
         </div>
         {displayMode == "test" && <div className="w-6/12 bg-fwd-100"  >
           <TextUI args={{
@@ -191,13 +191,13 @@ export default function App() {
       <ModalTemplate isOpen={displayMode == 'rag'} component={<RagSection setRAG={setRAG} setDisplayMode={setDisplayMode} />} />
       {loading && <Loading />}
       <input type="file" id="imageCapture" accept="image/*" capture="environment"
-            className="hidden"
-            onChange={async (evt) => {
-              const file = evt.target.files[0];
-              const base64 = await convertBase64(file);
-              setImage(base64);
-              updateData(sessionId, name, prompt, base64);
-            }} />
+        className="hidden"
+        onChange={async (evt) => {
+          const file = evt.target.files[0];
+          const base64 = await convertBase64(file);
+          setImage(base64);
+          updateData(sessionId, name, prompt, base64);
+        }} />
     </div >
   );
 }
