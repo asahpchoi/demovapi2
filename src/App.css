@@ -76,7 +76,7 @@
   width: 100%;
   margin: 0.5em;
   padding: 1em;
-  height: 80vh;
+  height: 95vh;
 }
 
 h2 h3 h4 {
@@ -98,7 +98,7 @@ h2 h3 h4 {
 .bg{
   background-repeat: no-repeat;
   background-position: bottom;
-  background-size: 100%;
+  background-size: contain;
 }
 
 .overlay {

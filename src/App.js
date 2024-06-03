@@ -126,47 +126,48 @@ export default function App() {
     <div className="App">
 
       {/* AppBar with login and user selection */}
-      <div position="static">
-        <Toolbar className="flex ">
-          <img src={logo} className="w-40" onClick={(e) => {
 
-            if (window.prompt('password') != '2024') return
-            if (window.confirm("Make a call?")) {
-              setTranscripts([]);
-              call(name, prompt, rag);
-              setIsCalling(true);
-            }
-            else if (window.confirm("update config?")) {
-              setIsSetting(true)
-            }
-
-
-          }} />
-          <h2 className="p-10 font-bold">FWD Gen AI build your bot</h2>
-          <div className="flex-grow"></div>
-          FWD GenAI profile
-          <Select
-            onChange={(event) => {
-              const id = event.target.value;
-              window.location.replace(`?sid=${id}`);
-            }}
-            value={sessionId}
-            className="m-2"
-          >
-            {userlist.map((user) => (
-              <MenuItem key={user.id} value={user.id}>
-                {user.username}
-              </MenuItem>
-            ))}
-          </Select>
-        </Toolbar>
-      </div>
 
       {/* Main card for prompt and role selection */}
       <Stack direction={{ xs: 'column', sm: 'row' }}  >
-        <Paper className="halfpage bg" elevation="3"
+        <div className="halfpage bg"
           style={{ backgroundImage: `url(${bg}` }}
         >
+          <div position="static">
+            <Toolbar className="flex ">
+              <img src={logo} className="w-40" onClick={(e) => {
+
+                if (window.prompt('password') != '2024') return
+                if (window.confirm("Make a call?")) {
+                  setTranscripts([]);
+                  call(name, prompt, rag);
+                  setIsCalling(true);
+                }
+                else if (window.confirm("update config?")) {
+                  setIsSetting(true)
+                }
+
+
+              }} />
+              <h2 className="p-10 font-bold">FWD Gen AI build your bot</h2>
+              <div className="flex-grow"></div>
+              FWD GenAI profile
+              <Select
+                onChange={(event) => {
+                  const id = event.target.value;
+                  window.location.replace(`?sid=${id}`);
+                }}
+                value={sessionId}
+                className="m-2"
+              >
+                {userlist.map((user) => (
+                  <MenuItem key={user.id} value={user.id}>
+                    {user.username}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Toolbar>
+          </div>
           <Stack spacing={2} >
             <div className="flex">
               <div className="text-xl font-bold text-left flex-grow">Setup your agent bot</div>
@@ -231,17 +232,12 @@ export default function App() {
           <Button onClick={() => {
             setDisplayMode("rag")
           }}>RAG</Button>
-
-
-
-        </Paper>
+        </div>
         {displayMode == "rag" && <Modal open={true}>
           <RagSection setRAG={setRAG} setDisplayMode={setDisplayMode}></RagSection>
         </Modal>
-
         }
-        {displayMode == "test" && <Paper className="halfpage bg-fwd-100" elevation="3">
-
+        {displayMode == "test" && <div className="halfpage bg-fwd-100"  >
           <TextUI args={{
             setUserPrompt, setAnswer, callLLM, prompt,
             userPrompt, image, setImage, history,
@@ -249,7 +245,7 @@ export default function App() {
             model, setDisplayMode, openImageCapture
           }} />
 
-        </Paper>}
+        </div>}
         {displayMode == "info" && <ShowInstructions setDisplayMode={setDisplayMode} />}
       </Stack>
 
