@@ -7,7 +7,7 @@ module.exports = {
     colors: {
  
       fwd: {
-        50: '#fdf8f6',
+        50: '#FFFFFF',
         100: '#FEF9F4',
         200: '#eaddd7',
         300: '#e0cec7',

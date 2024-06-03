@@ -6,9 +6,9 @@ import {
   Select,
   Stack,
   Radio, RadioGroup, FormControlLabel,
-  FilledInput
-} from "@mui/material";
 
+} from "@mui/material";
+import { MainPrompt } from "./ui/MainPrompt.js";
 import { call, setCallback, convertBase64 } from "./libs/util.js";
 import { callLLM } from "./libs/llm.mjs";
 import { updateData, getUser, getUsers } from "./libs/state.mjs";
@@ -23,13 +23,12 @@ import Popper from '@mui/material/Popper';
 import logo from "./images/logo.svg";
 import { ShowQR } from "./ui/ShowQR.js";
 import { ShowInstructions } from "./ui/ShowInstructions.js";
-import HelpIcon from '@mui/icons-material/Help';
 import { LLMIcon } from "./ui/LLMIcon";
 import InputAdornment from '@mui/material/InputAdornment';
 import bg from "./images/background.svg"
 import { Result } from "./ui/Result.js";
 import CloseIcon from '@mui/icons-material/Close';
-import {Loading} from "./ui/Loading.js";
+import { Loading } from "./ui/Loading.js";
 
 export default function App() {
   /// State variables for managing various application states
@@ -220,43 +219,9 @@ export default function App() {
               ))}
             </Select>
           </div>
+          <MainPrompt setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
+            model={model} setModel={setModel} models={models}/>
 
-          <Stack spacing={2} className=" ">
-            <div className="flex ">
-              <div className="text-xl font-bold text-left flex-grow">Setup your agent bot</div>
-              <HelpIcon onClick={() => {
-                setDisplayMode("info")
-              }}> </HelpIcon>
-            </div>
-            <FilledInput
-              className=" "
-              multiline
-              rows="5"
-              label="Prompt / Instruction"
-              fullWidth
-              style={{ backgroundColor: 'white' }}
-              value={prompt}
-              onChange={(e) => {
-                setPrompt(e.target.value);
-                updateData(sessionId, name, e.target.value, image);
-              }}
-              endAdornment={
-                <InputAdornment position="end">
-                  <Button
-                    aria-label=""
-                    onClick={() => { setDisplayMode("test"); window.scrollTo(0, document.body.scrollHeight); }}
-                    onMouseDown={() => { setDisplayMode("test"); window.scrollTo(0, document.body.scrollHeight); }}
-                    edge="end"
-                  >
-                    Test the bot
-                  </Button>
-                </InputAdornment>
-              }
-            />
-            <ShowLLMs />
-
-
-          </Stack>
           <input type="file" id="imageCapture" accept="image/*" capture="environment"
             className="hidden"
             onChange={async (evt) => {
@@ -291,7 +256,7 @@ export default function App() {
       <ModalTemplate isOpen={displayMode == "setting"} component={<SettingUI args={{ setUserlist }} />} />
       <ModalTemplate isOpen={displayMode == 'result'} component={<Result result={result} />} />
       <ModalTemplate isOpen={displayMode == 'rag'} component={<RagSection setRAG={setRAG} setDisplayMode={setDisplayMode} />} />
-      { loading && <Loading /> }
+      {loading && <Loading />}
     </div >
   );
 }
