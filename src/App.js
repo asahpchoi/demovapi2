@@ -22,7 +22,8 @@ import { SettingUI } from "./ui/SettingUI.js";
 import Paper from '@mui/material/Paper';
 import { RagSection } from "./ui/RagSection.js";
 import { Login } from "./ui/Login.js";
-import bg2 from "./images/bg2.svg"
+import Box from '@mui/material/Box';
+import Popper from '@mui/material/Popper';
 import logo from "./images/logo.svg";
 import { ShowQR } from "./ui/ShowQR.js";
 import { ShowInstructions } from "./ui/ShowInstructions.js";
@@ -122,6 +123,48 @@ export default function App() {
     );
   }
 
+  function ShowLLMs() {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = (event) => {
+      setAnchorEl(anchorEl ? null : event.currentTarget);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popper' : undefined;
+
+    return <div>
+      <button aria-describedby={id} type="button" onClick={handleClick}>
+        Change Model
+      </button>
+      <Popper id={id} open={open} anchorEl={anchorEl}>
+        <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
+          <div className="flex" direction="row">
+            <div className="grow"></div>
+            <RadioGroup
+              row
+              className="p-1"
+              defaultValue={model}
+              onChange={(e) => {
+                setModel(e.target.value);
+
+              }}
+            >
+              {
+                models.map(m => <>
+                  <LLMIcon name={m.model} className="p-3" />
+                  <FormControlLabel value={m.model} control={<Radio className="p-5" />} label={m.name} />
+                </>)
+              }
+
+            </RadioGroup>
+            <div className="grow"></div>
+          </div>
+        </Box>
+      </Popper>
+    </div>
+  }
+
   return (
     <div className="App">
 
@@ -130,6 +173,13 @@ export default function App() {
 
       {/* Main card for prompt and role selection */}
       <Stack direction={{ xs: 'column', sm: 'row' }}  >
+
+        {displayMode == "rag" && <Modal open={true}>
+          <RagSection setRAG={setRAG} setDisplayMode={setDisplayMode}></RagSection>
+        </Modal>
+        }
+
+        {displayMode == "info" && <ShowInstructions setDisplayMode={setDisplayMode} />}
         <div className="halfpage bg"
           style={{ backgroundImage: `url(${bg}` }}
         >
@@ -180,7 +230,7 @@ export default function App() {
               rows="5"
               label="Prompt / Instruction"
               fullWidth
-              style={{backgroundColor:'white'}}
+              style={{ backgroundColor: 'white' }}
               value={prompt}
               onChange={(e) => {
                 setPrompt(e.target.value);
@@ -199,28 +249,9 @@ export default function App() {
                 </InputAdornment>
               }
             />
+            <ShowLLMs />
 
-            <div className="flex" direction="row">
-              <div className="grow"></div>
-              <RadioGroup
-                row
-                className="p-1"
-                defaultValue="azure"
-                onChange={(e) => {
-                  setModel(e.target.value);
-                  console.log({ model })
-                }}
-              >
-                {
-                  models.map(m => <>
-                    <LLMIcon name={m.model} className="p-3" />
-                    <FormControlLabel value={m.model} control={<Radio className="p-5" />} label={m.name} />
-                  </>)
-                }
 
-              </RadioGroup>
-              <div className="grow"></div>
-            </div>
           </Stack>
           <input type="file" id="imageCapture" accept="image/*" capture="environment"
             className="hidden"
@@ -234,10 +265,6 @@ export default function App() {
             setDisplayMode("rag")
           }}>RAG</Button>
         </div>
-        {displayMode == "rag" && <Modal open={true}>
-          <RagSection setRAG={setRAG} setDisplayMode={setDisplayMode}></RagSection>
-        </Modal>
-        }
         {displayMode == "test" && <div className="halfpage bg-fwd-100"  >
           <TextUI args={{
             setUserPrompt, setAnswer, callLLM, prompt,
@@ -247,7 +274,6 @@ export default function App() {
           }} />
 
         </div>}
-        {displayMode == "info" && <ShowInstructions setDisplayMode={setDisplayMode} />}
       </Stack>
 
       {/* Modal for calling interaction */}
