@@ -25,9 +25,7 @@ export const CallUI = ({ args }) => {
                 currentMessage
             }
         </Stack>
-        <Stack style={{ height: "30vh", overflow: "scroll" }}>
-            {sentiment}
-        </Stack>
+ 
         <Stack direction="row" justifyContent="center" className="footer">
             <Fab onClick={() => {
                 setIsCalling(false);

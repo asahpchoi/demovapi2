@@ -16,7 +16,8 @@ import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
-
+import MoodIcon from '@mui/icons-material/Mood';
+import { checkSentiment } from "../libs/llm.mjs";
 export const TextUI = ({ args }) => {
     const { setUserPrompt, setAnswer, callLLM,
         prompt, userPrompt, image, setImage,
@@ -35,10 +36,24 @@ export const TextUI = ({ args }) => {
 
             } />, name: 'Use mobile to take photo'
         },
-        {icon:             <Checkbox onClick={() => {
-            setUseTool(!useTool);
-        }}></Checkbox>, name: 'use Tool'}
+        {
+            icon: <Checkbox onClick={() => {
+                setUseTool(!useTool);
+            }}></Checkbox>, name: 'use Tool'
+        },
+        {
+            icon: <MoodIcon onClick={showRating}>
+            </MoodIcon>, name: 'rating'
+        }
     ];
+
+    async function showRating() {
+        const data = history.map(h => `${h.role}: ${h.content}`).join();
+
+        const sentimentReply = await checkSentiment(data);
+        alert(sentimentReply)
+        //setSentiment(sentimentReply)
+    }
 
     async function handleSubmit() {
         var answerPart = '';
@@ -78,7 +93,7 @@ export const TextUI = ({ args }) => {
                         model: model
 
                     })
-                    console.log({toolCalls})
+                    console.log({ toolCalls })
                     setHistory([...history]);
                     setAnswer("");
                 }
@@ -136,8 +151,8 @@ export const TextUI = ({ args }) => {
                     }
                 }}
             />
- 
- 
+
+
 
             <SpeedDial
                 ariaLabel="SpeedDial basic example"

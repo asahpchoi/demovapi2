@@ -98,8 +98,8 @@ export default function App() {
           transcript: currentMessage
         }]))
         setCurrentMessage("");
-        const sentimentReply = await checkSentiment(JSON.stringify(transcripts));
-        setSentiment(sentimentReply)
+        //const sentimentReply = await checkSentiment(JSON.stringify(transcripts));
+        //setSentiment(sentimentReply)
       }
     }
   }
