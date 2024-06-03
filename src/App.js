@@ -5,22 +5,17 @@ import {
   Modal,
   Select,
   Stack,
-  TextField,
-  Toolbar,
-  Typography,
-  CircularProgress,
   Radio, RadioGroup, FormControlLabel,
   FilledInput
 } from "@mui/material";
 
 import { call, setCallback, convertBase64 } from "./libs/util.js";
-import { callLLM, checkSentiment } from "./libs/llm.mjs";
+import { callLLM } from "./libs/llm.mjs";
 import { updateData, getUser, getUsers } from "./libs/state.mjs";
 import "./App.css";
 import { CallUI } from "./ui/CallUI.js";
 import { TextUI } from "./ui/TextUI.js";
 import { SettingUI } from "./ui/SettingUI.js";
-import Paper from '@mui/material/Paper';
 import { RagSection } from "./ui/RagSection.js";
 import { Login } from "./ui/Login.js";
 import Box from '@mui/material/Box';
@@ -34,7 +29,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import bg from "./images/background.svg"
 import { Result } from "./ui/Result.js";
 import CloseIcon from '@mui/icons-material/Close';
-
+import {Loading} from "./ui/Loading.js";
 
 export default function App() {
   /// State variables for managing various application states
@@ -122,14 +117,7 @@ export default function App() {
   }
   setCallback(callback)
   // Render loading spinner if data is still being fetched
-  if (loading) {
-    return (
-      <div className="loading">
-        <CircularProgress />
-        <Typography variant="h6">Loading...</Typography>
-      </div>
-    );
-  }
+
 
   function ShowLLMs() {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -206,7 +194,6 @@ export default function App() {
 
   return (
     <div className="App">
-
       {/* Main card for prompt and role selection */}
       <Stack direction={{ xs: 'column', sm: 'row' }}  >
         {displayMode == "info" && <ShowInstructions setDisplayMode={setDisplayMode} />}
@@ -304,6 +291,7 @@ export default function App() {
       <ModalTemplate isOpen={displayMode == "setting"} component={<SettingUI args={{ setUserlist }} />} />
       <ModalTemplate isOpen={displayMode == 'result'} component={<Result result={result} />} />
       <ModalTemplate isOpen={displayMode == 'rag'} component={<RagSection setRAG={setRAG} setDisplayMode={setDisplayMode} />} />
+      { loading && <Loading /> }
     </div >
   );
 }

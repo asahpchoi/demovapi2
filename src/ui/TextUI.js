@@ -1,8 +1,6 @@
 import {
     Stack,
     TextField,
-    Button,
-    Paper,
     Checkbox
 } from "@mui/material";
 import { useState } from "react";
@@ -16,7 +14,7 @@ import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import MoodIcon from '@mui/icons-material/Mood';
 import { checkSentiment } from "../libs/llm.mjs";
 import { Chatbot } from "./Chatbot";
-
+import { Loading } from "./Loading";
 export const TextUI = ({ args }) => {
     const { setUserPrompt, setAnswer, callLLM,
         prompt, userPrompt, image, setImage,
@@ -48,10 +46,10 @@ export const TextUI = ({ args }) => {
 
     async function showRating() {
         const data = history.map(h => `${h.role}: ${h.content}`).join();
-
+        setIsLoading(true)
         const scoring = await checkSentiment(data);
         setDisplayMode("result")
-
+        setIsLoading(false)
         setResult(scoring)
         //setSentiment(sentimentReply)
     }
@@ -118,6 +116,7 @@ export const TextUI = ({ args }) => {
     }
 
     return <Stack className="bg-fwd-100 ">
+        {isLoading && <Loading></Loading>}
         <Stack className="z1 flex  bg-fwd-100" direction="row" justifyContent="space-between"
             alignItems="baseline">
             <Chatbot LLMIcon={LLMIcon} history={history} answer={answer} model={model} isLoading={isLoading} />
