@@ -59,9 +59,6 @@ export default function App() {
     notdonewell: `not donewell`,
     score: 78,
   });
-
-
-
   // useEffect hook to initialize data on component mount
   useEffect(() => {
     async function init() {
@@ -116,6 +113,7 @@ export default function App() {
   function openImageCapture() {
     document.getElementById("imageCapture").click();
   }
+
   setCallback(callback)
   // Render loading spinner if data is still being fetched
 
