@@ -53,7 +53,7 @@ export default function App() {
   const [transcripts, setTranscripts] = useState([])
   const [currentMessage, setCurrentMessage] = useState("");
   const [sentiment, setSentiment] = useState("Neutral");
-  const [uploadMode, setUploadMode] = useState(false);
+
   const [displayMode, setDisplayMode] = useState("info");
   const [rag, setRAG] = useState("");
   const [model, setModel] = useState("azure");
@@ -99,7 +99,9 @@ export default function App() {
       setUserlist(userl);
       setLoading(false); // Set loading to false once data is fetched
 
-      setUploadMode(params.get("upload"));
+      if (params.get("upload")) {
+        setDisplayMode("upload")
+      }
 
     }
     init();
@@ -176,6 +178,18 @@ export default function App() {
     </div>
   }
 
+  function logoAction() {
+    if (window.prompt('password') != '2024') return
+    if (window.confirm("Make a call?")) {
+      setTranscripts([]);
+      call(name, prompt, rag);
+      setDisplayMode("call")
+    }
+    else if (window.confirm("update config?")) {
+      setDisplayMode("setting")
+    }
+  }
+
   function ModalTemplate({ isOpen, component }) {
     return <Modal open={isOpen} >
 
@@ -197,32 +211,18 @@ export default function App() {
 
   return (
     <div className="App">
- 
+
       {/* Main card for prompt and role selection */}
-      <Stack direction={{ xs: 'column', sm: 'row' }}  > 
+      <Stack direction={{ xs: 'column', sm: 'row' }}  >
         {displayMode == "info" && <ShowInstructions setDisplayMode={setDisplayMode} />}
-        <div className="halfpage bg"
+        <div className="w-6/12 bg p-3"
           style={{ backgroundImage: `url(${bg}` }}
         >
-
-          <Toolbar className="flex ">
-            <img src={logo} className="w-30 -ml-8" onClick={(e) => {
-
-              if (window.prompt('password') != '2024') return
-              if (window.confirm("Make a call?")) {
-                setTranscripts([]);
-                call(name, prompt, rag);
-                setDisplayMode("call")
-              }
-              else if (window.confirm("update config?")) {
-                setDisplayMode("setting")
-              }
-
-
-            }} />
-            <h2 className="p-1 font-bold ">FWD Gen AI build your bot</h2>
+          <div className="flex h-15">
+            <img src={logo} className="w-30 " onClick={logoAction} />
+            <div className="p-5 decoration-solid">FWD Gen AI build your bot</div>
             <div className="flex-grow"></div>
-            FWD GenAI profile
+            <div className="p-5 decoration-solid">FWD GenAI profile</div>
             <Select
               onChange={(event) => {
                 const id = event.target.value;
@@ -237,7 +237,7 @@ export default function App() {
                 </MenuItem>
               ))}
             </Select>
-          </Toolbar>
+          </div>
 
           <Stack spacing={2} className=" ">
             <div className="flex ">
@@ -287,7 +287,7 @@ export default function App() {
             setDisplayMode("rag")
           }}>RAG</Button>
         </div>
-        {displayMode == "test" && <div className="halfpage bg-fwd-100"  >
+        {displayMode == "test" && <div className="w-6/12 bg-fwd-100"  >
           <TextUI args={{
             setUserPrompt, setAnswer, callLLM, prompt,
             userPrompt, image, setImage, history,
@@ -297,31 +297,18 @@ export default function App() {
 
         </div>}
       </Stack>
-
-
-
-
-      {
-        uploadMode && <Modal open={true}>
-          <Stack className="overlay"><Button onClick={() => {
-            document.getElementById("imageCapture").click();
-          }}>Take a photo</Button>
-            {image && <img style={{ height: "10vh", width: "10vw" }} src={image} />}
-
-            <Button onClick={() => { window.close() }}>Close</Button>
-          </Stack>
-        </Modal>
-      }
-
       <ModalTemplate isOpen={!sessionId} component={<Login />} />
+      <ModalTemplate isOpen={displayMode == "upload"} component={<Stack ><Button onClick={() => {
+        document.getElementById("imageCapture").click();
+      }}>Take a photo</Button>
+        {image && <img style={{ height: "10vh", width: "10vw" }} src={image} />}
+
+      </Stack>} />
       <ModalTemplate isOpen={displayMode == "call"} component={<CallUI args={{ prompt, transcripts, currentMessage, sentiment, rag }} />} />
       <ModalTemplate isOpen={displayMode == "QR"} component={<ShowQR />} />
       <ModalTemplate isOpen={displayMode == "setting"} component={<SettingUI args={{ setUserlist }} />} />
-
       <ModalTemplate isOpen={displayMode == 'result'} component={<Result result={result} />} />
       <ModalTemplate isOpen={displayMode == 'rag'} component={<RagSection setRAG={setRAG} setDisplayMode={setDisplayMode} />} />
-
-
     </div >
   );
 }

@@ -6,11 +6,11 @@ import {
     Checkbox
 } from "@mui/material";
 import { useState } from "react";
-import Markdown from 'react-markdown';
+
 import { ImageControl } from "./ImageControl";
 import { LLMIcon } from "./LLMIcon"
 import PersonIcon from '@mui/icons-material/Person';
-import CircularProgress from '@mui/material/CircularProgress';
+
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
@@ -18,6 +18,8 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import MoodIcon from '@mui/icons-material/Mood';
 import { checkSentiment } from "../libs/llm.mjs";
+import { Chatbot } from "./Chatbot";
+
 export const TextUI = ({ args }) => {
     const { setUserPrompt, setAnswer, callLLM,
         prompt, userPrompt, image, setImage,
@@ -121,22 +123,7 @@ export const TextUI = ({ args }) => {
     return <Stack className="bg-fwd-100 ">
         <Stack className="z1 flex  bg-fwd-100" direction="row" justifyContent="space-between"
             alignItems="baseline">
-            <div id="chatbox" style={{ width: image ? '70%' : '100%', overflow: 'auto', textAlign: "left", height: '80vh' }}>
-                <Stack className="p-2">
-                    {history.map(h => {
-                        const data = h.content[0].text
-                        return <Stack direction="row" className="pt-2">
-                            {h.model ? <LLMIcon name={h.model} /> : <LLMIcon name="user" />}
-                            <Markdown className="pl-2 pt-2">{data}</Markdown>
-                        </Stack>
-                    })}
-                    {answer && <Stack direction="row" className="pt-2">
-                        <LLMIcon name={model} ></LLMIcon>
-                        <Markdown className="pl-2 pt-2">{answer}</Markdown>
-                    </Stack>}
-                    {isLoading && <CircularProgress />}
-                </Stack>
-            </div>
+            <Chatbot LLMIcon={LLMIcon} history={history} answer={answer} model={model} isLoading={isLoading} />
             {image && <div>
                 <ImageControl image={image} setImage={setImage} />
             </div>}
