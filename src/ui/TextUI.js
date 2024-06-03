@@ -119,7 +119,7 @@ export const TextUI = ({ args }) => {
         {isLoading && <Loading></Loading>}
         <Stack className="z1 flex  bg-fwd-100" direction="row" justifyContent="space-between"
             alignItems="baseline">
-            <Chatbot LLMIcon={LLMIcon} history={history} answer={answer} model={model} isLoading={isLoading} />
+            <Chatbot LLMIcon={LLMIcon} history={history} answer={answer} model={model}   />
             {image && <div>
                 <ImageControl image={image} setImage={setImage} />
             </div>}
