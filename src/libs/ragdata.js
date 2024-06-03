@@ -1,4 +1,5 @@
 export const ragdata = [{
+    id: 1,
     name: 'Set for Life', selected: false, content: `
 FWD Philippines’ “Set for Life” investment-linked insurance plan based on a recent visit to their website:
 
@@ -29,6 +30,7 @@ Individuals looking for a comprehensive solution that not only protects them wit
 For more details, including specific terms, fund options, or to get a quotation, interested clients are encouraged to visit the FWD Philippines website or contact their customer service for personalized advice.
  ` },
 {
+    id:2,
     name: 'Health Investment-Linked', selected: false, content: `Here are the key details about FWD's Health Investment-Linked Insurance bundle from the given source:
 
     ## Health Bundle Overview
@@ -54,6 +56,7 @@ For more details, including specific terms, fund options, or to get a quotation,
     [5] https://www.fwd.com.ph/investment/
     ` },
 {
+    id:3,
     name: 'Claim process', selected: false, content: `Here are the key details about FWD's claim process based on the provided search results:
 
     ## Claim Submission

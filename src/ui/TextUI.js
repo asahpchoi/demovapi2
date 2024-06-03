@@ -59,14 +59,13 @@ export const TextUI = ({ args }) => {
 
 
         const answer = await callLLM(prompt, userPrompt, image,
-            (data, fin) => {
+            (data, fin, toolCalls) => {
                 if (data) {
                     setIsLoading(false)
                     answerPart += data;
                     setAnswer(answerPart)
                 }
                 if (fin) {
-
                     history.push({
                         role: "assistant",
                         content:
@@ -79,6 +78,7 @@ export const TextUI = ({ args }) => {
                         model: model
 
                     })
+                    console.log({toolCalls})
                     setHistory([...history]);
                     setAnswer("");
                 }
