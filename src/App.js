@@ -151,7 +151,7 @@ export default function App() {
   return (
     <div className="App">
       <div className="p-9 flex flex-row justify-center">
-        <div className="flex gap-4  justify-center text-base font-bold text-neutral-800 max-md:ml-2.5">
+        <div className="flex gap-4 justify-center text-base font-bold text-neutral-800 max-md:ml-2.5">
           <img
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/5eccd0cf9d1dbad8df1ed9b5b5532b98d226c847c16bafd04c30b8477fba72b0?"
@@ -182,7 +182,7 @@ export default function App() {
           />
         </div>
       </div>
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex">
         <ShowInstructions setDisplayMode={setDisplayMode} />
         <MainPrompt setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
           model={model} setModel={setModel} models={models} />

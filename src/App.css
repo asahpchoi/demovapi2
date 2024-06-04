@@ -6,9 +6,9 @@
   background-position: center;
   background-position: cover;
   text-align: center;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .App-logo {
