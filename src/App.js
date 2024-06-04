@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import person from "./images/person.svg"
 import { MainPrompt } from "./ui/MainPrompt.js";
+import UserPrompt from "./ui/UserPrompt.js";
 import { call, setCallback, convertBase64 } from "./libs/util.js";
 import { callLLM } from "./libs/llm.mjs";
 import { updateData, getUser, getUsers } from "./libs/state.mjs";
@@ -33,17 +34,16 @@ export default function App() {
   /// State variables for managing various application states
   const [loading, setLoading] = useState(true);
   const [prompt, setPrompt] = useState("");
-  const [userPrompt, setUserPrompt] = useState("");
   const [answer, setAnswer] = useState("");
   const [sessionId, setSessionId] = useState(null);
   const [name, setName] = useState();
   const [userlist, setUserlist] = useState([]);
   const [image, setImage] = useState(null);
-  const [history, setHistory] = useState([]);
   const [transcripts, setTranscripts] = useState([])
   const [currentMessage, setCurrentMessage] = useState("");
   const [displayMode, setDisplayMode] = useState("info");
   const [rag, setRAG] = useState("");
+  const [showInstructions, setShowInstructions] = useState(true);
   const [model, setModel] = useState("azure");
   const models = [
     { name: "openai", model: "azure" },
@@ -183,9 +183,12 @@ export default function App() {
         </div>
       </div>
       <div className="flex">
-        <ShowInstructions setDisplayMode={setDisplayMode} />
-        <MainPrompt setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
+        {showInstructions &&
+          <ShowInstructions onClose={() => setShowInstructions(false)} />
+        }
+        <MainPrompt onOpenBot={() => setShowInstructions(false)} setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
           model={model} setModel={setModel} models={models} />
+        <UserPrompt />
       </div>
       {/* Main card for prompt and role selection */}
       {/* <Stack direction={{ xs: 'column', sm: 'row' }}  > */}

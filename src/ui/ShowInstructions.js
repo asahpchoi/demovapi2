@@ -61,7 +61,7 @@ function ListItem({ title, bodies }) {
   );
 }
 
-export function ShowInstructions(args) {
+export function ShowInstructions({ onClose }) {
   const personaPrompts = [
     {
       imgSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/65228453a158cd340735b9d797da542cfabb42c194b8d97bdfccca9134fbb04f?apiKey=aef2252b7f4e44588501764630aaa53c&",
@@ -80,16 +80,19 @@ export function ShowInstructions(args) {
   const containerStyle = {
     borderRadius: "0 12px 0 0",
     boxShadow: "0px 0px 20px 0px #00000040",
+    flexShrink: 0,
+    width: "50vw",
   };
 
   return (
     <div
       style={containerStyle}
-      className="pr-1 pl-1 pt-9 bg-fwd-100 h-screen max-w-[671px]">
+      className="pr-1 pl-1 pt-9 bg-fwd-100 h-screen">
       <div className="h-full overflow-scroll pr-5">
         <div className="flex gap-5 text-2xl font-bold text-neutral-800 max-md:flex-wrap">
           <div className="flex-1 text-left max-md:max-w-full">Your exercise:</div>
           <img
+            onClick={onClose}
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/1c20d56edd74692ec6723c453fd7540dd85d36f02b1c84a368990badcf4d68a3?"
             className="shrink-0 my-auto w-6 aspect-square"

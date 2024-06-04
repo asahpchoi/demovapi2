@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import {
   FilledInput, Button
@@ -26,7 +27,7 @@ const FileItem = ({ src, text, alt }) => (
     </div>
 );
 */
-export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel, models, onOpenBot }) => {
+const UserPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel, models }) => {
   // const enableButton = prompt.length > 0;
   const enableButton = true;
   const buttonStyle = {
@@ -63,8 +64,8 @@ export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel,
   }
 
   return (
-    <div className="flex flex-col px-9 pb-9">
-      <div className="text-left text-2xl font-bold text-neutral-800">
+    <div className="flex flex-col px-9 pb-9 max-w-[695px] max-md:px-5">
+      <div className="text-left text-2xl font-bold text-neutral-800 max-md:max-w-full">
         Set up your agent bot:
       </div>
       <div className="text-left mt-9 text-xl font-bold text-neutral-800 max-md:max-w-full">
@@ -78,7 +79,7 @@ export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel,
             onClick={async () => {
             }}
           >
-            <div className="flex-1" onClick={onOpenBot}>
+            <div className="flex-1">
               Open your GPT
             </div>
           </button>
@@ -156,7 +157,7 @@ export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel,
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
   return (
     <div className="flex flex-col self-stretch  bg-fwd-50 pl-10 pr-10">
@@ -230,3 +231,5 @@ export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel,
     </div>
   )
 };
+
+export default UserPrompt;
