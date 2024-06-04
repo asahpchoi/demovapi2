@@ -15,7 +15,7 @@ import MoodIcon from '@mui/icons-material/Mood';
 import { checkSentiment } from "../libs/llm.mjs";
 import { Chatbot } from "./Chatbot";
 import { Loading } from "./Loading";
-
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export const TextUI = ({ args }) => {
     const { setUserPrompt, setAnswer, callLLM,
@@ -33,16 +33,20 @@ export const TextUI = ({ args }) => {
                 setDisplayMode("QR");
             }
 
-            } />, name: 'Use mobile to take photo'
+            } />, name: 'use mobile to take photo'
         },
         {
             icon: <Checkbox onClick={() => {
                 setUseTool(!useTool);
-            }}></Checkbox>, name: 'use Tool'
+            }}></Checkbox>, name: 'use tool'
         },
         {
             icon: <MoodIcon onClick={showRating}>
             </MoodIcon>, name: 'rating'
+        },
+        {
+            icon: <DeleteIcon onClick={() => { setHistory([]) }}/>
+            , name: "remove history"
         }
     ];
 
@@ -102,7 +106,7 @@ export const TextUI = ({ args }) => {
                 const chatbox = document.getElementById("chatbox");
                 chatbox.scrollTop = 10000;
 
-            }, history, rag, model, useTool);
+            }, history, setHistory, rag, model, useTool);
         const newHistory = history;
     }
 

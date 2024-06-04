@@ -26,14 +26,15 @@ export function RagSection(args) {
     };
 
     const customList = (items) => (
-        <Paper className='h-100'>
-            <List dense component="div" role="list" >
+        <Paper >
+            <List component="div" role="list" style={{ height: 300 }} >
                 {items.map((i) => {
                     const labelId = `transfer-list-item-${i.id}-label`;
                     return (
                         <ListItemButton
                             key={i.id}
                             role="listitem"
+
                             onClick={() => {
                                 const newlist = files.map(
                                     f => {
@@ -62,7 +63,7 @@ export function RagSection(args) {
 
         <div className='w-8/12 m-24 bg-fwd-100 p-5' >
             <Grid container spacing={2} justifyContent="center" alignItems="center" >
-                <Grid item xs={12}>Select documents </Grid>
+
                 <Grid item xs={6}>Available documents</Grid>
                 <Grid item xs={6}>Selected documents</Grid>
                 <Grid item xs={6}>{customList(files.filter(f => !f.selected))}</Grid>
