@@ -14,6 +14,7 @@ const icons = {
     mistral: mistral,
     minimax: minimax,
 }
+/*
 const FileItem = ({ src, text, alt }) => (
     <div className="flex gap-5 justify-between px-2 py-2 rounded bg-stone-50">
         <div className="flex gap-1">
@@ -23,7 +24,7 @@ const FileItem = ({ src, text, alt }) => (
         <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/d89bee0d53fee804ad87b2cccf2b6d70465b44bc4fb312abf57535a233c953b4?apiKey=aef2252b7f4e44588501764630aaa53c&" alt="Delete icon" className="shrink-0 my-auto w-4 aspect-square" />
     </div>
 );
-
+*/
 export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel, models }) => (
     <div className="flex flex-col self-stretch  bg-fwd-50 pl-10 pr-10">
         <header className="flex gap-5 justify-between px-5 w-full font-bold max-md:flex-wrap max-md:max-w-full">

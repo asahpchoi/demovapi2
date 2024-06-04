@@ -73,13 +73,13 @@ export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, r
             ]);
 
 
-    if (model == "azure" || !model)
+    if (model === "azure" || !model)
         azureLLM(messages, cb, useTools);
 
-    if (model == "groq")
+    if (model === "groq")
         groqLLM(messages, cb);
 
-    if (model == "minimax")
+    if (model === "minimax")
         minimaxLLM(systemPrompt ? systemPrompt : "you are a bot", userPrompt, cb)
 
 }
@@ -137,7 +137,7 @@ const azureLLM = async (messages, cb, useTools) => {
     return "OK"
 }
 const minimaxLLM = async (systemPrompt, userPrompt, cb) => {
-    const groupID = '1743503684043542894';
+    //const groupID = '1743503684043542894';
     const api_key = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJHcm91cE5hbWUiOiJhc2FjaG9pIiwiVXNlck5hbWUiOiJhc2FjaG9pIiwiQWNjb3VudCI6IiIsIlN1YmplY3RJRCI6IjE3NDM1MDM2ODQwNTE5MzE1MDIiLCJQaG9uZSI6IjE3MTUyMTY2NzI5IiwiR3JvdXBJRCI6IjE3NDM1MDM2ODQwNDM1NDI4OTQiLCJQYWdlTmFtZSI6IiIsIk1haWwiOiJhc2EuY2hvaUBnbWFpbC5jb20iLCJDcmVhdGVUaW1lIjoiMjAyNC0wNS0zMCAyMjo1MToyMyIsImlzcyI6Im1pbmltYXgifQ.otWX76fs0v2k30vFp_xVp_0DnIbUpbuoUCrW1XLr75UHPA7ufsXKeywKYyu7WUUw6dSSFy72GpjpgfvN91xlxNyZZudKWwHRX6G3AW3jYRRg3FYQepoGoJmHFxf0tPUpeQGdIb-JXOCCRSdcMUJvRCs24SNUgqmgn9xf9OKBTnMbK80Z0BL4lRhLC90yhzbQsdQ4CEIL9q0gS-Jn7gjsmgQk6KSv9bRnbAZVMMu6WJMOXeV3hBE0E83BY3AvFHtleXpv-DXjSE24KfTL_AAJuElLlE6JgUyvvPrHmoM7PUqEynS8obmMxpf7Mn84ML6rCkinMdHdcCX81xDN-74W-A'
     const url = "https://api.minimax.chat/v1/text/chatcompletion_v2"
     const headers = { "Content-Type": "application/json", "Authorization": `Bearer ${api_key}` }
@@ -172,6 +172,7 @@ const minimaxLLM = async (systemPrompt, userPrompt, cb) => {
 
 
 }
+/*
 const mistralLLM = async (messages, cb) => {
 
     const client = new MistralClient('QLrfXO2hbUYXoUtSqDXm0bGiwcOiSQmd');
@@ -188,7 +189,7 @@ const mistralLLM = async (messages, cb) => {
             cb(streamText);
         }
     }
-}
+}*/
 const groqLLM = async (messages, cb) => {
     const groq = new Groq({
         apiKey: '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'
@@ -198,7 +199,7 @@ const groqLLM = async (messages, cb) => {
     const m = messages.map(m => {
         let c2 = "";
 
-        if (typeof m.content == "object") {
+        if (typeof m.content === "object") {
             c2 = m.content[0].text
         }
         else {

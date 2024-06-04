@@ -167,7 +167,7 @@ export default function App() {
         {displayMode === "test" &&<TextUI args={{
             setUserPrompt, setAnswer, callLLM, prompt,
             userPrompt, image, setImage, history,
-            setHistory, setImage, answer, rag,
+            setHistory, answer, rag,
             model, setDisplayMode, openImageCapture, setResult
           }} />
 
@@ -177,7 +177,7 @@ export default function App() {
       <ModalTemplate isOpen={displayMode === "upload"} component={<Stack ><Button onClick={() => {
         document.getElementById("imageCapture").click();
       }}>Take a photo</Button>
-        {image && <img style={{ height: "10vh", width: "10vw" }} src={image} />}
+        {image && <img style={{ height: "10vh", width: "10vw" }} src={image} alt="photo"/>}
 
       </Stack>} />
       <ModalTemplate isOpen={displayMode === "call"} component={<CallUI args={{ prompt, transcripts, currentMessage }} />} refresh={true} />

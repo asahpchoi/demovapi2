@@ -3,7 +3,7 @@ import {
     Button,
     Stack,
     TextField,
-    AppBar
+ 
 } from "@mui/material";
 import { useState } from "react";
 import { getID, updateData } from "../libs/state.mjs";
@@ -17,11 +17,11 @@ export const Login = ({ args }) => {
     return <Stack className="flex justify-center overlay bg" style={{ backgroundImage: `url(${bg}` }}>
 
         <div className="absolute top-0 left-0 flex align-middle">
-            <img src={logo} className="w-40 ml-7" />
+            <img src={logo} className="w-40 ml-7" alt="logo" />
             <h2 className="p-10 font-bold">FWD Gen AI build your bot</h2>
         </div>
         <div className="flex flex-col text-center" style={{ marginTop: -200 }}>
-            <img src={listen} className="h-64 -mb-20" />
+            <img src={listen} className="h-64 -mb-20" alt="listen" />
             <div className="text-3xl w-auto font-bold">Hello, Nice to have you here.</div>
             <div className="text-5xl w-auto font-bold py-6">What is your name?</div>
             <div className="flex" >
