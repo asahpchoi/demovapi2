@@ -11,7 +11,7 @@ export const ImageControl = (args) => {
 
     return <Stack style={{ padding: '1em', position: 'absolute', top: 0, right: 0, }}>
         <img alt="th" src={args.image} style={{ width: imgSize }} onClick={() => {
-            setImgSize(imgSize == "10vw" ? "70vw" : "10vw")
+            setImgSize(imgSize == "6vw" ? "40vw" : "6vw")
         }} />
         <Button onClick={() => { args.setImage(null) }}>Delete</Button>
     </Stack>

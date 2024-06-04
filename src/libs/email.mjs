@@ -16,12 +16,12 @@ export const sendEmail = async (to, subject, body) => {
 }
 
 export const sendSms = async (phone, body) => {
-    console.log('send SMS', { phone, body: body.substring(1, 70) })
+    console.log('send SMS', { phone, body: body.substring(0, 70) })
     try {
         const url = "https://hook.eu2.make.com/ht9oe36by9aur8to1qk4gy2c0rrls3zv"
         //https://maize-persistent-license.glitch.me/
         await axiox.post(url, {
-            phone, body: body.substring(1, 70)
+            phone, body: body.substring(0, 70)
         })
 
     } catch (e) {
