@@ -17,7 +17,7 @@ const icons = {
   minimax: minimax,
 }
 
-export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel, models, onOpenBot }) {
+export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel, models, onOpenBot, isShowInstructions, onPressShowInstructions }) {
   const [isRag, setIsRag] = React.useState(false);
   const [text, setText] = React.useState("");
   const [isToggled, setIsToggled] = React.useState(false);
@@ -47,12 +47,19 @@ export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel,
   }
 
   return (
-    <div className="flex flex-col px-9 pb-9 w-1/2">
+    <div className="flex flex-col px-9 pb-9" style={{ width: "50vw" }}>
       <div className="text-left text-2xl font-bold text-neutral-800">
         Set up your agent bot:
       </div>
-      <div className="text-left mt-9 text-xl font-bold text-neutral-800 max-md:max-w-full">
-        Enter prompt below:
+      <div className="flex flex-row mt-9 justify-between">
+        <div className="text-left ext-xl font-bold text-neutral-800 max-md:max-w-full">
+          Enter prompt below:
+        </div>
+        {!isShowInstructions && (
+          <div className="text-end text-orange-500 font-bold" onClick={() => onPressShowInstructions()}>
+            Show instructions
+          </div>
+        )}
       </div>
       <div className="flex flex-col h-[400px] justify-between p-2 mt-4 bg-white rounded-lg border-2 border-orange-500 border-solid max-md:max-w-full">
         <div className="flex flex-row flex-1 gap-2 max-md:flex-col max-md:gap-0">

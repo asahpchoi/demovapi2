@@ -188,8 +188,17 @@ export default function App() {
           {showInstructions &&
             <ShowInstructions onClose={() => setShowInstructions(false)} />
           }
-          <MainPrompt onOpenBot={() => setShowInstructions(false)} setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
-            model={model} setModel={setModel} models={models} />
+          <MainPrompt 
+            onOpenBot={() => setShowInstructions(false)}
+            setDisplayMode={setDisplayMode}
+            prompt={prompt}
+            setPrompt={setPrompt}
+            model={model}
+            setModel={setModel} 
+            models={models}
+            isShowInstructions={showInstructions} 
+            onPressShowInstructions={() => setShowInstructions(true)}
+          />
         </div>
       </div>
       <UserPrompt />
