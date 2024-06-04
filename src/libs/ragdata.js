@@ -32,9 +32,10 @@ For more details, including specific terms, fund options, or to get a quotation,
 premium calculation reference:
 the Life premium for male, 29yo, non smoker, Set For Life for Set for Life is 300,000
 
-` },
+`, url: 'https://www.fwd.com.ph/files/v3/assets/blt9d245055972fde4e/blta2cacf5e959a3f86/63b7d865cd847f0b3fb4643c/fwd-set-for-life-addons-and-bundles-brochure_(1).pdf'
+},
 {
-    id:2,
+    id: 2,
     name: 'Health Investment-Linked', selected: false, content: `Here are the key details about FWD's Health Investment-Linked Insurance bundle from the given source:
 
     ## Health Bundle Overview
@@ -58,9 +59,11 @@ the Life premium for male, 29yo, non smoker, Set For Life for Set for Life is 30
     [3] https://www.fwd.com.ph/files/v3/assets/blt9d245055972fde4e/bltd98c2aaaaadeb48c/64c766b596bd5743e2dcf2bc/FWD_Set_for_Life_Investment-linked_Insurance_Brochure_V2.0_July_2023.pdf
     [4] https://www.fwd.com.ph/files/v3/assets/blt9d245055972fde4e/blt020f70a12b46caf1/647d6880f478a934dd7f091d/Q1_2023_FWD_PH_Fact_Sheet.pdf
     [5] https://www.fwd.com.ph/investment/
-    ` },
+    `
+    , url: `https://www.fwd.com.ph/investment/`
+},
 {
-    id:3,
+    id: 3,
     name: 'Claim process', selected: false, content: `Here are the key details about FWD's claim process based on the provided search results:
 
     ## Claim Submission
@@ -89,4 +92,6 @@ the Life premium for male, 29yo, non smoker, Set For Life for Set for Life is 30
     [2] https://www.fwd.com.vn/en/claims/
     [3] https://www.fwd.com.ph/investment/
     [4] https://www.fwd.com.hk/en/business/claims/medical/
-    [5] https://www.fwd.com.hk/en/claims/outpatient/` }]
+    [5] https://www.fwd.com.hk/en/claims/outpatient/`,
+    url: 'https://help.fwd.com.sg/hc/en-us/articles/4406755345305-How-do-I-submit-my-Travel-claim-and-what-are-the-documents-required'
+}]

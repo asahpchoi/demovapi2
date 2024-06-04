@@ -63,7 +63,7 @@ export function RagSection(args) {
 
         <div className='w-8/12 m-24 bg-fwd-100 p-5' >
             <Grid container spacing={2} justifyContent="center" alignItems="center" >
-
+                <Grid item xs={12}>Link to the file: {files.map(f => <div><a href={f.url} target="_blank">{f.name}</a></div>)}</Grid>
                 <Grid item xs={6}>Available documents</Grid>
                 <Grid item xs={6}>Selected documents</Grid>
                 <Grid item xs={6}>{customList(files.filter(f => !f.selected))}</Grid>

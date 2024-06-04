@@ -43,6 +43,7 @@ export const checkSentiment = async (content) => {
 
 export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, rag, model, useTools) => {
     //The deployment name for your completions API model. The instruct model is the only new model that supports the legacy API.
+    const extraPrompt = " *if you are sending email, make sure the body is in html format, if you are sending sms, make sure prefix + is added, and the sms body should be less than 70 characters"
     const messages = [
         {
             role: "system",
@@ -80,7 +81,7 @@ export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, r
         groqLLM(messages, cb);
 
     if (model === "minimax")
-        minimaxLLM(systemPrompt ? systemPrompt : "you are a bot", userPrompt, cb)
+        minimaxLLM(systemPrompt ? systemPrompt + extraPrompt : "you are a bot" + extraPrompt, userPrompt, cb)
 
 }
 
