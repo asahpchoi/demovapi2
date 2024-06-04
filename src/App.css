@@ -1,5 +1,14 @@
 .App {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("./images/bg2.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-position: cover;
   text-align: center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .App-logo {

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import {
   Button,
- 
   Modal,
- 
   Stack,
- 
-
+  MenuItem,
+  Select
 } from "@mui/material";
+import person from "./images/person.svg"
 import { MainPrompt } from "./ui/MainPrompt.js";
 import { call, setCallback, convertBase64 } from "./libs/util.js";
 import { callLLM } from "./libs/llm.mjs";
@@ -18,17 +17,17 @@ import { TextUI } from "./ui/TextUI.js";
 import { SettingUI } from "./ui/SettingUI.js";
 import { RagSection } from "./ui/RagSection.js";
 import { Login } from "./ui/Login.js";
- 
+
 import { ShowQR } from "./ui/ShowQR.js";
 import { ShowInstructions } from "./ui/ShowInstructions.js";
- 
+
 
 import bg from "./images/background.svg"
 import { Result } from "./ui/Result.js";
 import CloseIcon from '@mui/icons-material/Close';
 import { Loading } from "./ui/Loading.js";
 import { Header } from "./ui/Header.js";
- 
+
 
 export default function App() {
   /// State variables for managing various application states
@@ -151,32 +150,69 @@ export default function App() {
 
   return (
     <div className="App">
-      {/* Main card for prompt and role selection */}
-      <Stack direction={{ xs: 'column', sm: 'row' }}  >
-        {displayMode === "info" && <ShowInstructions setDisplayMode={setDisplayMode} />}
-        <div className="md:w-1/2 w-full bg"
-          style={{ backgroundImage: `url(${bg}` }}
-        >
-          <Header logoAction={logoAction} userlist={userlist} sessionId={sessionId} />
-          <MainPrompt setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
-            model={model} setModel={setModel} models={models} />
-
-
+      <div className="p-9 flex flex-row justify-center">
+        <div className="flex gap-4  justify-center text-base font-bold text-neutral-800 max-md:ml-2.5">
+          <img
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/5eccd0cf9d1dbad8df1ed9b5b5532b98d226c847c16bafd04c30b8477fba72b0?"
+            className="shrink-0 max-w-full aspect-[2.56] w-[108px]"
+          />
+          <div className="self-center">FWD Gen AI build your bot</div>
         </div>
-        {displayMode === "test" &&<TextUI args={{
-            setUserPrompt, setAnswer, callLLM, prompt,
-            userPrompt, image, setImage, history,
-            setHistory, answer, rag,
-            model, setDisplayMode, openImageCapture, setResult
-          }} />
+        <div className="flex flex-1 gap-2 justify-end self-end text-sm whitespace-nowrap">
+          <div className="self-end">
+            <Select
+              onChange={(event) => {
+                const id = event.target.value;
+                window.location.replace(`?sid=${id}`);
+              }}
+              value={sessionId}
+            >
+              {userlist.map((user) => (
+                <MenuItem key={user.id} value={user.id}>
+                  {user.username}
+                </MenuItem>
+              ))}
+            </Select>
+          </div>
+          <img
+            loading="lazy"
+            src={person} alt="Notification icon"
+            className="shrink-0 w-10 aspect-square"
+          />
+        </div>
+      </div>
+      <div className="flex flex-1 overflow-hidden">
+        <ShowInstructions setDisplayMode={setDisplayMode} />
+        <MainPrompt setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
+          model={model} setModel={setModel} models={models} />
+      </div>
+      {/* Main card for prompt and role selection */}
+      {/* <Stack direction={{ xs: 'column', sm: 'row' }}  > */}
+      {/*   {displayMode === "info" && <ShowInstructions setDisplayMode={setDisplayMode} />} */}
+      {/*   <div className="md:w-1/2 w-full bg" */}
+      {/*     style={{ backgroundImage: `url(${bg}` }} */}
+      {/*   > */}
+      {/*     {/* <Header logoAction={logoAction} userlist={userlist} sessionId={sessionId} /> */}
+      {/*     <MainPrompt setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt} */}
+      {/*       model={model} setModel={setModel} models={models} /> */}
 
-        }
-      </Stack>
+
+      {/*   </div> */}
+      {/*   {displayMode === "test" && <TextUI args={{ */}
+      {/*     setUserPrompt, setAnswer, callLLM, prompt, */}
+      {/*     userPrompt, image, setImage, history, */}
+      {/*     setHistory, answer, rag, */}
+      {/*     model, setDisplayMode, openImageCapture, setResult */}
+      {/*   }} /> */}
+
+      {/*   } */}
+      {/* </Stack> */}
       <ModalTemplate isOpen={!sessionId} component={<Login />} />
       <ModalTemplate isOpen={displayMode === "upload"} component={<Stack ><Button onClick={() => {
         document.getElementById("imageCapture").click();
       }}>Take a photo</Button>
-        {image && <img style={{ height: "10vh", width: "10vw" }} src={image} alt="photo"/>}
+        {image && <img style={{ height: "10vh", width: "10vw" }} src={image} alt="photo" />}
 
       </Stack>} />
       <ModalTemplate isOpen={displayMode === "call"} component={<CallUI args={{ prompt, transcripts, currentMessage }} />} refresh={true} />
@@ -193,7 +229,7 @@ export default function App() {
           setImage(base64);
           updateData(sessionId, name, prompt, base64);
         }} />
-       
+
     </div >
   );
 }
