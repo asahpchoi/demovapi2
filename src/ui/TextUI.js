@@ -43,7 +43,7 @@ export const TextUI = (props) => {
   }
 
   const endSessionButtonStyle = {
-    zIndex: 10000,
+    zIndex: 3,
     position: "absolute",
     top: "24px",
     right: "24px",

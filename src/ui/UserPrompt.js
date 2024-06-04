@@ -28,14 +28,14 @@ const FileItem = ({ src, text, alt }) => (
     </div>
 );
 */
-const UserPrompt = ({ onEndSession, prompt, setPrompt, model, setModel, models }) => {
+const UserPrompt = ({ onEndSession, prompt, model }) => {
   // const enableButton = prompt.length > 0;
   const containerStyle = {
-    marginLeft: "12px",
     borderLeft: "4px solid red",
     borderImage: "linear-gradient(180deg, #E87722 9.11%, #E87722 30.93%, #FED141 57.74%, #6ECEB2 73.64%, #E87722 91.37%) 1",
     boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.45)",
     width: "50vw",
+    flexShrink: 0,
     backgroundColor: "rgba(250, 250, 250, 1)",
   }
   return (

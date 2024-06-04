@@ -150,6 +150,7 @@ export default function App() {
   return (
     <div className="App">
       <div style={{
+        flexShrink: 0,
         width: showInstructions ? "100vw" : "50vw",
       }}>
         <div className="p-9 flex flex-row justify-center">
@@ -188,17 +189,8 @@ export default function App() {
           {showInstructions &&
             <ShowInstructions onClose={() => setShowInstructions(false)} />
           }
-          <MainPrompt 
-            onOpenBot={() => setShowInstructions(false)}
-            setDisplayMode={setDisplayMode}
-            prompt={prompt}
-            setPrompt={setPrompt}
-            model={model}
-            setModel={setModel} 
-            models={models}
-            isShowInstructions={showInstructions} 
-            onPressShowInstructions={() => setShowInstructions(true)}
-          />
+          <MainPrompt onOpenBot={() => setShowInstructions(false)} setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
+            model={model} setModel={setModel} models={models} />
         </div>
       </div>
       <UserPrompt onEndSession={() => setDisplayMode("result")} model={model} />
