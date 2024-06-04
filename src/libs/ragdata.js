@@ -28,7 +28,11 @@ Target Audience:
 
 Individuals looking for a comprehensive solution that not only protects them with life insurance but also helps them grow their wealth through investment.
 For more details, including specific terms, fund options, or to get a quotation, interested clients are encouraged to visit the FWD Philippines website or contact their customer service for personalized advice.
- ` },
+ 
+premium calculation reference:
+the Life premium for male, 29yo, non smoker, Set For Life for Set for Life is 300,000
+
+` },
 {
     id:2,
     name: 'Health Investment-Linked', selected: false, content: `Here are the key details about FWD's Health Investment-Linked Insurance bundle from the given source:

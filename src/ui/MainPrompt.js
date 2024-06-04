@@ -51,7 +51,7 @@ export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel,
                 </div>
             </div>
             <nav className="flex gap-4  max-md:flex-wrap max-md:pr-5 flex-row-reverse">
-            <Button className="m-1" onClick={() => {
+                <Button className="m-1" onClick={() => {
                     setDisplayMode("test")
                 }} variant="outlined"> Start conversation</Button>
                 <img loading="lazy" src={uploadimage} alt="Second external link" className="shrink-0 w-6 aspect-square"

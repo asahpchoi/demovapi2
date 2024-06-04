@@ -45,7 +45,7 @@ export const TextUI = ({ args }) => {
             </MoodIcon>, name: 'rating'
         },
         {
-            icon: <DeleteIcon onClick={() => { setHistory([]) }}/>
+            icon: <DeleteIcon onClick={() => { setHistory([]) }} />
             , name: "remove history"
         }
     ];
@@ -79,6 +79,7 @@ export const TextUI = ({ args }) => {
         const chatbox = document.getElementById("chatbox");
         chatbox.scrollTop = 10000;
 
+
         const answer = await callLLM(prompt, userPrompt, image,
             (data, fin, toolCalls) => {
                 if (data) {
@@ -106,7 +107,7 @@ export const TextUI = ({ args }) => {
                 const chatbox = document.getElementById("chatbox");
                 chatbox.scrollTop = 10000;
 
-            }, history, setHistory, rag, model, useTool);
+            }, history, rag, model, useTool);
         const newHistory = history;
     }
 
