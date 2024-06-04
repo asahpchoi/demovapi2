@@ -30,6 +30,7 @@ import { Result } from "./ui/Result.js";
 import CloseIcon from '@mui/icons-material/Close';
 import { Loading } from "./ui/Loading.js";
 import { Header } from "./ui/Header.js";
+import Call from "./ui/Call.js"
 
 export default function App() {
   /// State variables for managing various application states
@@ -165,15 +166,14 @@ export default function App() {
 
 
         </div>
-        {displayMode == "test" && <div className="bg-fwd-100"  >
-          <TextUI args={{
+        {displayMode == "test" &&<TextUI args={{
             setUserPrompt, setAnswer, callLLM, prompt,
             userPrompt, image, setImage, history,
             setHistory, setImage, answer, rag,
             model, setDisplayMode, openImageCapture, setResult
           }} />
 
-        </div>}
+        }
       </Stack>
       <ModalTemplate isOpen={!sessionId} component={<Login />} />
       <ModalTemplate isOpen={displayMode == "upload"} component={<Stack ><Button onClick={() => {
@@ -196,6 +196,7 @@ export default function App() {
           setImage(base64);
           updateData(sessionId, name, prompt, base64);
         }} />
+       
     </div >
   );
 }

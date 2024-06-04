@@ -115,8 +115,8 @@ export const TextUI = ({ args }) => {
         )
     }
 
-    return <Stack className="bg-fwd-100">
-        <Stack className="z1 flex  bg-fwd-100" direction="row" justifyContent="space-between"
+    return <Stack className="bg-fwd-100 md:w-1/2 w-full">
+        <Stack className="z1 flex  " direction="row" justifyContent="space-between"
             alignItems="baseline">
             <Chatbot LLMIcon={LLMIcon} history={history} answer={answer} model={model} />
             {image && <div>
