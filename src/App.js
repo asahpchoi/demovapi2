@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {
   Button,
-  MenuItem,
+ 
   Modal,
-  Select,
+ 
   Stack,
-  Radio, RadioGroup, FormControlLabel,
+ 
 
 } from "@mui/material";
 import { MainPrompt } from "./ui/MainPrompt.js";
@@ -18,19 +18,17 @@ import { TextUI } from "./ui/TextUI.js";
 import { SettingUI } from "./ui/SettingUI.js";
 import { RagSection } from "./ui/RagSection.js";
 import { Login } from "./ui/Login.js";
-import Box from '@mui/material/Box';
-import Popper from '@mui/material/Popper';
-import logo from "./images/logo.svg";
+ 
 import { ShowQR } from "./ui/ShowQR.js";
 import { ShowInstructions } from "./ui/ShowInstructions.js";
-import { LLMIcon } from "./ui/LLMIcon";
+ 
 
 import bg from "./images/background.svg"
 import { Result } from "./ui/Result.js";
 import CloseIcon from '@mui/icons-material/Close';
 import { Loading } from "./ui/Loading.js";
 import { Header } from "./ui/Header.js";
-import Call from "./ui/Call.js"
+ 
 
 export default function App() {
   /// State variables for managing various application states
@@ -65,7 +63,7 @@ export default function App() {
     async function init() {
       if (false) {
         console.log("ci", process.env.CI)
-        while (window.prompt('Enter Password') != "fwdstrategy2024") {
+        while (window.prompt('Enter Password') !== "fwdstrategy2024") {
 
         }
       }
@@ -121,7 +119,7 @@ export default function App() {
 
 
   function logoAction() {
-    if (window.prompt('password') != '2024') return
+    if (window.prompt('password') !== '2024') return
     if (window.confirm("Make a call?")) {
       setTranscripts([]);
       call(name, prompt, rag);
@@ -155,7 +153,7 @@ export default function App() {
     <div className="App">
       {/* Main card for prompt and role selection */}
       <Stack direction={{ xs: 'column', sm: 'row' }}  >
-        {displayMode == "info" && <ShowInstructions setDisplayMode={setDisplayMode} />}
+        {displayMode === "info" && <ShowInstructions setDisplayMode={setDisplayMode} />}
         <div className="md:w-1/2 w-full bg p-3"
           style={{ backgroundImage: `url(${bg}` }}
         >
@@ -166,7 +164,7 @@ export default function App() {
 
 
         </div>
-        {displayMode == "test" &&<TextUI args={{
+        {displayMode === "test" &&<TextUI args={{
             setUserPrompt, setAnswer, callLLM, prompt,
             userPrompt, image, setImage, history,
             setHistory, setImage, answer, rag,
@@ -176,17 +174,17 @@ export default function App() {
         }
       </Stack>
       <ModalTemplate isOpen={!sessionId} component={<Login />} />
-      <ModalTemplate isOpen={displayMode == "upload"} component={<Stack ><Button onClick={() => {
+      <ModalTemplate isOpen={displayMode === "upload"} component={<Stack ><Button onClick={() => {
         document.getElementById("imageCapture").click();
       }}>Take a photo</Button>
         {image && <img style={{ height: "10vh", width: "10vw" }} src={image} />}
 
       </Stack>} />
-      <ModalTemplate isOpen={displayMode == "call"} component={<CallUI args={{ prompt, transcripts, currentMessage }} />} refresh={true} />
-      <ModalTemplate isOpen={displayMode == "QR"} component={<ShowQR />} refresh={true} />
-      <ModalTemplate isOpen={displayMode == "setting"} component={<SettingUI args={{ setUserlist }} />} />
-      <ModalTemplate isOpen={displayMode == 'result'} component={<Result result={result} />} />
-      <ModalTemplate isOpen={displayMode == 'rag'} component={<RagSection setRAG={setRAG} setDisplayMode={setDisplayMode} />} />
+      <ModalTemplate isOpen={displayMode === "call"} component={<CallUI args={{ prompt, transcripts, currentMessage }} />} refresh={true} />
+      <ModalTemplate isOpen={displayMode === "QR"} component={<ShowQR />} refresh={true} />
+      <ModalTemplate isOpen={displayMode === "setting"} component={<SettingUI args={{ setUserlist }} />} />
+      <ModalTemplate isOpen={displayMode === 'result'} component={<Result result={result} />} />
+      <ModalTemplate isOpen={displayMode === 'rag'} component={<RagSection setRAG={setRAG} setDisplayMode={setDisplayMode} />} />
       {loading && <Loading />}
       <input type="file" id="imageCapture" accept="image/*" capture="environment"
         className="hidden"
