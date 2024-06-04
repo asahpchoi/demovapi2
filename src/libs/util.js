@@ -51,6 +51,14 @@ export function call(username, prompt, rag) {
   vapi.start("cb6e3612-eb7e-463e-9041-ad17021669d7", assistantOverrides);
 }
 
+export function setMute(mute) {
+  vapi.setMuted(mute);
+}
+
+export function isMute() {
+  return vapi.isMuted();
+}
+
 export function stopCall() {
   vapi.stop();
 }

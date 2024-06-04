@@ -1,8 +1,10 @@
 import {
- 
+    Fab,
     Stack,
 } from "@mui/material";
- 
+
+
+
 export const CallUI = ({ args }) => {
     const { prompt, transcripts, currentMessage } = args;
 
@@ -17,9 +19,7 @@ export const CallUI = ({ args }) => {
                     (t, i) => <div id={i}>{t.role}: {t.transcript}</div>
                 )
             }
- 
         </Stack>
 
     </div>
-
 }
