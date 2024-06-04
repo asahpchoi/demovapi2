@@ -34,7 +34,6 @@ export default function App() {
   /// State variables for managing various application states
   const [loading, setLoading] = useState(true);
   const [prompt, setPrompt] = useState("");
-  const [answer, setAnswer] = useState("");
   const [sessionId, setSessionId] = useState(null);
   const [name, setName] = useState();
   const [userlist, setUserlist] = useState([]);
@@ -150,46 +149,50 @@ export default function App() {
 
   return (
     <div className="App">
-      <div className="p-9 flex flex-row justify-center">
-        <div className="flex gap-4 justify-center text-base font-bold text-neutral-800 max-md:ml-2.5">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/5eccd0cf9d1dbad8df1ed9b5b5532b98d226c847c16bafd04c30b8477fba72b0?"
-            className="shrink-0 max-w-full aspect-[2.56] w-[108px]"
-          />
-          <div className="self-center">FWD Gen AI build your bot</div>
-        </div>
-        <div className="flex flex-1 gap-2 justify-end self-end text-sm whitespace-nowrap">
-          <div className="self-end">
-            <Select
-              onChange={(event) => {
-                const id = event.target.value;
-                window.location.replace(`?sid=${id}`);
-              }}
-              value={sessionId}
-            >
-              {userlist.map((user) => (
-                <MenuItem key={user.id} value={user.id}>
-                  {user.username}
-                </MenuItem>
-              ))}
-            </Select>
+      <div style={{
+        width: showInstructions ? "100%" : "50vw",
+      }}>
+        <div className="p-9 flex flex-row justify-center">
+          <div className="flex gap-4 justify-center text-base font-bold text-neutral-800 max-md:ml-2.5">
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/5eccd0cf9d1dbad8df1ed9b5b5532b98d226c847c16bafd04c30b8477fba72b0?"
+              className="shrink-0 max-w-full aspect-[2.56] w-[108px]"
+            />
+            <div className="self-center">FWD Gen AI build your bot</div>
           </div>
-          <img
-            loading="lazy"
-            src={person} alt="Notification icon"
-            className="shrink-0 w-10 aspect-square"
-          />
+          <div className="flex flex-1 gap-2 justify-end self-end text-sm whitespace-nowrap">
+            <div className="self-end">
+              <Select
+                onChange={(event) => {
+                  const id = event.target.value;
+                  window.location.replace(`?sid=${id}`);
+                }}
+                value={sessionId}
+              >
+                {userlist.map((user) => (
+                  <MenuItem key={user.id} value={user.id}>
+                    {user.username}
+                  </MenuItem>
+                ))}
+              </Select>
+            </div>
+            <img
+              loading="lazy"
+              src={person} alt="Notification icon"
+              className="shrink-0 w-10 aspect-square"
+            />
+          </div>
+        </div>
+        <div className="flex">
+          {showInstructions &&
+            <ShowInstructions onClose={() => setShowInstructions(false)} />
+          }
+          <MainPrompt onOpenBot={() => setShowInstructions(false)} setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
+            model={model} setModel={setModel} models={models} />
         </div>
       </div>
-      <div className="flex">
-        {showInstructions &&
-          <ShowInstructions onClose={() => setShowInstructions(false)} />
-        }
-        <MainPrompt onOpenBot={() => setShowInstructions(false)} setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
-          model={model} setModel={setModel} models={models} />
-        <UserPrompt />
-      </div>
+      <UserPrompt />
       {/* Main card for prompt and role selection */}
       {/* <Stack direction={{ xs: 'column', sm: 'row' }}  > */}
       {/*   {displayMode === "info" && <ShowInstructions setDisplayMode={setDisplayMode} />} */}
