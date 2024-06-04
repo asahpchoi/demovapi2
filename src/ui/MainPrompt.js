@@ -8,7 +8,10 @@ import openai from "../images/openai.png";
 import mistral from "../images/mistral.png";
 import minimax from "../images/minimax.jpeg";
 import uploadimage from "../images/uploadimage.svg"
+import documentIcon from "../images/document.svg"
 import quote from "../images/quote.svg"
+import untoggled from "../images/untoggled.svg"
+import toggled from "../images/toggled.svg"
 
 const icons = {
   openai: openai,
@@ -28,6 +31,9 @@ const FileItem = ({ src, text, alt }) => (
 */
 export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel, models, onOpenBot }) => {
   // const enableButton = prompt.length > 0;
+  const [isRag, setIsRag] = React.useState(false);
+  const [isToggled, setIsToggled] = React.useState(false);
+  const [selectedModel, setSelectedModel] = React.useState(null);
   const enableButton = true;
   const buttonStyle = {
     alignItems: "center",
@@ -99,22 +105,40 @@ export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel,
               <div className="my-auto">Select LLM:</div>
             </div>
             <div className="flex flex-wrap flex-1 gap-3 content-start font-[450] text-neutral-800">
-              <div className="flex gap-2 justify-center py-1 pr-3 pl-1 bg-white border-0 border-orange-500 border-solid rounded-[100px]">
-                <div style={model === "openai" ? { ...radioStyle, ...selectedRadioStyle } : radioStyle} className="flex gap-1 justify-center my-auto" onClick={() => setModel("openai")} />
+              <div
+                onClick={() => setSelectedModel("openai")}
+                className="flex gap-2 justify-center py-1 pr-3 pl-1 bg-white border-0 border-orange-500 border-solid rounded-[100px]">
+                <img
+                  loading="lazy"
+                  src={selectedModel === "openai" ? selected : unselected}
+                  className="shrink-0 w-5 aspect-square"
+                />
                 <div className="flex gap-1 justify-center my-auto">
                   <img loading="lazy" src={icons.openai} alt={`${icons.openai} icon`} className="shrink-0 aspect-square w-[18px]" />
                   <div>CHAT GPT 4.0</div>
                 </div>
               </div>
-              <div className="flex gap-2 justify-center py-1 pr-3 pl-1 whitespace-nowrap bg-white border-0 border-orange-500 border-solid rounded-[100px]">
-                <div style={model === "minimax" ? { ...radioStyle, ...selectedRadioStyle } : radioStyle} className="flex gap-1 justify-center my-auto" onClick={() => setModel("minimax")} />
+              <div
+                onClick={() => setSelectedModel("minimax")}
+                className="flex gap-2 justify-center py-1 pr-3 pl-1 whitespace-nowrap bg-white border-0 border-orange-500 border-solid rounded-[100px]">
+                <img
+                  loading="lazy"
+                  src={selectedModel === "minimax" ? selected : unselected}
+                  className="shrink-0 w-5 aspect-square"
+                />
                 <div className="flex gap-1 justify-center my-auto">
                   <img loading="lazy" src={icons.minimax} alt={`${icons.minimax} icon`} className="shrink-0 aspect-square w-[18px]" />
                   <div>Minimax</div>
                 </div>
               </div>
-              <div className="flex gap-2 justify-center py-1 pr-3 pl-1 whitespace-nowrap bg-white border-0 border-orange-500 border-solid rounded-[100px]">
-                <div style={model === "mistral" ? { ...radioStyle, ...selectedRadioStyle } : radioStyle} className="flex gap-1 justify-center my-auto" onClick={() => setModel("mistral")} />
+              <div
+                onClick={() => setSelectedModel("mistral")}
+                className="flex gap-2 justify-center py-1 pr-3 pl-1 whitespace-nowrap bg-white border-0 border-orange-500 border-solid rounded-[100px]">
+                <img
+                  loading="lazy"
+                  src={selectedModel === "mistral" ? selected : unselected}
+                  className="shrink-0 w-5 aspect-square"
+                />
                 <div className="flex gap-1 justify-center my-auto">
                   <img loading="lazy" src={icons.mistral} alt={`${icons.mistral} icon`} className="shrink-0 aspect-square w-[18px]" />
                   <div>Llama</div>
@@ -125,7 +149,7 @@ export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel,
         </div>
       </div>
       <div className="flex flex-col justify-center px-4 py-3 mt-4 text-sm font-bold rounded border-0 border-orange-300 border-solid text-neutral-800 max-md:max-w-full">
-        <div className="flex gap-2 items-center pr-20 rounded max-md:flex-wrap max-md:pr-5">
+        <div onClick={() => setIsRag(prev => !prev)} className="flex gap-2 items-center pr-20 rounded max-md:flex-wrap max-md:pr-5">
           <img
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/ae4b7f3fcb1fa8d640e3d612357eace063b133fa8316a0efb79b66276ebaf2af?"
@@ -134,26 +158,82 @@ export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel,
           <div className="self-stretch my-auto">
             Select RAG files (Optional):{" "}
           </div>
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/79f6274fd0f0ef75ad579f4f61afaa456c188722f02e280e7e7fb4ad5d667f70?"
-            className="shrink-0 self-stretch my-auto w-6 aspect-square"
-          />
+          {isRag && (
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/322af2efe56197fee32bb9c57fdd22b8854c995217d64460c2c893db9c5b3e1e?"
+              className="w-full aspect-[1.59] fill-orange-500 max-w-[16px]"
+            />
+          )}
+          {!isRag && (
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/dac67a7d7ee3479a44f3fdc9ffc09e44f38d378042714a7802b36f3a6e7b0602?"
+              className="w-full aspect-[1.59] fill-orange-500 max-w-[16px]"
+            />
+          )}
         </div>
+        {isRag && (
+          <div className="flex gap-3 mt-5 self-stretch text-xs font-bold text-neutral-800 max-md:flex-wrap">
+            <div className="flex gap-1 justify-center p-2 bg-white rounded">
+              <img
+                loading="lazy"
+                src={documentIcon}
+                className="shrink-0 w-5 aspect-square"
+              />
+              <div className="flex-1 my-auto underline">Set for Life</div>
+              <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/20edc38edb55de419d162ad4a214d71d710f0594cc5ca107db3c28d5ef15d759?"
+                className="shrink-0 w-5 aspect-square"
+              />
+            </div>
+            <div className="flex gap-1 justify-center p-2 bg-white rounded">
+              <img
+                loading="lazy"
+                src={documentIcon}
+                className="shrink-0 w-5 aspect-square"
+              />
+              <div className="flex-1 my-auto underline">Health investment linked</div>
+              <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/20edc38edb55de419d162ad4a214d71d710f0594cc5ca107db3c28d5ef15d759?"
+                className="shrink-0 w-5 aspect-square"
+              />
+            </div>
+            <div className="flex gap-1 justify-center p-2 bg-white rounded">
+              <img
+                loading="lazy"
+                src={documentIcon}
+                className="shrink-0 w-5 aspect-square"
+              />
+              <div className="flex-1 my-auto underline">Claim process</div>
+              <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/20edc38edb55de419d162ad4a214d71d710f0594cc5ca107db3c28d5ef15d759?"
+                className="shrink-0 w-5 aspect-square"
+              />
+            </div>
+          </div>
+        )}
       </div>
       <div className="flex gap-2 items-center pr-3 pl-4 mt-4 rounded max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/5755ed0f9e50a3b37ef69f0f55954e4fc43d0d996ff3a40a57ea3303d8835621?"
-          className="shrink-0 self-stretch aspect-[0.97] w-[29px]"
-        />
         <div className="self-stretch my-auto text-sm font-bold text-neutral-800">
           Agentic AI bot (email agent)
         </div>
-        <div className="flex flex-col justify-center max-w-[40px]">
-          <div className="flex flex-col justify-center items-start py-1 w-full bg-white border-2 border-solid border-zinc-400 rounded-[50px]">
-            <div className="shrink-0 w-3.5 h-3.5 rounded-full bg-zinc-400" />
-          </div>
+        <div onClick={() => setIsToggled(prev => !prev)}>
+          {isToggled && (
+            <img
+              loading="lazy"
+              src={toggled}
+              className="shrink-0 self-stretch aspect-[0.97] w-[29px]"
+            />)}
+          {!isToggled && (
+            <img
+              loading="lazy"
+              src={untoggled}
+              className="shrink-0 self-stretch aspect-[0.97] w-[29px]"
+            />)}
         </div>
       </div>
     </div >
