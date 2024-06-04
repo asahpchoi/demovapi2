@@ -27,6 +27,41 @@ const FileItem = ({ src, text, alt }) => (
 );
 */
 export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel, models }) => {
+  // const enableButton = prompt.length > 0;
+  const enableButton = true;
+  const buttonStyle = {
+    alignItems: "center",
+    width: "147px",
+    height: "44px",
+    display: "flex",
+    borderRadius: "4px",
+    backgroundColor: enableButton ? "#E87722" : "#F3BB90",
+    color: "#fff",
+    padding: "0 16px 0 16px",
+    fontSize: "14px",
+    fontWeight: "bold",
+  }
+
+  const inputStyle = {
+    outline: "none",
+    caretColor: "#E87722",
+    display: "flex",
+    flex: "1",
+    resize: 'none',
+  }
+
+  const radioStyle = {
+    width: "24px",
+    height: "24px",
+    borderRadius: "1000px",
+    borderColor: "#E87722",
+    borderWidth: "2px",
+  }
+
+  const selectedRadioStyle = {
+    backgroundColor: "#E87722",
+  }
+
   return (
     <div className="flex flex-col px-9 pb-9 max-w-[695px] max-md:px-5">
       <div className="text-left text-2xl font-bold text-neutral-800 max-md:max-w-full">
@@ -36,22 +71,17 @@ export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel,
         Enter prompt below:
       </div>
       <div className="flex flex-col h-[400px] justify-between p-2 mt-4 bg-white rounded-lg border-2 border-orange-500 border-solid max-md:max-w-full">
-        <div className="max-md:max-w-full">
-          <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-            <div className="flex flex-col w-9/12 max-md:ml-0 max-md:w-full">
-              <div className="grow justify-center py-4 text-sm leading-5 font-[450] text-neutral-800 max-md:mt-3 max-md:max-w-full">
-                You are a financial advisor. Your role is to provide clients
-                with sound financial advice and strategies to help them achieve
-                their financial goals. Offer guidance on investments, savings,
-                retirement planning, and budgeting. Ensure that your advice is
-                tailored to each client’s individual financial situation and
-                goals.
-              </div>
-            </div>
-            <button className="flex flex-col ml-5 w-3/12 max-md:ml-0 bg-fwd-50 max-md:w-full">
+        <div className="flex flex-row flex-1 gap-2 max-md:flex-col max-md:gap-0">
+          <textarea style={inputStyle} multiple />
+          <button
+            style={buttonStyle}
+            onClick={async () => {
+            }}
+          >
+            <div className="flex-1">
               Open your GPT
-            </button>
-          </div>
+            </div>
+          </button>
         </div>
         <div>
           <img
@@ -70,47 +100,23 @@ export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel,
             </div>
             <div className="flex flex-wrap flex-1 gap-3 content-start font-[450] text-neutral-800">
               <div className="flex gap-2 justify-center py-1 pr-3 pl-1 bg-white border-0 border-orange-500 border-solid rounded-[100px]">
-                <img
-                  loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/369250538ec0daff0bcb5eb4209f9a2258c8ca46f76beb4927f7a218fb5d166a?"
-                  className="shrink-0 w-6 aspect-square"
-                />
+                <div style={model === "openai" ? { ...radioStyle, ...selectedRadioStyle } : radioStyle} className="flex gap-1 justify-center my-auto" onClick={() => setModel("openai")} />
                 <div className="flex gap-1 justify-center my-auto">
-                  <img
-                    loading="lazy"
-                    srcSet="..."
-                    className="shrink-0 aspect-square w-[18px]"
-                  />
+                  <img loading="lazy" src={icons.openai} alt={`${icons.openai} icon`} className="shrink-0 aspect-square w-[18px]" />
                   <div>CHAT GPT 4.0</div>
                 </div>
               </div>
               <div className="flex gap-2 justify-center py-1 pr-3 pl-1 whitespace-nowrap bg-white border-0 border-orange-500 border-solid rounded-[100px]">
-                <img
-                  loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/369250538ec0daff0bcb5eb4209f9a2258c8ca46f76beb4927f7a218fb5d166a?"
-                  className="shrink-0 w-6 aspect-square"
-                />
+                <div style={model === "minimax" ? { ...radioStyle, ...selectedRadioStyle } : radioStyle} className="flex gap-1 justify-center my-auto" onClick={() => setModel("minimax")} />
                 <div className="flex gap-1 justify-center my-auto">
-                  <img
-                    loading="lazy"
-                    srcSet="..."
-                    className="shrink-0 aspect-square w-[18px]"
-                  />
-                  <div>Claude</div>
+                  <img loading="lazy" src={icons.minimax} alt={`${icons.minimax} icon`} className="shrink-0 aspect-square w-[18px]" />
+                  <div>Minimax</div>
                 </div>
               </div>
               <div className="flex gap-2 justify-center py-1 pr-3 pl-1 whitespace-nowrap bg-white border-0 border-orange-500 border-solid rounded-[100px]">
-                <img
-                  loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/369250538ec0daff0bcb5eb4209f9a2258c8ca46f76beb4927f7a218fb5d166a?"
-                  className="shrink-0 w-6 aspect-square"
-                />
+                <div style={model === "mistral" ? { ...radioStyle, ...selectedRadioStyle } : radioStyle} className="flex gap-1 justify-center my-auto" onClick={() => setModel("mistral")} />
                 <div className="flex gap-1 justify-center my-auto">
-                  <img
-                    loading="lazy"
-                    srcSet="..."
-                    className="shrink-0 aspect-square w-[18px]"
-                  />
+                  <img loading="lazy" src={icons.mistral} alt={`${icons.mistral} icon`} className="shrink-0 aspect-square w-[18px]" />
                   <div>Llama</div>
                 </div>
               </div>
@@ -144,8 +150,8 @@ export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel,
         <div className="self-stretch my-auto text-sm font-bold text-neutral-800">
           Agentic AI bot (email agent)
         </div>
-        <div className="flex flex-col justify-center self-stretch my-auto">
-          <div className="flex flex-col justify-center items-start py-1 bg-white border-2 border-solid border-zinc-400 rounded-[50px] max-md:pr-5">
+        <div className="flex flex-col justify-center max-w-[40px]">
+          <div className="flex flex-col justify-center items-start py-1 w-full bg-white border-2 border-solid border-zinc-400 rounded-[50px]">
             <div className="shrink-0 w-3.5 h-3.5 rounded-full bg-zinc-400" />
           </div>
         </div>
