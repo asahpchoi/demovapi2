@@ -17,11 +17,18 @@ const icons = {
   minimax: minimax,
 }
 
+const files = {
+  setForLife: 1,
+  healthInvestmentLinked: 2,
+  claimProcess: 3,
+}
+
 export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel, models, onOpenBot, isShowInstructions, onPressShowInstructions }) {
   const [isRag, setIsRag] = React.useState(false);
   const [text, setText] = React.useState("");
   const [isToggled, setIsToggled] = React.useState(false);
   const [selectedModel, setSelectedModel] = React.useState(null);
+  const [selectedFiles, setSelectedFiles] = React.useState([]);
   const enableButton = !!text && text.length > 0;
 
   const buttonStyle = {
@@ -76,11 +83,61 @@ export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel,
           </button>
         </div>
         <div>
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/2cb397158623a09c65497ec899e1ffc3078c8c7a6c644308d076b0f3894e0d46?"
-            className="w-6 aspect-square max-md:mt-10"
-          />
+          <div className="flex flex-row gap-2 text-xs font-bold text-neutral-800 max-md:flex-wrap">
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/2cb397158623a09c65497ec899e1ffc3078c8c7a6c644308d076b0f3894e0d46?"
+              className="w-6 h-[36px] aspect-square max-md:mt-10"
+            />
+            {selectedFiles.includes(files.setForLife) && (
+              <div className="flex gap-5 justify-between px-2 py-2 rounded bg-stone-50" onClick={() => setSelectedFiles([])}>
+                <div className="flex gap-1 pr-5">
+                  <img
+                    src={documentIcon}
+                    className="shrink-0 w-5 aspect-square"
+                  />
+                  <div className="my-auto">Set for Life </div>
+                </div>
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/d89bee0d53fee804ad87b2cccf2b6d70465b44bc4fb312abf57535a233c953b4?"
+                  className="shrink-0 my-auto w-4 aspect-square"
+                />
+              </div>
+            )}
+            {selectedFiles.includes(files.healthInvestmentLinked) && (
+              <div className="flex gap-0.5 justify-between px-2 py-2 rounded bg-stone-50">
+                <div className="flex gap-1 pr-5">
+                  <img
+                    src={documentIcon}
+                    className="shrink-0 w-5 aspect-square"
+                  />
+                  <div className="my-auto">Health investment linked</div>
+                </div>
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/75e5f02c47074f3f38d36de4edbbd11a27acd444132daef9754f913ed2b07a72?"
+                  className="shrink-0 my-auto w-4 aspect-square"
+                />
+              </div>
+            )}
+            {selectedFiles.includes(files.claimProcess) && (
+              <div className="flex gap-5 justify-between px-2 py-2 rounded bg-stone-50">
+                <div className="flex gap-1 pr-5">
+                  <img
+                    src={documentIcon}
+                    className="shrink-0 w-5 aspect-square"
+                  />
+                  <div className="my-auto">Claim process</div>
+                </div>
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/d89bee0d53fee804ad87b2cccf2b6d70465b44bc4fb312abf57535a233c953b4?"
+                  className="shrink-0 my-auto w-4 aspect-square"
+                />
+              </div>
+            )}
+          </div>
           <div className="flex gap-3 py-3 mt-3 text-sm rounded-lg max-md:flex-wrap">
             <div className="flex gap-2 self-start px-1 font-bold rounded text-neutral-800">
               <img
@@ -158,39 +215,52 @@ export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel,
         </div>
         {isRag && (
           <div className="flex gap-3 mt-5 self-stretch text-xs font-bold text-neutral-800 max-md:flex-wrap">
-            <div className="flex gap-1 justify-center p-2 bg-white rounded">
-              <img
-                src={documentIcon}
-                className="shrink-0 w-5 aspect-square"
-              />
-              <div className="flex-1 my-auto underline">Set for Life</div>
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/20edc38edb55de419d162ad4a214d71d710f0594cc5ca107db3c28d5ef15d759?"
-                className="shrink-0 w-5 aspect-square"
-              />
-            </div>
-            <div className="flex gap-1 justify-center p-2 bg-white rounded">
-              <img
-                src={documentIcon}
-                className="shrink-0 w-5 aspect-square"
-              />
-              <div className="flex-1 my-auto underline">Health investment linked</div>
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/20edc38edb55de419d162ad4a214d71d710f0594cc5ca107db3c28d5ef15d759?"
-                className="shrink-0 w-5 aspect-square"
-              />
-            </div>
-            <div className="flex gap-1 justify-center p-2 bg-white rounded">
-              <img
-                src={documentIcon}
-                className="shrink-0 w-5 aspect-square"
-              />
-              <div className="flex-1 my-auto underline">Claim process</div>
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/20edc38edb55de419d162ad4a214d71d710f0594cc5ca107db3c28d5ef15d759?"
-                className="shrink-0 w-5 aspect-square"
-              />
-            </div>
+            {!selectedFiles.includes(files.setForLife) && (
+              <div className="flex gap-1 justify-center p-2 bg-white rounded"
+                onClick={() => setSelectedFiles(prev => [...prev, files.setForLife])}
+              >
+                <img
+                  src={documentIcon}
+                  className="shrink-0 w-5 aspect-square"
+                />
+                <div className="flex-1 my-auto underline">Set for Life</div>
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/20edc38edb55de419d162ad4a214d71d710f0594cc5ca107db3c28d5ef15d759?"
+                  className="shrink-0 w-5 aspect-square"
+                />
+              </div>
+            )}
+            {!selectedFiles.includes(files.healthInvestmentLinked) && (
+              <div
+                className="flex gap-1 justify-center p-2 bg-white rounded"
+                onClick={() => setSelectedFiles(prev => [...prev, files.healthInvestmentLinked])}
+              >
+                <img
+                  src={documentIcon}
+                  className="shrink-0 w-5 aspect-square"
+                />
+                <div className="flex-1 my-auto underline">Health investment linked</div>
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/20edc38edb55de419d162ad4a214d71d710f0594cc5ca107db3c28d5ef15d759?"
+                  className="shrink-0 w-5 aspect-square"
+                />
+              </div>
+            )}
+            {!selectedFiles.includes(files.claimProcess) && (
+              <div className="flex gap-1 justify-center p-2 bg-white rounded"
+                onClick={() => setSelectedFiles(prev => [...prev, files.claimProcess])}
+              >
+                <img
+                  src={documentIcon}
+                  className="shrink-0 w-5 aspect-square"
+                />
+                <div className="flex-1 my-auto underline">Claim process</div>
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/20edc38edb55de419d162ad4a214d71d710f0594cc5ca107db3c28d5ef15d759?"
+                  className="shrink-0 w-5 aspect-square"
+                />
+              </div>
+            )}
           </div>
         )}
       </div>
