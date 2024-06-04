@@ -1,6 +1,6 @@
 import * as React from "react";
 import {
-    FilledInput
+    FilledInput, Button
 } from "@mui/material";
 import selected from "../images/selected.svg";
 import unselected from "../images/unselected.svg";
@@ -9,6 +9,7 @@ import mistral from "../images/mistral.png";
 import minimax from "../images/minimax.jpeg";
 import uploadimage from "../images/uploadimage.svg"
 import quote from "../images/quote.svg"
+
 const icons = {
     openai: openai,
     mistral: mistral,
@@ -29,14 +30,16 @@ export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel,
     <div className="flex flex-col self-stretch  bg-fwd-50 pl-10 pr-10">
         <header className="flex gap-5 justify-between px-5 w-full font-bold max-md:flex-wrap max-md:max-w-full">
             <h1 className="text-xl text-neutral-800">Enter prompt below:</h1>
-            <div className="text-base text-right text-orange-500" onClick={() => {
+            <div className="text-base text-right text-orange-500" ><Button onClick={() => {
                 setDisplayMode("info")
-            }}>Show instructions</div>
+            }} variant="outlined">Show instructions</Button>
+
+            </div>
         </header>
         <section className="flex flex-col justify-between p-2 mt-4 w-full bg-white rounded-lg border-2 border-orange-500 border-solid max-md:max-w-full">
             <div className="max-md:max-w-full">
                 <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                    <article className="flex flex-col w-[71%] max-md:ml-0 max-md:w-full">
+                    <article className="flex flex-col w-full max-md:ml-0 max-md:w-full">
                         <p className="grow pt-2.5 pb-6 text-sm leading-5 font-[450] text-neutral-800 max-md:mt-3">
                             <FilledInput value={prompt} className="w-full h-300" rows={3} multiline
                                 onChange={(e) => {
@@ -44,23 +47,16 @@ export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel,
                                 }} />
                         </p>
                     </article>
-                    <aside className="flex flex-col ml-5 w-[29%] max-md:ml-0 max-md:w-full">
-                        <div
-                            className="justify-center px-4 py-3 w-full text-base font-bold text-white bg-orange-500 rounded max-md:mt-3"
-                            tabIndex={0}
-                            role="button"
-                            onClick={() => {
-                                setDisplayMode("test")
-                            }}
-                        >
-                            Start conversation
-                        </div>
-                    </aside>
+
                 </div>
             </div>
-            <nav className="flex gap-4 pr-20 max-md:flex-wrap max-md:pr-5">
+            <nav className="flex gap-4  max-md:flex-wrap max-md:pr-5 flex-row-reverse">
+            <Button className="m-1" onClick={() => {
+                    setDisplayMode("test")
+                }} variant="outlined"> Start conversation</Button>
                 <img loading="lazy" src={uploadimage} alt="Second external link" className="shrink-0 w-6 aspect-square"
                     onClick={() => { setDisplayMode("upload") }} />
+
             </nav>
         </section>
         <section className="flex gap-3 py-3 mt-6 text-sm rounded-lg max-md:flex-wrap">
@@ -70,7 +66,7 @@ export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel,
             </div>
             <div className="flex flex-wrap flex-1 gap-3 content-start pr-20 font-[450] text-neutral-800">
                 {
-             
+
                     models.map((item, index) => (
                         <div
                             key={index}
@@ -96,8 +92,8 @@ export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel,
                 <div className="flex-1 my-auto max-md:max-w-full" onClick={() => {
                     setDisplayMode("rag")
                 }}>Select RAG files (Optional):{" "}</div>
-            </div>   
- 
+            </div>
+
         </section>
     </div>
 );
