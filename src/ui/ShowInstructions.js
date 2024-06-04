@@ -88,7 +88,7 @@ export function ShowInstructions({ onClose }) {
     <div
       style={containerStyle}
       className="pr-1 pl-1 pt-9 bg-fwd-100 h-screen">
-      <div className="h-full overflow-scroll pr-5">
+      <div className="h-full overflow-scroll pl-5 pr-5">
         <div className="flex gap-5 text-2xl font-bold text-neutral-800 max-md:flex-wrap">
           <div className="flex-1 text-left max-md:max-w-full">Your exercise:</div>
           <img
@@ -107,7 +107,7 @@ export function ShowInstructions({ onClose }) {
             sunt explicabo.
           </div>
         </div>
-        <div className="mt-5 mb-5 text-sm self-start font-bold leading-5 text-neutral-800 max-md:max-w-full">
+        <div className="mt-5 mb-5 text-sm text-left self-start font-bold leading-5 text-neutral-800 max-md:max-w-full">
           Tips:
         </div>
         <div className="flex flex-col gap-4 mb-5">
