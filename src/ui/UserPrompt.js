@@ -28,7 +28,7 @@ const FileItem = ({ src, text, alt }) => (
     </div>
 );
 */
-const UserPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel, models }) => {
+const UserPrompt = ({ onEndSession, prompt, setPrompt, model, setModel, models }) => {
   // const enableButton = prompt.length > 0;
   const containerStyle = {
     marginLeft: "12px",
@@ -40,7 +40,7 @@ const UserPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel, models
   }
   return (
     <div className="h-screen" style={containerStyle}>
-      <TextUI args={{ prompt, setPrompt, model, setModel, models }} />
+      <TextUI prompt={prompt} model={model} onEndSession={onEndSession} />
     </div>
   );
 

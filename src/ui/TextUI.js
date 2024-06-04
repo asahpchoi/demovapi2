@@ -3,7 +3,6 @@ import {
   Checkbox
 } from "@mui/material";
 import { useState } from "react";
-import { ImageControl } from "./ImageControl";
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
@@ -16,11 +15,11 @@ import { Loading } from "./Loading";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { callLLM } from "../libs/llm.mjs";
 
-export const TextUI = ({ args }) => {
+export const TextUI = (props) => {
   const {
-    prompt, image, setImage,
-    rag,
-    setDisplayMode, model, openImageCapture, setResult } = args
+    prompt, image,
+    rag, onEndSession,
+    setDisplayMode, model, openImageCapture, setResult } = props
 
   const [answer, setAnswer] = useState("");
   const [history, setHistory] = useState([]);
@@ -40,6 +39,7 @@ export const TextUI = ({ args }) => {
   const promptInputStyle = {
     outline: "none",
     flexGrow: 1,
+    fontSize: "16px",
   }
 
   const endSessionButtonStyle = {
@@ -54,6 +54,7 @@ export const TextUI = ({ args }) => {
     fontSize: "14px",
     alignItems: "center",
   }
+
 
   const actions = [
     { icon: <CameraAltIcon onClick={openImageCapture} />, name: 'Take photo' },
@@ -151,20 +152,21 @@ export const TextUI = ({ args }) => {
 
   return (
     <Stack className="flex h-screen relative w-full">
-      <button style={endSessionButtonStyle}>
+      <button style={endSessionButtonStyle} onClick={onEndSession}>
         End the session
         <svg className="ml-1" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M15.4999 8H8.5C8.224 8 8 8.224 8 8.5V15.5C8 15.776 8.224 16 8.5 16H15.4999C15.7759 16 15.9999 15.776 15.9999 15.5V8.5C15.9999 8.224 15.7759 8 15.4999 8Z" fill="#B30909" />
           <path fill-rule="evenodd" clip-rule="evenodd" d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21ZM12 23C18.0751 23 23 18.0751 23 12C23 5.92487 18.0751 1 12 1C5.92487 1 1 5.92487 1 12C1 18.0751 5.92487 23 12 23Z" fill="#B30909" />
         </svg>
       </button>
-      <Stack className="absolute bottom-0 pb-20" direction="row" justifyContent="space-between"
-        alignItems="baseline">
+
+      <Stack className="absolute top-0 pb-20 h-screen w-full">
         <Chatbot history={history} answer={answer} model={model} />
-        {image && <div>
-          <ImageControl image={image} setImage={setImage} />
-        </div>}
+        {/* {image && <div> */}
+        {/*   <ImageControl image={image} setImage={setImage} /> */}
+        {/* </div>} */}
       </Stack>
+
       <div className="p-3 absolute bottom-0 w-full" style={{ backgroundColor: "white" }}>
         <div style={promptStyle} >
           <div className="mr-1">
@@ -191,24 +193,26 @@ export const TextUI = ({ args }) => {
           </div>
         </div>
       </div>
-      {isLoading && <Loading>
+      {
+        isLoading && <Loading>
 
-        <SpeedDial
-          ariaLabel="SpeedDial basic example"
-          sx={{ position: 'absolute', bottom: 16, right: 16 }}
-          icon={<SpeedDialIcon />}
-        >
-          {actions.map((action) => (
-            <SpeedDialAction
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-            />
-          ))}
-        </SpeedDial>
+          <SpeedDial
+            ariaLabel="SpeedDial basic example"
+            sx={{ position: 'absolute', bottom: 16, right: 16 }}
+            icon={<SpeedDialIcon />}
+          >
+            {actions.map((action) => (
+              <SpeedDialAction
+                key={action.name}
+                icon={action.icon}
+                tooltipTitle={action.name}
+              />
+            ))}
+          </SpeedDial>
 
-      </Loading>}
+        </Loading>
+      }
 
-    </Stack>
+    </Stack >
   )
 }

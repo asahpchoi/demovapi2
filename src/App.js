@@ -150,7 +150,7 @@ export default function App() {
   return (
     <div className="App">
       <div style={{
-        width: showInstructions ? "100%" : "50vw",
+        width: showInstructions ? "100vw" : "50vw",
       }}>
         <div className="p-9 flex flex-row justify-center">
           <div className="flex gap-4 justify-center text-base font-bold text-neutral-800 max-md:ml-2.5">
@@ -201,28 +201,8 @@ export default function App() {
           />
         </div>
       </div>
-      <UserPrompt />
-      {/* Main card for prompt and role selection */}
-      {/* <Stack direction={{ xs: 'column', sm: 'row' }}  > */}
-      {/*   {displayMode === "info" && <ShowInstructions setDisplayMode={setDisplayMode} />} */}
-      {/*   <div className="md:w-1/2 w-full bg" */}
-      {/*     style={{ backgroundImage: `url(${bg}` }} */}
-      {/*   > */}
-      {/*     {/* <Header logoAction={logoAction} userlist={userlist} sessionId={sessionId} /> */}
-      {/*     <MainPrompt setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt} */}
-      {/*       model={model} setModel={setModel} models={models} /> */}
+      <UserPrompt onEndSession={() => setDisplayMode("result")} model={model} />
 
-
-      {/*   </div> */}
-      {/*   {displayMode === "test" && <TextUI args={{ */}
-      {/*     setUserPrompt, setAnswer, callLLM, prompt, */}
-      {/*     userPrompt, image, setImage, history, */}
-      {/*     setHistory, answer, rag, */}
-      {/*     model, setDisplayMode, openImageCapture, setResult */}
-      {/*   }} /> */}
-
-      {/*   } */}
-      {/* </Stack> */}
       <ModalTemplate isOpen={!sessionId} component={<Login />} />
       <ModalTemplate isOpen={displayMode === "upload"} component={<Stack ><Button onClick={() => {
         document.getElementById("imageCapture").click();
