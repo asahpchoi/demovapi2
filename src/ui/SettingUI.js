@@ -1,5 +1,5 @@
 import {
- 
+
     Stack,
     Button,
     TextField
@@ -14,10 +14,7 @@ export const SettingUI = ({ args }) => {
 
     useEffect(() => {
         getSettings("instruction").then(setInstruction);
-
-        getUsers().then(setUsers)
-
-
+        getUsers().then(setUsers);
     }, [])
 
 

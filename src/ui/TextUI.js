@@ -15,6 +15,8 @@ import MoodIcon from '@mui/icons-material/Mood';
 import { checkSentiment } from "../libs/llm.mjs";
 import { Chatbot } from "./Chatbot";
 import { Loading } from "./Loading";
+
+
 export const TextUI = ({ args }) => {
     const { setUserPrompt, setAnswer, callLLM,
         prompt, userPrompt, image, setImage,

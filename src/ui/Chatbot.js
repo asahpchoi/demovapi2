@@ -2,7 +2,7 @@ import {
     Stack,
 } from "@mui/material";
 import Markdown from 'react-markdown';
- 
+import person from "../images/person.svg"
 
 export const Chatbot = ({ LLMIcon, history, answer, model  }) => {
     return <div id="chatbox" className="" style={{ overflow: 'auto', textAlign: "left" }}>
@@ -10,7 +10,7 @@ export const Chatbot = ({ LLMIcon, history, answer, model  }) => {
             {history.map((h,i) => {
                 const data = h.content[0].text
                 return <Stack direction="row" className="pt-2" key={i}>
-                    {h.model ? <LLMIcon name={h.model} /> : <LLMIcon name="user" />}
+                    {h.model ? <LLMIcon name={h.model} /> : <img src={person} alt="person"/>}
                     <Markdown className="pl-2 pt-2">{data}</Markdown>
                 </Stack>
             })}

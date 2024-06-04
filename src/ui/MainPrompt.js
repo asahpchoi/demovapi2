@@ -38,7 +38,7 @@ export const MainPrompt = ({ setDisplayMode, prompt, setPrompt, model, setModel,
                 <div className="flex gap-5 max-md:flex-col max-md:gap-0">
                     <article className="flex flex-col w-[71%] max-md:ml-0 max-md:w-full">
                         <p className="grow pt-2.5 pb-6 text-sm leading-5 font-[450] text-neutral-800 max-md:mt-3">
-                            <FilledInput value={prompt} className="w-full h-300" rows={5} multiline
+                            <FilledInput value={prompt} className="w-full h-300" rows={3} multiline
                                 onChange={(e) => {
                                     setPrompt(e.target.value)
                                 }} />

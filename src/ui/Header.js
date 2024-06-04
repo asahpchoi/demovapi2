@@ -12,7 +12,7 @@ import person from "../images/person.svg"
 
 export function Header({ sessionId, userlist, logoAction }) {
     return (
-        <section className="flex gap-4 p-9 max-md:flex-wrap max-md:px-5">
+        <section className="flex gap-4 p-2 max-md:flex-wrap max-md:px-5">
             <img
                 loading="lazy"
                 src={logo}

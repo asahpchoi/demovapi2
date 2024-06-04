@@ -154,11 +154,10 @@ export default function App() {
       {/* Main card for prompt and role selection */}
       <Stack direction={{ xs: 'column', sm: 'row' }}  >
         {displayMode === "info" && <ShowInstructions setDisplayMode={setDisplayMode} />}
-        <div className="md:w-1/2 w-full bg p-3"
+        <div className="md:w-1/2 w-full bg"
           style={{ backgroundImage: `url(${bg}` }}
         >
           <Header logoAction={logoAction} userlist={userlist} sessionId={sessionId} />
-
           <MainPrompt setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
             model={model} setModel={setModel} models={models} />
 
