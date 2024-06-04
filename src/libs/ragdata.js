@@ -55,13 +55,13 @@ the Life premium for male, 29yo, non smoker, annual premium for Set for Life is 
     
     image
     Recover without worrying about premium payments
-    If you have a major illness, we’ll waive future premium payments.
+    If you have a major illness, we  ll waive future premium payments.
     image
     100% refund of paid premiums
-    100% refund if you’ve never made a major critical illness claim by age 75.
+    100% refund if you  ve never made a major critical illness claim by age 75.
     image
     100% death benefit for your loved ones
-    Should you pass away before you turn 75, we’ll give your family 100% of your plan's benefit amount.
+    Should you pass away before you turn 75, we  ll give your family 100% of your plan's benefit amount.
     `
     , url: `https://www.fwd.com.ph/health-protection/set-for-health/`
 },
