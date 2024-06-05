@@ -38,7 +38,6 @@ export const Chatbot = ({ history, answer, model }) => {
 
     {history.length === 0 &&
       <Stack style={placeholderStyle}>
-        <div>Hello! I am your financial advisor. </div>
         <div>How can I help you today?</div>
       </Stack>
     }

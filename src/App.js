@@ -141,8 +141,19 @@ export default function App() {
         {!isHideClose &&
           <CloseIcon
             className="fixed top-0  right-0 m-5"
-            onClick={() => {
-              refresh ? window.location.reload() : setDisplayMode("test")
+            onClick={async () => {
+
+              refresh ? window.location.reload() : setDisplayMode("test");
+              const params = new URLSearchParams(document.location.search);
+              const sid = params.get("sid");
+        
+              const data = await getUser(sid);
+              if (data) {
+                setName(data[0].username);
+                setPrompt(data[0].systemPrompt);
+                setImage(data[0].photo)
+                
+              }
             }}>
 
           </CloseIcon>
@@ -213,7 +224,7 @@ export default function App() {
         </div>
       </div>
       <UserPrompt onEndSession={() => setDisplayMode("result")} model={model} useTool={useTool} rag={rag} prompt={prompt} setDisplayMode={setDisplayMode} image={image} />
- 
+
       <ModalTemplate isOpen={!sessionId} component={<Login />} />
       <ModalTemplate isOpen={displayMode === "upload"} component={<Stack ><Button onClick={() => {
         document.getElementById("imageCapture").click();
@@ -222,7 +233,7 @@ export default function App() {
 
       </Stack>} />
       <ModalTemplate isOpen={displayMode === "call"} component={<CallUI args={{ prompt, transcripts, currentMessage }} />} refresh={true} />
-      <ModalTemplate isOpen={displayMode === "QR"} component={<ShowQR />} refresh={true} />
+      <ModalTemplate isOpen={displayMode === "QR"} component={<ShowQR />} />
       <ModalTemplate isOpen={displayMode === "setting"} component={<SettingUI args={{ setUserlist }} />} />
 
       <ModalTemplate isOpen={displayMode === 'result'} isHideClose component={<Result result={result} userlist={userlist} sessionId={sessionId} />} />
