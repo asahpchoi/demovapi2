@@ -3,23 +3,18 @@ import {
   Checkbox
 } from "@mui/material";
 import { useState } from "react";
-import SpeedDial from '@mui/material/SpeedDial';
-import SpeedDialIcon from '@mui/material/SpeedDialIcon';
-import SpeedDialAction from '@mui/material/SpeedDialAction';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
-import MoodIcon from '@mui/icons-material/Mood';
-import { checkSentiment } from "../libs/llm.mjs";
+
 import { Chatbot } from "./Chatbot";
 import { Loading } from "./Loading";
-import DeleteIcon from '@mui/icons-material/Delete';
+
 import { callLLM } from "../libs/llm.mjs";
 
 export const TextUI = (props) => {
   const {
     prompt, image,
     rag, onEndSession,
-    setDisplayMode, model, openImageCapture, setResult, useTool } = props
+    setDisplayMode, model, useTool
+  } = props
 
   const [answer, setAnswer] = useState("");
   const [history, setHistory] = useState([]);
@@ -58,15 +53,7 @@ export const TextUI = (props) => {
 
 
 
-  async function showRating() {
-    const data = history.map(h => `${h.role}: ${h.content}`).join();
-    setIsLoading(true)
-    const scoring = await checkSentiment(data);
-    setDisplayMode("result")
-    setIsLoading(false)
-    setResult(scoring)
-    //setSentiment(sentimentReply)
-  }
+
 
   async function handleSubmit() {
     var answerPart = '';
@@ -117,16 +104,6 @@ export const TextUI = (props) => {
       }, history, rag, model, useTool);
   }
 
-  function convertMessages(ms) {
-    return ms.map(
-      m => {
-        return {
-          role: m.role,
-          content: m.content[0].text
-        }
-      }
-    )
-  }
 
   return (
     <Stack className="flex h-screen relative w-full">
@@ -178,11 +155,7 @@ export const TextUI = (props) => {
         </div>
       </div>
       {
-        isLoading && <Loading>
-
-
-
-        </Loading>
+        isLoading && <Loading/>
       }
 
     </Stack >
