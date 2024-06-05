@@ -19,7 +19,7 @@ const icons = {
   minimax: minimax,
 }
 
-export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructions, onPressShowInstructions, setRAG, setUseTool, setDisplayMode, sessionId, prompt}) {
+export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructions, onPressShowInstructions, setRAG, setUseTool, setDisplayMode, sessionId, prompt }) {
   const [isRag, setIsRag] = React.useState(false);
   const [text, setText] = React.useState("");
   const [isToggled, setIsToggled] = React.useState(false);
@@ -69,7 +69,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
     setRAG(RAG);
     setUseTool(isToggled);
     setPrompt(text);
-    updateSystemPrompt(sessionId,text);
+    updateSystemPrompt(sessionId, text);
   }, [selectedFiles, isToggled, text])
 
 
@@ -85,7 +85,9 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
         </div>
         {!isShowInstructions && (
           <div className="text-end text-orange-500 font-bold" onClick={() => onPressShowInstructions()}>
-            Show instructions
+            <button>
+              Show instructions
+            </button>
           </div>
         )}
       </div>
@@ -105,7 +107,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
             onClick={async () => {
             }}
           >
-            <div className="flex-1" onClick={onOpenBot}>
+            <div className="flex-1" onClick={isShowInstructions ? onOpenBot : undefined}>
               Open your GPT
             </div>
           </button>
@@ -115,8 +117,8 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
             <img
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/2cb397158623a09c65497ec899e1ffc3078c8c7a6c644308d076b0f3894e0d46?"
-              className="w-6 h-[36px] aspect-square max-md:mt-10"
-              onClick={()=>setDisplayMode("QR")}
+              className=" w- 6 h-[36px] aspect-square max-md:mt-10"
+              onClick={() => setDisplayMode("QR")}
             />
             {selectedFiles.setForLife && (
               <div className="flex gap-5 px-2 py-2 rounded bg-fwd-100">
@@ -278,13 +280,13 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
             {!selectedFiles.health && (
               <div
                 className="flex gap-1 justify-center p-2 bg-white rounded"
-      
+
               >
                 <img
                   src={documentIcon}
                   className="shrink-0 w-5 aspect-square"
                 />
-                
+
                 <a className="flex-1 my-auto underline" href={ragdata.health.url} target="_blank">Health investment linked</a>
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/20edc38edb55de419d162ad4a214d71d710f0594cc5ca107db3c28d5ef15d759?"
@@ -295,7 +297,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
             )}
             {!selectedFiles.claim && (
               <div className="flex gap-1 justify-center p-2 bg-white rounded"
-       
+
               >
                 <img
                   src={documentIcon}
