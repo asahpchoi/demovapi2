@@ -100,22 +100,31 @@ export function ShowInstructions({ onClose, style }) {
         <div className="flex gap-2 mt-6 text-sm text-neutral-800 max-md:flex-wrap">
           <div className="text-left font-bold leading-[150%]">Your task:</div>
           <div className="flex-1 text-left leading-5 font-[450] max-md:max-w-full">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
-            ab illo inventore veritatis et quasi architecto beatae vitae dicta
-            sunt explicabo.
+            Using basic prompt engineering, create a new GenAI Assistant Agent bot.
+
+            In the right side text box, you can define key attributes of your very own GenAI Assistant bot.
+
+
+
+            The more details and specific instructions you provide in the prompt window (right side text box) will train your bot to be more domain focused and detailed.
+
+            Use the below tips to help you on your way!
           </div>
         </div>
         <div className="mt-5 mb-5 text-sm text-left self-start font-bold leading-5 text-neutral-800 max-md:max-w-full">
           Tips:
         </div>
         <div className="flex flex-col gap-4 mb-5">
-          <ListItem title="1. Name:" bodies={["Objective: Provide your name for the assitant.", "Example: Athena, Max, Zoe, etc."]} />
-          <ListItem title="2. Style:" bodies={["Objective: Define the tone and style of the conversation.", "Style options: Formal, Informal, Professional, Friendly, Authoritative, Humorous, etc."]} />
-          <ListItem title="3. Role:" bodies={["Objective: Outline the primary role of the assistant and suggest to choose from the following three below."]} />
+          <ListItem title="1. Name:" bodies={["Objective: Provide a name for your Assistant.", "Example: Athena, Max, Zoe, etc."]} />
+          <ListItem title="2. Style:" bodies={["Objective: Define the tone and style of the conversation. ", "Style options: Formal, Informal, Professional, Friendly, Authoritative, Humorous, etc."]} />
+          <ListItem title="3. Role:" bodies={["Objective: Outline the primary role of your assistant bot. Please focus one of the below options",
+            "FWD Customer Assistant ",
+            "FWD Claims Assistant ",
+            "FWD UW Assistant "
+          ]} />
           <ListItem title="4. Tasks:" bodies={["Objective: Describe the specific tasks or types of assistance the AI is supposed to provide."]} />
           <ListItem title="5. Additional Context:" bodies={["Objective: Provide extra information or constraints that may be useful in guiding the AI’s responses."]} />
-          <ListItem title="6. Sample Interaction:" bodies={["Objective: Provide example dialogues to show how the AI should respond."]} />
+          <ListItem title="6. Sample Interaction:" bodies={["Objective: Provide example dialogues to show how the AI should respond. "]} />
         </div>
         <div className="justify-center px-4 pt-4 pb-8 mt-5 text-base leading-6 rounded-lg border border-solid border-neutral-800 font-[450] text-neutral-800 max-md:max-w-full">
           <span className="text-xl font-bold leading-6">

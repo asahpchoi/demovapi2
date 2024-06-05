@@ -43,9 +43,7 @@ export const checkSentiment = async (content) => {
 
 export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, rag, model, useTools) => {
     //The deployment name for your completions API model. The instruct model is the only new model that supports the legacy API.
-    console.log("LLM", {
-        useTools, rag, model, systemPrompt, userPrompt, imageUrl
-    })
+
     const extraPrompt = " *if you are sending email, make sure the body is in html format, if you are sending sms, make sure prefix + is added"
     const messages = [
         {
@@ -114,24 +112,29 @@ const azureLLM = async (messages, cb, useTools) => {
         )
         const choice = reply.choices[0];
         if (choice.finishReason === 'tool_calls') {
-            const tool = choice.message.toolCalls[0];
-            const requestedToolCalls = await func[tool.function.name](tool.function.arguments, tool.id);
-            const replyMessage = reply.choices[0].message;
+            if (choice.message.toolCalls.length === 1) {
+                const tool = choice.message.toolCalls[0];
+                const requestedToolCalls = await func[tool.function.name](tool.function.arguments, tool.id);
+                const replyMessage = reply.choices[0].message;
 
 
-            const toolCallResolutionMessages = [
-                ...messages,
-                replyMessage,
-                requestedToolCalls,
-            ];
+                const toolCallResolutionMessages = [
+                    ...messages,
+                    replyMessage,
+                    requestedToolCalls,
+                ];
 
-            console.log({ toolCallResolutionMessages })
-            const result = await client.getChatCompletions(deployment, toolCallResolutionMessages);
-            try {
-                cb(result.choices[0].message.content, "stop", requestedToolCalls)
+                console.log({ messages, replyMessage, requestedToolCalls })
+                const result = await client.getChatCompletions(deployment, toolCallResolutionMessages);
+                try {
+                    cb(result.choices[0].message.content, "stop", requestedToolCalls)
+                }
+                catch (e) {
+
+                }
             }
-            catch (e) {
-
+            else {
+                cb("Function calling error", "stop")
             }
         }
         else {

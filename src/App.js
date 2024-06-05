@@ -166,6 +166,7 @@ export default function App() {
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/5eccd0cf9d1dbad8df1ed9b5b5532b98d226c847c16bafd04c30b8477fba72b0?"
               className="shrink-0 max-w-full aspect-[2.56] w-[108px]"
+              onClick={logoAction}
             />
             <div className="self-center">FWD Gen AI build your bot</div>
           </div>
