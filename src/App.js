@@ -155,6 +155,8 @@ export default function App() {
   return (
     <div className="App">
       <div style={{
+        display: 'flex',
+        flexDirection: 'column',
         flexShrink: 0,
       }}>
         <div className="p-9 flex flex-row justify-center">
@@ -189,7 +191,7 @@ export default function App() {
             />
           </div>
         </div>
-        <div className="flex relative">
+        <div className="flex flex-1 relative">
           <div style={landingPlaceholderStyle} className="landing-instrustions-placeholder" >
           </div>
           <ShowInstructions style={showInstructionsStyle} onClose={onToggleInstructions} />
