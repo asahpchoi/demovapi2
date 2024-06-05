@@ -59,14 +59,20 @@ export default function App() {
   // useEffect hook to initialize data on component mount
   useEffect(() => {
     async function init() {
+      const params = new URLSearchParams(document.location.search);
+      const sid = params.get("sid");
+
+      if (params.get("upload")) {
+        setDisplayMode("upload")
+      }
       if (false) {
         console.log("ci", process.env.CI)
         while (window.prompt('Enter Password') !== "fwdstrategy2024") {
 
         }
       }
-      const params = new URLSearchParams(document.location.search);
-      const sid = params.get("sid");
+
+
 
 
       if (sid) {
@@ -98,9 +104,7 @@ export default function App() {
       ));
       setLoading(false); // Set loading to false once data is fetched
 
-      if (params.get("upload")) {
-        setDisplayMode("upload")
-      }
+
 
     }
     init();
