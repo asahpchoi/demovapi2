@@ -134,7 +134,7 @@ const azureLLM = async (messages, cb, useTools) => {
                 }
             }
             else {
-                cb("Function calling error", "stop")
+                cb("sorry, this function is not possible right now", "stop")
             }
         }
         else {

@@ -79,7 +79,23 @@ export default function App() {
         }
       }
       const userl = await getUsers();
-      setUserlist(userl);
+
+      
+      setUserlist(userl.sort(
+        (a, b) => {
+          const nameA = a.username.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.username.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        
+          // names must be equal
+          return 0;
+        }
+      ));
       setLoading(false); // Set loading to false once data is fetched
 
       if (params.get("upload")) {
@@ -228,7 +244,7 @@ export default function App() {
       <ModalTemplate isOpen={!sessionId} component={<Login />} />
       <ModalTemplate isOpen={displayMode === "upload"} component={<Stack ><Button onClick={() => {
         document.getElementById("imageCapture").click();
-      }}>Take a photo</Button>
+      }}  variant="contained" fullWidth>Take a photo</Button>
         {image && <>
           <img style={{ width: '60vw' }} src={image} alt="photo" />
           <div>Once the picture is taken, you can close the QR code on the desktop.</div>

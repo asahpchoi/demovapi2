@@ -4,15 +4,21 @@ import unselected from "../images/unselected.svg";
 import openai from "../images/openai.png";
 import mistral from "../images/mistral.png";
 import minimax from "../images/minimax.jpeg";
- 
+
 import documentIcon from "../images/document.svg"
- 
+
 import untoggled from "../images/untoggled.svg"
 import toggled from "../images/toggled.svg"
 import email from "../images/email.svg"
 import { ragdata } from "../libs/ragdata";
 import { updateSystemPrompt } from "../libs/state.mjs";
+import manulife from "../images/manulife.png";
+import code from "../images/code.jpg";
+import {
 
+  Modal,
+
+} from "@mui/material";
 const icons = {
   openai: openai,
   mistral: mistral,
@@ -23,6 +29,8 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
   const [isRag, setIsRag] = React.useState(false);
   const [text, setText] = React.useState("");
   const [isToggled, setIsToggled] = React.useState(false);
+  const [showCode, setShowCode] = React.useState(false)
+  const [showPDF, setShowPDF] = React.useState(false);
   const [selectedModel, setSelectedModel] = React.useState("azure");
   const [selectedFiles, setSelectedFiles] = React.useState({
     setForLife: false,
@@ -101,16 +109,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
             }}
             value={prompt}
           />
-          <button
-            style={buttonStyle}
-            disabled={!enableButton}
-            onClick={async () => {
-            }}
-          >
-            <div className="flex-1" onClick={isShowInstructions ? onOpenBot : undefined}>
-              Open your GPT
-            </div>
-          </button>
+
         </div>
         <div>
           <div className="flex flex-row gap-2 text-xs font-bold text-neutral-800 max-md:flex-wrap">
@@ -181,6 +180,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
                 />
               </div>
             )}
+
           </div>
           <div className="flex gap-3 py-3 mt-3 text-sm rounded-lg max-md:flex-wrap">
             <div className="flex gap-2 self-start px-1 font-bold rounded text-neutral-800">
@@ -225,15 +225,26 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
                 />
                 <div className="flex gap-1 justify-center my-auto">
                   <img loading="lazy" src={icons.mistral} alt={`${icons.mistral} icon`} className="shrink-0 aspect-square w-[18px]" />
-                  <div>Llama</div>
+                  <div>Mistral</div>
                 </div>
               </div>
+
             </div>
+            <button
+              style={buttonStyle}
+              disabled={!enableButton}
+              onClick={async () => {
+              }}
+            >
+              <div className="flex-1" onClick={isShowInstructions ? onOpenBot : undefined}>
+                Open your GPT
+              </div>
+            </button>
           </div>
         </div>
       </div>
       <div className="flex flex-col justify-center px-4 py-3 mt-4 text-sm font-bold rounded border-0 border-orange-300 border-solid text-neutral-800 max-md:max-w-full">
-        <div onClick={() => setIsRag(prev => !prev)} className="flex gap-2 items-center pr-20 rounded max-md:flex-wrap max-md:pr-5">
+        <div onClick={() => setIsRag(prev => !prev)} style={{ cursor: "pointer" }} className="flex gap-2 items-center pr-20 rounded max-md:flex-wrap max-md:pr-5">
           <img
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/ae4b7f3fcb1fa8d640e3d612357eace063b133fa8316a0efb79b66276ebaf2af?"
@@ -274,6 +285,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
                   onClick={() => {
                     setSelectedFiles(prev => ({ ...prev, setForLife: true }));
                   }}
+                  style={{ cursor: "pointer" }}
                 />
               </div>
             )}
@@ -292,6 +304,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/20edc38edb55de419d162ad4a214d71d710f0594cc5ca107db3c28d5ef15d759?"
                   className="shrink-0 w-5 aspect-square"
                   onClick={() => { setSelectedFiles(prev => ({ ...prev, health: true })) }}
+                  style={{ cursor: "pointer" }}
                 />
               </div>
             )}
@@ -308,6 +321,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/20edc38edb55de419d162ad4a214d71d710f0594cc5ca107db3c28d5ef15d759?"
                   className="shrink-0 w-5 aspect-square"
                   onClick={() => { setSelectedFiles(prev => ({ ...prev, claim: true })) }}
+                  style={{ cursor: "pointer" }}
                 />
               </div>
             )}
@@ -318,9 +332,15 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
         <img
           src={email}
         />
-        <div className="self-stretch my-auto text-sm font-bold text-neutral-800">
+        <div className="self-stretch my-auto text-sm font-bold text-neutral-800" onClick={() => {
+          setShowCode(prev => !prev)
+
+        }} style={{ cursor: "pointer" }}>
           Agentic AI bot (email agent)
+
+
         </div>
+        {showCode && <img src={code} style={{ position: "absolute", right: 0, width: "30vw", }} />}
         <div onClick={() => {
           setIsToggled(prev => !prev)
           setUseTool(prev => !prev);
@@ -336,6 +356,15 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
               className="shrink-0 self-stretch aspect-[0.97] w-[29px]"
             />)}
         </div>
+
+      </div>
+      <div className="flex gap-2 items-center pr-3 pl-4 mt-4 rounded max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
+        [<div onClick={e => setShowPDF(true)}>Sample image</div>]
+        <Modal open={showPDF}>
+          <img src={manulife} onClick={e => {
+            setShowPDF(false)
+          }} style={{ position: "absolute", left: '30%', top: 0, height: '100vh' }}></img>
+        </Modal>
       </div>
     </div>
   );

@@ -1,7 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://ymfbypjbsgujebgrezpu.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InltZmJ5cGpic2d1amViZ3JlenB1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTY1MzIyODUsImV4cCI6MjAzMjEwODI4NX0.f9tmCKOS4HrsRM5GRJQNp5Q_elqj2hV9lNOmZi3j8fA'
+//const supabaseUrl = 'https://ymfbypjbsgujebgrezpu.supabase.co' 
+const supabaseUrl = 'https://zabjstmmafriyymepyef.supabase.co'
+//const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InltZmJ5cGpic2d1amViZ3JlenB1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTY1MzIyODUsImV4cCI6MjAzMjEwODI4NX0.f9tmCKOS4HrsRM5GRJQNp5Q_elqj2hV9lNOmZi3j8fA'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InphYmpzdG1tYWZyaXl5bWVweWVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc1NzU1NDIsImV4cCI6MjAzMzE1MTU0Mn0.Ut-E9wPo2W_OUr-wmn8Iub5lVULtGsnPbUFSbdFnINk'
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 
@@ -17,6 +19,7 @@ export const getUsers = async () => {
   const { data, error } = await supabase
     .from('session')
     .select()
+  //console.log(data.sort((a,b)=>{a.username - b.username}));
   return data;
 }
 
