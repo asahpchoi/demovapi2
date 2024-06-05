@@ -10,13 +10,13 @@ import person from "./images/person.svg"
 import { MainPrompt } from "./ui/MainPrompt.js";
 import UserPrompt from "./ui/UserPrompt.js";
 import { call, setCallback, convertBase64 } from "./libs/util.js";
-import { callLLM } from "./libs/llm.mjs";
+
 import { updateData, getUser, getUsers } from "./libs/state.mjs";
 import "./App.css";
 import { CallUI } from "./ui/CallUI.js";
-import { TextUI } from "./ui/TextUI.js";
+
 import { SettingUI } from "./ui/SettingUI.js";
-import { RagSection } from "./ui/RagSection.js";
+
 import { Login } from "./ui/Login.js";
 
 import { ShowQR } from "./ui/ShowQR.js";
@@ -27,7 +27,7 @@ import bg from "./images/background.svg"
 import { Result } from "./ui/Result.js";
 import CloseIcon from '@mui/icons-material/Close';
 import { Loading } from "./ui/Loading.js";
-import { Header } from "./ui/Header.js";
+
 
 
 export default function App() {
@@ -240,7 +240,6 @@ export default function App() {
       <ModalTemplate isOpen={displayMode === "setting"} component={<SettingUI args={{ setUserlist }} />} />
 
       <ModalTemplate isOpen={displayMode === 'result'} isHideClose component={<Result result={result} userlist={userlist} sessionId={sessionId} />} />
-      <ModalTemplate isOpen={displayMode === 'rag'} component={<RagSection setRAG={setRAG} setDisplayMode={setDisplayMode} />} />
 
       {loading && <Loading />}
       <input type="file" id="imageCapture" accept="image/*" capture="environment"

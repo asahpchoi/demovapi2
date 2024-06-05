@@ -1,43 +1,7 @@
-/*import { getSettings } from "../libs/state.mjs";
-import { useState } from "react";
-import CloseIcon from '@mui/icons-material/Close';
-
-export const ShowInstructions = (args) => {
-
-    const [instruction, setInstruction] = useState("")
-    getSettings("instruction").then(data => {
-        setInstruction(data)
-    })
-    return <div className="md:w-1/2 w-full pt-5 bg-fwd-100 p-5"   elevation="3">
-        <div className="flex">
-            <div className="text-xl font-bold text-left flex-grow">Tips for for your instructions</div>
-            <CloseIcon onClick={() => {
-                args.setDisplayMode("test")
-            }}> </CloseIcon>
-        </div>
-
-        <pre style={{ textAlign: "left", overflow: "auto", textWrap: "wrap", margin: '2em', height: '80vh' }}>
-            {instruction}
-        </pre>
-    </div>
-}
-*/
-import { ViewHeadline } from "@mui/icons-material";
+ 
 import * as React from "react";
 
-function SamplePersonaPrompt({ imgSrc, title }) {
-  return (
-    <div className="flex gap-2 p-3 border-2 border-orange-500 border-solid rounded-[44px] " role="button" tabIndex="0">
-      <img
-        loading="lazy"
-        src={imgSrc}
-        className="shrink-0 w-6 aspect-square"
-        alt=""
-      />
-      <div className="my-auto">{title}</div>
-    </div>
-  );
-}
+ 
 
 function ListItem({ title, bodies }) {
   return (

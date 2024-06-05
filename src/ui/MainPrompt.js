@@ -4,9 +4,9 @@ import unselected from "../images/unselected.svg";
 import openai from "../images/openai.png";
 import mistral from "../images/mistral.png";
 import minimax from "../images/minimax.jpeg";
-import uploadimage from "../images/uploadimage.svg"
+ 
 import documentIcon from "../images/document.svg"
-import quote from "../images/quote.svg"
+ 
 import untoggled from "../images/untoggled.svg"
 import toggled from "../images/toggled.svg"
 import email from "../images/email.svg"

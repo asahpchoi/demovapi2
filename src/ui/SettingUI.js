@@ -4,11 +4,11 @@ import {
     Button,
     TextField
 } from "@mui/material";
-import { removeUser, getSettings, getUsers, updateData, updateValue } from "../libs/state.mjs"
+import { removeUser, getSettings, getUsers, updateValue } from "../libs/state.mjs"
 import { useState, useEffect } from 'react';
 
-export const SettingUI = ({ args }) => {
-    const { setUserlist } = args;
+export const SettingUI = () => {
+
     const [instruction, setInstruction] = useState("")
     const [users, setUsers] = useState([])
 

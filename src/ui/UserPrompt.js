@@ -1,15 +1,10 @@
 
 import * as React from "react";
-import {
-  FilledInput, Button
-} from "@mui/material";
-import selected from "../images/selected.svg";
-import unselected from "../images/unselected.svg";
+ 
 import openai from "../images/openai.png";
 import mistral from "../images/mistral.png";
 import minimax from "../images/minimax.jpeg";
-import uploadimage from "../images/uploadimage.svg"
-import quote from "../images/quote.svg"
+ 
 import { TextUI } from "./TextUI";
 
 const icons = {
