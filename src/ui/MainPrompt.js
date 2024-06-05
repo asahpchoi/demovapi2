@@ -17,18 +17,16 @@ const icons = {
   minimax: minimax,
 }
 
-const files = {
-  setForLife: 1,
-  healthInvestmentLinked: 2,
-  claimProcess: 3,
-}
-
 export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel, models, onOpenBot, isShowInstructions, onPressShowInstructions }) {
   const [isRag, setIsRag] = React.useState(false);
   const [text, setText] = React.useState("");
   const [isToggled, setIsToggled] = React.useState(false);
   const [selectedModel, setSelectedModel] = React.useState(null);
-  const [selectedFiles, setSelectedFiles] = React.useState([]);
+  const [selectedFiles, setSelectedFiles] = React.useState({
+    setForLife: false,
+    health: false,
+    claim: false,
+  });
   const enableButton = !!text && text.length > 0;
 
   const buttonStyle = {
@@ -89,9 +87,9 @@ export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel,
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/2cb397158623a09c65497ec899e1ffc3078c8c7a6c644308d076b0f3894e0d46?"
               className="w-6 h-[36px] aspect-square max-md:mt-10"
             />
-            {selectedFiles.includes(files.setForLife) && (
-              <div className="flex gap-5 justify-between px-2 py-2 rounded bg-stone-50" onClick={() => setSelectedFiles([])}>
-                <div className="flex gap-1 pr-5">
+            {selectedFiles.setForLife && (
+              <div className="flex gap-5 px-2 py-2 rounded bg-fwd-100" onClick={() => setSelectedFiles(prev => ({ ...prev, setForLife: false }))}>
+                <div className="flex flex-1 gap-1">
                   <img
                     src={documentIcon}
                     className="shrink-0 w-5 aspect-square"
@@ -105,9 +103,11 @@ export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel,
                 />
               </div>
             )}
-            {selectedFiles.includes(files.healthInvestmentLinked) && (
-              <div className="flex gap-0.5 justify-between px-2 py-2 rounded bg-stone-50">
-                <div className="flex gap-1 pr-5">
+            {selectedFiles.health && (
+              <div className="flex gap-0.5 justify-between px-2 py-2 rounded bg-fwd-100"
+                onClick={() => setSelectedFiles(prev => ({ ...prev, health: false }))}
+              >
+                <div className="flex gap-1">
                   <img
                     src={documentIcon}
                     className="shrink-0 w-5 aspect-square"
@@ -121,9 +121,11 @@ export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel,
                 />
               </div>
             )}
-            {selectedFiles.includes(files.claimProcess) && (
-              <div className="flex gap-5 justify-between px-2 py-2 rounded bg-stone-50">
-                <div className="flex gap-1 pr-5">
+            {selectedFiles.claim && (
+              <div className="flex gap-5 justify-between px-2 py-2 rounded bg-fwd-100"
+                onClick={() => setSelectedFiles(prev => ({ ...prev, claim: false }))}
+              >
+                <div className="flex gap-1">
                   <img
                     src={documentIcon}
                     className="shrink-0 w-5 aspect-square"
@@ -215,9 +217,9 @@ export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel,
         </div>
         {isRag && (
           <div className="flex gap-3 mt-5 self-stretch text-xs font-bold text-neutral-800 max-md:flex-wrap">
-            {!selectedFiles.includes(files.setForLife) && (
+            {!selectedFiles.setForLife && (
               <div className="flex gap-1 justify-center p-2 bg-white rounded"
-                onClick={() => setSelectedFiles(prev => [...prev, files.setForLife])}
+                onClick={() => setSelectedFiles(prev => ({ ...prev, setForLife: true }))}
               >
                 <img
                   src={documentIcon}
@@ -230,10 +232,10 @@ export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel,
                 />
               </div>
             )}
-            {!selectedFiles.includes(files.healthInvestmentLinked) && (
+            {!selectedFiles.health && (
               <div
                 className="flex gap-1 justify-center p-2 bg-white rounded"
-                onClick={() => setSelectedFiles(prev => [...prev, files.healthInvestmentLinked])}
+                onClick={() => setSelectedFiles(prev => ({ ...prev, health: true }))}
               >
                 <img
                   src={documentIcon}
@@ -246,9 +248,9 @@ export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel,
                 />
               </div>
             )}
-            {!selectedFiles.includes(files.claimProcess) && (
+            {!selectedFiles.claim && (
               <div className="flex gap-1 justify-center p-2 bg-white rounded"
-                onClick={() => setSelectedFiles(prev => [...prev, files.claimProcess])}
+                onClick={() => setSelectedFiles(prev => ({ ...prev, claim: true }))}
               >
                 <img
                   src={documentIcon}
