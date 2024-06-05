@@ -31,7 +31,7 @@ export const Chatbot = ({ history, answer, model }) => {
     } : historyStyle;
   }
 
-  return <div id="chatbox" className="text-left overflow-scroll w-full">
+  return <div id="chatbox" className="text-left overflow-auto w-full">
     <div style={{ width: "69px" }} className="mx-auto mt-16">
       <img src={aichattop} alt="AI Chat" width="69px" />
     </div>

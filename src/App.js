@@ -43,6 +43,7 @@ export default function App() {
   const [displayMode, setDisplayMode] = useState("info");
   const [rag, setRAG] = useState("");
   const [showInstructions, setShowInstructions] = useState(true);
+  const [showLandingPlaceHolder, setShowLandingPlaceHolder] = useState(true);
   const [model, setModel] = useState("azure");
   const models = [
     { name: "openai", model: "azure" },
@@ -77,8 +78,6 @@ export default function App() {
           setImage(data[0].photo)
           setSessionId(sid);
         }
-
-
       }
       const userl = await getUsers();
       setUserlist(userl);
@@ -114,7 +113,13 @@ export default function App() {
   setCallback(callback)
   // Render loading spinner if data is still being fetched
 
+  const showInstructionsStyle = showInstructions ? {} : { left: "-50vw" };
+  const landingPlaceholderStyle = showLandingPlaceHolder ? {} : { width: "0px" };
 
+  const onToggleInstructions = () => {
+    setShowInstructions(v => !v);
+    setShowLandingPlaceHolder(false);
+  }
 
   function logoAction() {
     if (window.prompt('password') !== '2024') return
@@ -151,7 +156,6 @@ export default function App() {
     <div className="App">
       <div style={{
         flexShrink: 0,
-        width: showInstructions ? "100vw" : "50vw",
       }}>
         <div className="p-9 flex flex-row justify-center">
           <div className="flex gap-4 justify-center text-base font-bold text-neutral-800 max-md:ml-2.5">
@@ -185,11 +189,14 @@ export default function App() {
             />
           </div>
         </div>
-        <div className="flex">
-          {showInstructions &&
-            <ShowInstructions onClose={() => setShowInstructions(false)} />
-          }
-          <MainPrompt onOpenBot={() => setShowInstructions(false)} setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
+        <div className="flex relativen">
+          <div style={landingPlaceholderStyle} className="landing-instrustions-placeholder" >
+          </div>
+          <ShowInstructions style={showInstructionsStyle} onClose={onToggleInstructions} />
+          <MainPrompt
+            onOpenBot={() => setShowInstructions(false)}
+            setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
+            onPressShowInstructions={() => setShowInstructions(true)}
             model={model} setModel={setModel} models={models} />
         </div>
       </div>

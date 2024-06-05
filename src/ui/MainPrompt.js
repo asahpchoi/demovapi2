@@ -54,7 +54,7 @@ export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel,
   }
 
   return (
-    <div className="flex flex-col px-9 pb-9" style={{ width: "50vw" }}>
+    <div className="flex flex-col px-9 pb-9 overflow-auto" style={{ width: "50vw" }}>
       <div className="text-left text-2xl font-bold text-neutral-800">
         Set up your agent bot:
       </div>
