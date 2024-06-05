@@ -146,13 +146,13 @@ export default function App() {
               refresh ? window.location.reload() : setDisplayMode("test");
               const params = new URLSearchParams(document.location.search);
               const sid = params.get("sid");
-        
+
               const data = await getUser(sid);
               if (data) {
                 setName(data[0].username);
                 setPrompt(data[0].systemPrompt);
                 setImage(data[0].photo)
-                
+
               }
             }}>
 
@@ -229,7 +229,10 @@ export default function App() {
       <ModalTemplate isOpen={displayMode === "upload"} component={<Stack ><Button onClick={() => {
         document.getElementById("imageCapture").click();
       }}>Take a photo</Button>
-        {image && <img style={{ height: "10vh", width: "10vw" }} src={image} alt="photo" />}
+        {image && <>
+          <img style={{ width: '60vw' }} src={image} alt="photo" />
+          <div>Once the picture is taken, you can close the QR code on the desktop.</div>
+        </>}
 
       </Stack>} />
       <ModalTemplate isOpen={displayMode === "call"} component={<CallUI args={{ prompt, transcripts, currentMessage }} />} refresh={true} />

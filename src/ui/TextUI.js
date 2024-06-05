@@ -25,7 +25,8 @@ export const TextUI = (props) => {
   const [history, setHistory] = useState([]);
   const [userPrompt, setUserPrompt] = useState("");
   //const [useTool, setUseTool] = useState(false);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const [imgSize, setImgSize] = useState('10vw');
 
   const promptStyle = {
     backgroundColor: "white",
@@ -55,7 +56,7 @@ export const TextUI = (props) => {
     alignItems: "center",
   }
 
- 
+
 
   async function showRating() {
     const data = history.map(h => `${h.role}: ${h.content}`).join();
@@ -136,7 +137,10 @@ export const TextUI = (props) => {
           <path fill-rule="evenodd" clip-rule="evenodd" d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21ZM12 23C18.0751 23 23 18.0751 23 12C23 5.92487 18.0751 1 12 1C5.92487 1 1 5.92487 1 12C1 18.0751 5.92487 23 12 23Z" fill="#B30909" />
         </svg>
       </button>
-      {image && <img src={image} alt="thumbnail" style={{ width: '10vw', position: "absolute", right: 0, top: 200 }} />}
+      {image && <img src={image} alt="thumbnail" style={{ width: imgSize, position: "absolute", right: 0, top: 100, zIndex: 3 }}
+        onClick={() => {
+          setImgSize(imgSize === "10vw" ? "2vw" : "10vw")
+        }} />}
 
       <Stack className="absolute top-0 pb-20 h-screen w-full">
         <Chatbot history={history} answer={answer} model={model} />
@@ -176,7 +180,7 @@ export const TextUI = (props) => {
       {
         isLoading && <Loading>
 
-  
+
 
         </Loading>
       }
