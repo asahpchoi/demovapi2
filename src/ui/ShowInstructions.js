@@ -126,7 +126,10 @@ export function ShowInstructions({ onClose, style }) {
           <ListItem title="5. Additional Context:" bodies={["Objective: Provide extra information or constraints that may be useful in guiding the AI’s responses."]} />
           <ListItem title="6. Sample Interaction:" bodies={["Objective: Provide example dialogues to show how the AI should respond. "]} />
         </div>
-        <div className="justify-center px-4 pt-4 pb-8 mt-5 text-base leading-6 rounded-lg border border-solid border-neutral-800 font-[450] text-neutral-800 max-md:max-w-full">
+        <div className="justify-center px-4 pt-4 pb-8 mt-5 text-base leading-6 rounded-lg border border-solid border-neutral-800 font-[450] text-neutral-800 max-md:max-w-full" onCopy={()=>{
+          alert('please create your own prompt');
+          navigator.clipboard.writeText(" ");
+        }}>
           <span className="text-xl font-bold leading-6">
             Example of a Complete Prompt - Do not Copy
           </span>
