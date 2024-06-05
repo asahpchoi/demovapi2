@@ -258,6 +258,8 @@ export const ragdata = {
         
         Boarding pass 
         Copies of written proof from the public transport operator or their handling agents stating the number of hours you were without your baggage with the reason for the baggage delay`
+        , url:"https://help.fwd.com.sg/hc/en-us/articles/4406755345305-How-do-I-submit-my-Travel-claim-and-what-are-the-documents-required"
     }
+   
 
 }

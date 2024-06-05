@@ -11,7 +11,7 @@ import untoggled from "../images/untoggled.svg"
 import toggled from "../images/toggled.svg"
 import email from "../images/email.svg"
 import { ragdata } from "../libs/ragdata";
-
+import { updateSystemPrompt } from "../libs/state.mjs";
 
 const icons = {
   openai: openai,
@@ -19,7 +19,7 @@ const icons = {
   minimax: minimax,
 }
 
-export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructions, onPressShowInstructions, setRAG, setUseTool }) {
+export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructions, onPressShowInstructions, setRAG, setUseTool, setDisplayMode, sessionId, prompt}) {
   const [isRag, setIsRag] = React.useState(false);
   const [text, setText] = React.useState("");
   const [isToggled, setIsToggled] = React.useState(false);
@@ -54,7 +54,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
   }
 
   React.useEffect(() => {
-    console.log({ selectedFiles })
+
     var RAG = "";
     if (selectedFiles.setForLife) {
       RAG += ragdata.setForLife.content
@@ -69,6 +69,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
     setRAG(RAG);
     setUseTool(isToggled);
     setPrompt(text);
+    updateSystemPrompt(sessionId,text);
   }, [selectedFiles, isToggled, text])
 
 
@@ -96,6 +97,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
             onChange={e => {
               setText(e.target.value); setPrompt(e.target.value)
             }}
+            value={prompt}
           />
           <button
             style={buttonStyle}
@@ -114,9 +116,10 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/2cb397158623a09c65497ec899e1ffc3078c8c7a6c644308d076b0f3894e0d46?"
               className="w-6 h-[36px] aspect-square max-md:mt-10"
+              onClick={()=>setDisplayMode("QR")}
             />
             {selectedFiles.setForLife && (
-              <div className="flex gap-5 px-2 py-2 rounded bg-fwd-100" onClick={() => setSelectedFiles(prev => ({ ...prev, setForLife: false }))}>
+              <div className="flex gap-5 px-2 py-2 rounded bg-fwd-100">
                 <div className="flex flex-1 gap-1">
                   <img
                     src={documentIcon}
@@ -128,17 +131,13 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
                   loading="lazy"
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/d89bee0d53fee804ad87b2cccf2b6d70465b44bc4fb312abf57535a233c953b4?"
                   className="shrink-0 my-auto w-4 aspect-square"
+                  onClick={() => setSelectedFiles(prev => ({ ...prev, setForLife: false }))}
                 />
               </div>
             )}
             {selectedFiles.health && (
               <div className="flex gap-0.5 justify-between px-2 py-2 rounded bg-fwd-100"
-                onClick={() => {
-                  setSelectedFiles(prev => ({ ...prev, health: false }));
 
-                }
-
-                }
               >
                 <div className="flex gap-1">
                   <img
@@ -151,13 +150,18 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
                   loading="lazy"
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/75e5f02c47074f3f38d36de4edbbd11a27acd444132daef9754f913ed2b07a72?"
                   className="shrink-0 my-auto w-4 aspect-square"
+                  onClick={() => {
+                    setSelectedFiles(prev => ({ ...prev, health: false }));
+
+                  }
+
+                  }
                 />
               </div>
             )}
             {selectedFiles.claim && (
               <div className="flex gap-5 justify-between px-2 py-2 rounded bg-fwd-100"
-                onClick={() => setSelectedFiles(prev => ({ ...prev, claim: false }))
-                }
+
               >
                 <div className="flex gap-1">
                   <img
@@ -170,6 +174,8 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
                   loading="lazy"
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/d89bee0d53fee804ad87b2cccf2b6d70465b44bc4fb312abf57535a233c953b4?"
                   className="shrink-0 my-auto w-4 aspect-square"
+                  onClick={() => setSelectedFiles(prev => ({ ...prev, claim: false }))
+                  }
                 />
               </div>
             )}
@@ -253,49 +259,53 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
           <div className="flex gap-3 mt-5 self-stretch text-xs font-bold text-neutral-800 max-md:flex-wrap">
             {!selectedFiles.setForLife && (
               <div className="flex gap-1 justify-center p-2 bg-white rounded"
-                onClick={() => {
-                  setSelectedFiles(prev => ({ ...prev, setForLife: true }));
-                }}
+
               >
                 <img
                   src={documentIcon}
                   className="shrink-0 w-5 aspect-square"
                 />
-                <div className="flex-1 my-auto underline">Set for Life</div>
+                <a className="flex-1 my-auto underline" href={ragdata.setForLife.url} target="_blank">Set for Life</a>
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/20edc38edb55de419d162ad4a214d71d710f0594cc5ca107db3c28d5ef15d759?"
                   className="shrink-0 w-5 aspect-square"
+                  onClick={() => {
+                    setSelectedFiles(prev => ({ ...prev, setForLife: true }));
+                  }}
                 />
               </div>
             )}
             {!selectedFiles.health && (
               <div
                 className="flex gap-1 justify-center p-2 bg-white rounded"
-                onClick={() => { setSelectedFiles(prev => ({ ...prev, health: true })) }}
+      
               >
                 <img
                   src={documentIcon}
                   className="shrink-0 w-5 aspect-square"
                 />
-                <div className="flex-1 my-auto underline">Health investment linked</div>
+                
+                <a className="flex-1 my-auto underline" href={ragdata.health.url} target="_blank">Health investment linked</a>
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/20edc38edb55de419d162ad4a214d71d710f0594cc5ca107db3c28d5ef15d759?"
                   className="shrink-0 w-5 aspect-square"
+                  onClick={() => { setSelectedFiles(prev => ({ ...prev, health: true })) }}
                 />
               </div>
             )}
             {!selectedFiles.claim && (
               <div className="flex gap-1 justify-center p-2 bg-white rounded"
-                onClick={() => { setSelectedFiles(prev => ({ ...prev, claim: true })) }}
+       
               >
                 <img
                   src={documentIcon}
                   className="shrink-0 w-5 aspect-square"
                 />
-                <div className="flex-1 my-auto underline">Claim process</div>
+                <a className="flex-1 my-auto underline" href={ragdata.claim.url} target="_blank">Claim Process</a>
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/20edc38edb55de419d162ad4a214d71d710f0594cc5ca107db3c28d5ef15d759?"
                   className="shrink-0 w-5 aspect-square"
+                  onClick={() => { setSelectedFiles(prev => ({ ...prev, claim: true })) }}
                 />
               </div>
             )}

@@ -47,7 +47,7 @@ export default function App() {
   const [showInstructions, setShowInstructions] = useState(true);
   const [model, setModel] = useState("azure");
   const [useTool, setUseTool] = useState(false);
-
+ 
   const [showLandingPlaceHolder, setShowLandingPlaceHolder] = useState(true);
   const [result, setResult] = useState({
     improvement: `Consider starting the conversation with a friendly greeting, such as "Good morning/afternoon, thank you for taking the time to meet with me today. I’m excited to discuss your insurance needs.”`,
@@ -201,11 +201,14 @@ export default function App() {
             onPressModel={(model) => setModel(model)}
             onPressShowInstructions={onToggleInstructions}
             setRAG={setRAG}
-            setUseTool = {setUseTool}
+            setUseTool={setUseTool}
+            setDisplayMode={setDisplayMode}
+            sessionId={sessionId}
+            prompt={prompt}
           />
         </div>
       </div>
-      <UserPrompt onEndSession={() => setDisplayMode("result")} model={model} useTool={useTool} rag={rag} prompt={prompt}/>
+      <UserPrompt onEndSession={() => setDisplayMode("result")} model={model} useTool={useTool} rag={rag} prompt={prompt} setDisplayMode={setDisplayMode} image={image}/>
 
       <ModalTemplate isOpen={!sessionId} component={<Login />} />
       <ModalTemplate isOpen={displayMode === "upload"} component={<Stack ><Button onClick={() => {
@@ -218,7 +221,7 @@ export default function App() {
       <ModalTemplate isOpen={displayMode === "QR"} component={<ShowQR />} refresh={true} />
       <ModalTemplate isOpen={displayMode === "setting"} component={<SettingUI args={{ setUserlist }} />} />
       <ModalTemplate isOpen={displayMode === 'result'} component={<Result result={result} />} />
-     
+
       {loading && <Loading />}
       <input type="file" id="imageCapture" accept="image/*" capture="environment"
         className="hidden"

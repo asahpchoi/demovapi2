@@ -49,6 +49,15 @@ export const updateData = async (id, username, systemPrompt, photo) => {
   return data;
 }
 
+export const updateSystemPrompt = async (id, systemPrompt) => {
+  const { data, error } = await supabase
+    .from('session')
+    .upsert({ id, systemPrompt })
+    .select()
+
+  return data;
+}
+
 export const updateValue = async (key, value) => {
   const { data, error } = await supabase
     .from('content')
