@@ -189,7 +189,7 @@ export default function App() {
             />
           </div>
         </div>
-        <div className="flex relativen">
+        <div className="flex relative">
           <div style={landingPlaceholderStyle} className="landing-instrustions-placeholder" >
           </div>
           <ShowInstructions style={showInstructionsStyle} onClose={onToggleInstructions} />

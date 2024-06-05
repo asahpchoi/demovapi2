@@ -86,8 +86,8 @@ export function ShowInstructions({ onClose, style }) {
   return (
     <div
       style={containerStyle}
-      className="pr-1 pl-1 pt-9 bg-fwd-100 h-screen instrustions-container">
-      <div className="h-full overflow-scroll pl-5 pr-5">
+      className="pr-1 pl-1 pt-9 bg-fwd-100 h-full instrustions-container">
+      <div className="h-full overflow-auto pl-5 pr-5 pb-9">
         <div className="flex gap-5 text-2xl font-bold text-neutral-800 max-md:flex-wrap">
           <div className="flex-1 text-left max-md:max-w-full">Your exercise:</div>
           <img
