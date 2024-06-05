@@ -7,6 +7,10 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 
+//backup
+//https://ikqevetfqycsbcmuftov.supabase.co
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlrcWV2ZXRmcXljc2JjbXVmdG92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc2MDU3ODEsImV4cCI6MjAzMzE4MTc4MX0.iqagsnkV0_1vwrK57aBFOyG_kbZdKNk2crgR0LMj2Pk
+
 export const getID = async () => {
   const { data, error } = await supabase
     .from('session')
