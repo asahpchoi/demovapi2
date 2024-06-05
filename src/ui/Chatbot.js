@@ -5,6 +5,7 @@ import Markdown from 'react-markdown';
 import person from "../images/person.svg"
 import { LLMIcon } from "./LLMIcon"
 import aichattop from "../images/aichattop.png";
+import remarkGfm from 'remark-gfm';
 
 export const Chatbot = ({ history, answer, model }) => {
   const historyStyle = {
@@ -47,13 +48,14 @@ export const Chatbot = ({ history, answer, model }) => {
       return <Stack direction="row" style={getStyle(h.role)} key={i}>
         {h.role === "user" && <img src={person} alt="person" />}
         {h.role === "assistant" && <LLMIcon name={h.model ?? "azure"} />}
-        <Markdown className="pl-2 ">{data}</Markdown>
+        <Markdown remarkPlugins={[remarkGfm]} className="pl-2 ">{data}</Markdown>
+       
       </Stack>
     })}
 
     {answer && <Stack direction="row" style={{ ...historyStyle, ...assistantStyle }}>
       <LLMIcon name={model ?? "azure"} ></LLMIcon>
-      <Markdown className="pl-2 ">{answer}</Markdown>
+      <Markdown remarkPlugins={[remarkGfm]} className="pl-2 ">{answer}</Markdown>
     </Stack>}
 
   </div>

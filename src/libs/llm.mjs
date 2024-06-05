@@ -86,7 +86,6 @@ export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, r
 
 }
 
-
 const azureLLM = async (messages, cb, useTools) => {
     const client = new OpenAIClient(endpoint, new AzureKeyCredential(apiKey));
 
@@ -159,10 +158,10 @@ const minimaxLLM = async (systemPrompt, userPrompt, cb) => {
 
     const data = {
         "model": "abab6.5s-chat",
-        messages: messages,
+        "messages": messages,
         "tools": [],
         "tool_choice": "none",
-        "stream": false,
+        "stream": true,
         "max_tokens": 2048,
         "temperature": 0.1,
         "top_p": 0.9
@@ -172,7 +171,6 @@ const minimaxLLM = async (systemPrompt, userPrompt, cb) => {
     const reply = axios.post(url, data, { headers });
 
     reply.then(d => {
-
         const content = d.data.base_resp.status_msg != "" ? d.data.base_resp.status_msg : d.data.choices[0].message.content;
         cb(content, "stop")
     })
