@@ -33,7 +33,6 @@ import { Header } from "./ui/Header.js";
 export default function App() {
   /// State variables for managing various application states
   const [loading, setLoading] = useState(true);
-  const [prompt, setPrompt] = useState("");
   const [sessionId, setSessionId] = useState(null);
   const [name, setName] = useState();
   const [userlist, setUserlist] = useState([]);
@@ -42,14 +41,13 @@ export default function App() {
   const [currentMessage, setCurrentMessage] = useState("");
   const [displayMode, setDisplayMode] = useState("info");
   const [rag, setRAG] = useState("");
+
+  // Main prompt
+  const [prompt, setPrompt] = useState(null);
   const [showInstructions, setShowInstructions] = useState(true);
-  const [showLandingPlaceHolder, setShowLandingPlaceHolder] = useState(true);
   const [model, setModel] = useState("azure");
-  const models = [
-    { name: "openai", model: "azure" },
-    { name: "minimax", model: "minimax" },
-    { name: "mistral", model: "groq" },
-  ]
+
+  const [showLandingPlaceHolder, setShowLandingPlaceHolder] = useState(true);
   const [result, setResult] = useState({
     improvement: `Consider starting the conversation with a friendly greeting, such as "Good morning/afternoon, thank you for taking the time to meet with me today. I’m excited to discuss your insurance needs.”`,
     nexttime: `Hi, thank you for coming in today. I’m looking forward to learning more about your insurance needs and how we can help you.`,
@@ -118,7 +116,7 @@ export default function App() {
 
   const onToggleInstructions = () => {
     setShowInstructions(v => !v);
-    setShowLandingPlaceHolder(false);
+    setShowLandingPlaceHolder(v => !v);
   }
 
   function logoAction() {
@@ -196,10 +194,12 @@ export default function App() {
           </div>
           <ShowInstructions style={showInstructionsStyle} onClose={onToggleInstructions} />
           <MainPrompt
-            onOpenBot={() => setShowInstructions(false)}
-            setDisplayMode={setDisplayMode} prompt={prompt} setPrompt={setPrompt}
-            onPressShowInstructions={() => setShowInstructions(true)}
-            model={model} setModel={setModel} models={models} />
+            isShowInstructions={showInstructions}
+            setPrompt={setPrompt}
+            onOpenBot={onToggleInstructions}
+            onPressModel={(model) => setModel(model)}
+            onPressShowInstructions={onToggleInstructions}
+          />
         </div>
       </div>
       <UserPrompt onEndSession={() => setDisplayMode("result")} model={model} />

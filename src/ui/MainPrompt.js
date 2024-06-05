@@ -17,11 +17,11 @@ const icons = {
   minimax: minimax,
 }
 
-export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel, models, onOpenBot, isShowInstructions, onPressShowInstructions }) {
+export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructions, onPressShowInstructions }) {
   const [isRag, setIsRag] = React.useState(false);
   const [text, setText] = React.useState("");
   const [isToggled, setIsToggled] = React.useState(false);
-  const [selectedModel, setSelectedModel] = React.useState(null);
+  const [selectedModel, setSelectedModel] = React.useState("azure");
   const [selectedFiles, setSelectedFiles] = React.useState({
     setForLife: false,
     health: false,
@@ -68,10 +68,16 @@ export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel,
       </div>
       <div className="flex flex-col h-[400px] justify-between p-2 mt-4 bg-white rounded-lg border-2 border-orange-500 border-solid max-md:max-w-full">
         <div className="flex flex-row flex-1 gap-2 max-md:flex-col max-md:gap-0">
-          <textarea name="botPrompt" style={inputStyle} onChange={e => setText(e.target.value)} />
+          <textarea
+            name="botPrompt"
+            style={inputStyle}
+            onChange={e => {
+              setText(e.target.value); setPrompt(e.target.value)
+            }}
+          />
           <button
             style={buttonStyle}
-            disabled={enableButton}
+            disabled={!enableButton}
             onClick={async () => {
             }}
           >
@@ -151,10 +157,10 @@ export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel,
             </div>
             <div className="flex flex-wrap flex-1 gap-3 content-start font-[450] text-neutral-800">
               <div
-                onClick={() => setSelectedModel("openai")}
+                onClick={() => { setSelectedModel("azure"); onPressModel("azure") }}
                 className="flex gap-2 justify-center py-1 pr-3 pl-1 bg-white border-0 border-orange-500 border-solid rounded-[100px]">
                 <img
-                  src={selectedModel === "openai" ? selected : unselected}
+                  src={selectedModel === "azure" ? selected : unselected}
                   className="shrink-0 w-5 aspect-square"
                 />
                 <div className="flex gap-1 justify-center my-auto">
@@ -163,7 +169,7 @@ export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel,
                 </div>
               </div>
               <div
-                onClick={() => setSelectedModel("minimax")}
+                onClick={() => { setSelectedModel("minimax"); onPressModel("minimax") }}
                 className="flex gap-2 justify-center py-1 pr-3 pl-1 whitespace-nowrap bg-white border-0 border-orange-500 border-solid rounded-[100px]">
                 <img
                   src={selectedModel === "minimax" ? selected : unselected}
@@ -175,10 +181,10 @@ export function MainPrompt({ setDisplayMode, prompt, setPrompt, model, setModel,
                 </div>
               </div>
               <div
-                onClick={() => setSelectedModel("mistral")}
+                onClick={() => { setSelectedModel("grop"); onPressModel("grop") }}
                 className="flex gap-2 justify-center py-1 pr-3 pl-1 whitespace-nowrap bg-white border-0 border-orange-500 border-solid rounded-[100px]">
                 <img
-                  src={selectedModel === "mistral" ? selected : unselected}
+                  src={selectedModel === "grop" ? selected : unselected}
                   className="shrink-0 w-5 aspect-square"
                 />
                 <div className="flex gap-1 justify-center my-auto">
