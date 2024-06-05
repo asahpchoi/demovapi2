@@ -25,6 +25,8 @@ const icons = {
   minimax: minimax,
 }
 
+
+
 export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructions, onPressShowInstructions, setRAG, setUseTool, setDisplayMode, sessionId, prompt }) {
   const [isRag, setIsRag] = React.useState(false);
   const [text, setText] = React.useState("");
@@ -182,6 +184,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
             )}
 
           </div>
+   
           <div className="flex gap-3 py-3 mt-3 text-sm rounded-lg max-md:flex-wrap">
             <div className="flex gap-2 self-start px-1 font-bold rounded text-neutral-800">
               <img
@@ -243,6 +246,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
           </div>
         </div>
       </div>
+     
       <div className="flex flex-col justify-center px-4 py-3 mt-4 text-sm font-bold rounded border-0 border-orange-300 border-solid text-neutral-800 max-md:max-w-full">
         <div onClick={() => setIsRag(prev => !prev)} style={{ cursor: "pointer" }} className="flex gap-2 items-center pr-20 rounded max-md:flex-wrap max-md:pr-5">
           <img
