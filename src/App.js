@@ -47,7 +47,7 @@ export default function App() {
   const [showInstructions, setShowInstructions] = useState(true);
   const [model, setModel] = useState("azure");
   const [useTool, setUseTool] = useState(false);
- 
+
   const [showLandingPlaceHolder, setShowLandingPlaceHolder] = useState(true);
   const [result, setResult] = useState({
     improvement: `Consider starting the conversation with a friendly greeting, such as "Good morning/afternoon, thank you for taking the time to meet with me today. I’m excited to discuss your insurance needs.”`,
@@ -132,19 +132,21 @@ export default function App() {
     }
   }
 
-  function ModalTemplate({ isOpen, component, refresh }) {
+  function ModalTemplate({ isOpen, component, refresh, isHideClose }) {
     return <Modal open={isOpen} >
 
       <Stack className="overlay bg" justifyContent="center"
         alignItems="center"
         style={{ backgroundImage: `url(${bg}` }}>
-        <CloseIcon
-          className="fixed top-0  right-0 m-5"
-          onClick={() => {
-            refresh ? window.location.reload() : setDisplayMode("test")
-          }}>
+        {!isHideClose &&
+          <CloseIcon
+            className="fixed top-0  right-0 m-5"
+            onClick={() => {
+              refresh ? window.location.reload() : setDisplayMode("test")
+            }}>
 
-        </CloseIcon>
+          </CloseIcon>
+        }
         {component}
 
       </Stack>
@@ -202,14 +204,15 @@ export default function App() {
             onPressShowInstructions={onToggleInstructions}
             setRAG={setRAG}
             setUseTool={setUseTool}
+
             setDisplayMode={setDisplayMode}
             sessionId={sessionId}
             prompt={prompt}
           />
         </div>
       </div>
-      <UserPrompt onEndSession={() => setDisplayMode("result")} model={model} useTool={useTool} rag={rag} prompt={prompt} setDisplayMode={setDisplayMode} image={image}/>
-
+      <UserPrompt onEndSession={() => setDisplayMode("result")} model={model} useTool={useTool} rag={rag} prompt={prompt} setDisplayMode={setDisplayMode} image={image} />
+ 
       <ModalTemplate isOpen={!sessionId} component={<Login />} />
       <ModalTemplate isOpen={displayMode === "upload"} component={<Stack ><Button onClick={() => {
         document.getElementById("imageCapture").click();
@@ -220,7 +223,9 @@ export default function App() {
       <ModalTemplate isOpen={displayMode === "call"} component={<CallUI args={{ prompt, transcripts, currentMessage }} />} refresh={true} />
       <ModalTemplate isOpen={displayMode === "QR"} component={<ShowQR />} refresh={true} />
       <ModalTemplate isOpen={displayMode === "setting"} component={<SettingUI args={{ setUserlist }} />} />
-      <ModalTemplate isOpen={displayMode === 'result'} component={<Result result={result} />} />
+
+      <ModalTemplate isOpen={displayMode === 'result'} isHideClose component={<Result result={result} userlist={userlist} sessionId={sessionId} />} />
+      <ModalTemplate isOpen={displayMode === 'rag'} component={<RagSection setRAG={setRAG} setDisplayMode={setDisplayMode} />} />
 
       {loading && <Loading />}
       <input type="file" id="imageCapture" accept="image/*" capture="environment"
