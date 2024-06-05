@@ -10,6 +10,8 @@ import quote from "../images/quote.svg"
 import untoggled from "../images/untoggled.svg"
 import toggled from "../images/toggled.svg"
 import email from "../images/email.svg"
+import { ragdata } from "../libs/ragdata";
+
 
 const icons = {
   openai: openai,
@@ -17,7 +19,7 @@ const icons = {
   minimax: minimax,
 }
 
-export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructions, onPressShowInstructions }) {
+export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructions, onPressShowInstructions, setRAG, setUseTool }) {
   const [isRag, setIsRag] = React.useState(false);
   const [text, setText] = React.useState("");
   const [isToggled, setIsToggled] = React.useState(false);
@@ -50,6 +52,26 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
     resize: 'none',
     fontSize: "14px",
   }
+
+  React.useEffect(() => {
+    console.log({ selectedFiles })
+    var RAG = "";
+    if (selectedFiles.setForLife) {
+      RAG += ragdata.setForLife.content
+    }
+    if (selectedFiles.health) {
+      RAG += ragdata.health.content
+    }
+    if (selectedFiles.claim) {
+      RAG += ragdata.claim.content
+    }
+
+    setRAG(RAG);
+    setUseTool(isToggled);
+    setPrompt(text);
+  }, [selectedFiles, isToggled, text])
+
+
 
   return (
     <div className="flex flex-col px-9 pb-9 overflow-auto" style={{ width: "50vw" }}>
@@ -111,7 +133,12 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
             )}
             {selectedFiles.health && (
               <div className="flex gap-0.5 justify-between px-2 py-2 rounded bg-fwd-100"
-                onClick={() => setSelectedFiles(prev => ({ ...prev, health: false }))}
+                onClick={() => {
+                  setSelectedFiles(prev => ({ ...prev, health: false }));
+
+                }
+
+                }
               >
                 <div className="flex gap-1">
                   <img
@@ -129,7 +156,8 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
             )}
             {selectedFiles.claim && (
               <div className="flex gap-5 justify-between px-2 py-2 rounded bg-fwd-100"
-                onClick={() => setSelectedFiles(prev => ({ ...prev, claim: false }))}
+                onClick={() => setSelectedFiles(prev => ({ ...prev, claim: false }))
+                }
               >
                 <div className="flex gap-1">
                   <img
@@ -181,10 +209,10 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
                 </div>
               </div>
               <div
-                onClick={() => { setSelectedModel("grop"); onPressModel("grop") }}
+                onClick={() => { setSelectedModel("groq"); onPressModel("groq") }}
                 className="flex gap-2 justify-center py-1 pr-3 pl-1 whitespace-nowrap bg-white border-0 border-orange-500 border-solid rounded-[100px]">
                 <img
-                  src={selectedModel === "grop" ? selected : unselected}
+                  src={selectedModel === "groq" ? selected : unselected}
                   className="shrink-0 w-5 aspect-square"
                 />
                 <div className="flex gap-1 justify-center my-auto">
@@ -225,7 +253,9 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
           <div className="flex gap-3 mt-5 self-stretch text-xs font-bold text-neutral-800 max-md:flex-wrap">
             {!selectedFiles.setForLife && (
               <div className="flex gap-1 justify-center p-2 bg-white rounded"
-                onClick={() => setSelectedFiles(prev => ({ ...prev, setForLife: true }))}
+                onClick={() => {
+                  setSelectedFiles(prev => ({ ...prev, setForLife: true }));
+                }}
               >
                 <img
                   src={documentIcon}
@@ -241,7 +271,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
             {!selectedFiles.health && (
               <div
                 className="flex gap-1 justify-center p-2 bg-white rounded"
-                onClick={() => setSelectedFiles(prev => ({ ...prev, health: true }))}
+                onClick={() => { setSelectedFiles(prev => ({ ...prev, health: true })) }}
               >
                 <img
                   src={documentIcon}
@@ -256,7 +286,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
             )}
             {!selectedFiles.claim && (
               <div className="flex gap-1 justify-center p-2 bg-white rounded"
-                onClick={() => setSelectedFiles(prev => ({ ...prev, claim: true }))}
+                onClick={() => { setSelectedFiles(prev => ({ ...prev, claim: true })) }}
               >
                 <img
                   src={documentIcon}
@@ -279,7 +309,10 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
         <div className="self-stretch my-auto text-sm font-bold text-neutral-800">
           Agentic AI bot (email agent)
         </div>
-        <div onClick={() => setIsToggled(prev => !prev)}>
+        <div onClick={() => {
+          setIsToggled(prev => !prev)
+          setUseTool(prev => !prev);
+        }}>
           {isToggled && (
             <img
               src={toggled}

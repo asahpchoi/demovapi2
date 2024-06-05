@@ -46,6 +46,7 @@ export default function App() {
   const [prompt, setPrompt] = useState(null);
   const [showInstructions, setShowInstructions] = useState(true);
   const [model, setModel] = useState("azure");
+  const [useTool, setUseTool] = useState(false);
 
   const [showLandingPlaceHolder, setShowLandingPlaceHolder] = useState(true);
   const [result, setResult] = useState({
@@ -199,10 +200,12 @@ export default function App() {
             onOpenBot={onToggleInstructions}
             onPressModel={(model) => setModel(model)}
             onPressShowInstructions={onToggleInstructions}
+            setRAG={setRAG}
+            setUseTool = {setUseTool}
           />
         </div>
       </div>
-      <UserPrompt onEndSession={() => setDisplayMode("result")} model={model} />
+      <UserPrompt onEndSession={() => setDisplayMode("result")} model={model} useTool={useTool} rag={rag} prompt={prompt}/>
 
       <ModalTemplate isOpen={!sessionId} component={<Login />} />
       <ModalTemplate isOpen={displayMode === "upload"} component={<Stack ><Button onClick={() => {
@@ -215,7 +218,7 @@ export default function App() {
       <ModalTemplate isOpen={displayMode === "QR"} component={<ShowQR />} refresh={true} />
       <ModalTemplate isOpen={displayMode === "setting"} component={<SettingUI args={{ setUserlist }} />} />
       <ModalTemplate isOpen={displayMode === 'result'} component={<Result result={result} />} />
-      <ModalTemplate isOpen={displayMode === 'rag'} component={<RagSection setRAG={setRAG} setDisplayMode={setDisplayMode} />} />
+     
       {loading && <Loading />}
       <input type="file" id="imageCapture" accept="image/*" capture="environment"
         className="hidden"

@@ -19,12 +19,12 @@ export const TextUI = (props) => {
   const {
     prompt, image,
     rag, onEndSession,
-    setDisplayMode, model, openImageCapture, setResult } = props
+    setDisplayMode, model, openImageCapture, setResult, useTool } = props
 
   const [answer, setAnswer] = useState("");
   const [history, setHistory] = useState([]);
   const [userPrompt, setUserPrompt] = useState("");
-  const [useTool, setUseTool] = useState(false);
+  //const [useTool, setUseTool] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
 
   const promptStyle = {
