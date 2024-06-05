@@ -44,11 +44,11 @@ export const checkSentiment = async (content) => {
 export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, rag, model, useTools) => {
     //The deployment name for your completions API model. The instruct model is the only new model that supports the legacy API.
 
-    const extraPrompt = " *if you are sending email, make sure the body is in html format, if you are sending sms, make sure prefix + is added"
+    const extraPrompt = "*answer the table in markdown format, when you sending a email, output the body as html, if you are sending sms, make sure prefix + is added, if print table, make sure it is in markdown format"
     const messages = [
         {
             role: "system",
-            content: systemPrompt + `context: ${rag}`
+            content: systemPrompt + `${extraPrompt} context: ${rag}`
         }]
         .concat(
             history ? history : [],
@@ -58,12 +58,12 @@ export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, r
                     [
                         {
                             type: "text",
-                            text: userPrompt
+                            text: userPrompt 
                         }
                     ] : [
                         {
                             type: "text",
-                            text: userPrompt
+                            text: userPrompt 
                         },
                         {
                             type: `image_url`,
