@@ -115,12 +115,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
         </div>
         <div>
           <div className="flex flex-row gap-2 text-xs font-bold text-neutral-800 max-md:flex-wrap">
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/2cb397158623a09c65497ec899e1ffc3078c8c7a6c644308d076b0f3894e0d46?"
-              className=" w- 6 h-[36px] aspect-square max-md:mt-10"
-              onClick={() => setDisplayMode("QR")}
-            />
+
             {selectedFiles.setForLife && (
               <div className="flex gap-5 px-2 py-2 rounded bg-fwd-100">
                 <div className="flex flex-1 gap-1">
@@ -233,6 +228,13 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
               </div>
 
             </div>
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/2cb397158623a09c65497ec899e1ffc3078c8c7a6c644308d076b0f3894e0d46?"
+              className=" w- 6 h-[36px] aspect-square max-md:mt-10"
+              onClick={() => setDisplayMode("QR")}
+            />
+
             <button
               style={buttonStyle}
              
