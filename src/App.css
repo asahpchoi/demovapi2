@@ -4,7 +4,7 @@
   background-image: url("./images/bg2.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-position: cover;
+  background-size: cover;
   text-align: center;
   display: flex;
   flex-direction: row;

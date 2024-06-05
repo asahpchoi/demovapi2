@@ -132,19 +132,21 @@ export default function App() {
     }
   }
 
-  function ModalTemplate({ isOpen, component, refresh }) {
+  function ModalTemplate({ isOpen, component, refresh, isHideClose }) {
     return <Modal open={isOpen} >
 
       <Stack className="overlay bg" justifyContent="center"
         alignItems="center"
         style={{ backgroundImage: `url(${bg}` }}>
-        <CloseIcon
-          className="fixed top-0  right-0 m-5"
-          onClick={() => {
-            refresh ? window.location.reload() : setDisplayMode("test")
-          }}>
+        {!isHideClose &&
+          <CloseIcon
+            className="fixed top-0  right-0 m-5"
+            onClick={() => {
+              refresh ? window.location.reload() : setDisplayMode("test")
+            }}>
 
-        </CloseIcon>
+          </CloseIcon>
+        }
         {component}
 
       </Stack>
@@ -219,6 +221,8 @@ export default function App() {
       <ModalTemplate isOpen={displayMode === "setting"} component={<SettingUI args={{ setUserlist }} />} />
       <ModalTemplate isOpen={displayMode === 'result'} component={<Result result={result} />} />
      
+      <ModalTemplate isOpen={displayMode === 'result'} isHideClose component={<Result result={result} userlist={userlist} sessionId={sessionId} />} />
+      <ModalTemplate isOpen={displayMode === 'rag'} component={<RagSection setRAG={setRAG} setDisplayMode={setDisplayMode} />} />
       {loading && <Loading />}
       <input type="file" id="imageCapture" accept="image/*" capture="environment"
         className="hidden"
