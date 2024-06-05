@@ -1,7 +1,7 @@
  
 import * as React from "react";
 
-import hints from "../images/hints.jpg";
+import Hints from "./Hints"
 
 function ListItem({ title, bodies }) {
   return (
@@ -128,7 +128,7 @@ export function ShowInstructions({ onClose, style }) {
             </li>
           </ul>
         </div>
-        <img src={hints} style={{width:600}} />
+        <Hints />
       </div>
       {/* ) */}
 
