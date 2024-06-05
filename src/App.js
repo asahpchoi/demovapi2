@@ -9,7 +9,7 @@ import {
 import person from "./images/person.svg"
 import { MainPrompt } from "./ui/MainPrompt.js";
 import UserPrompt from "./ui/UserPrompt.js";
-import { call, setCallback, convertBase64 } from "./libs/util.js";
+import { call, setCallback, convertBase64, resizeBase64Img } from "./libs/util.js";
 
 import { updateData, getUser, getUsers } from "./libs/state.mjs";
 import "./App.css";
@@ -80,7 +80,7 @@ export default function App() {
       }
       const userl = await getUsers();
 
-      
+
       setUserlist(userl.sort(
         (a, b) => {
           const nameA = a.username.toUpperCase(); // ignore upper and lowercase
@@ -91,7 +91,7 @@ export default function App() {
           if (nameA > nameB) {
             return 1;
           }
-        
+
           // names must be equal
           return 0;
         }
@@ -244,7 +244,7 @@ export default function App() {
       <ModalTemplate isOpen={!sessionId} component={<Login />} />
       <ModalTemplate isOpen={displayMode === "upload"} component={<Stack ><Button onClick={() => {
         document.getElementById("imageCapture").click();
-      }}  variant="contained" fullWidth>Take a photo</Button>
+      }} variant="contained" fullWidth>Take a photo</Button>
         {image && <>
           <img style={{ width: '60vw' }} src={image} alt="photo" />
           <div>Once the picture is taken, you can close the QR code on the desktop.</div>
@@ -263,8 +263,10 @@ export default function App() {
         onChange={async (evt) => {
           const file = evt.target.files[0];
           const base64 = await convertBase64(file);
-          setImage(base64);
-          updateData(sessionId, name, prompt, base64);
+          const resizeBase64 = await resizeBase64Img(base64);
+          //console.log({base64, resizeBase64})
+          setImage(resizeBase64);
+          updateData(sessionId, name, prompt, resizeBase64);
         }} />
 
     </div >

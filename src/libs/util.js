@@ -25,6 +25,25 @@ export const convertBase64 = (file) => {
   })
 }
 
+export function resizeBase64Img(base64) {
+  const newWidth = 400;
+  const newHeight = 600;
+
+  return new Promise((resolve, reject) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = newWidth;
+    canvas.height = newHeight;
+    let context = canvas.getContext("2d");
+    let img = document.createElement("img");
+    img.src = base64;
+    img.onload = function () {
+      context.scale(newWidth / img.width, newHeight / img.height);
+      context.drawImage(img, 0, 0);
+      resolve(canvas.toDataURL());
+    }
+  });
+}
+
 export function call(username, prompt, rag) {
   const context = JSON.stringify(rag)
 

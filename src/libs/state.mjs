@@ -18,7 +18,7 @@ export const getID = async () => {
 export const getUsers = async () => {
   const { data, error } = await supabase
     .from('session')
-    .select()
+    .select(`id, username`)
   //console.log(data.sort((a,b)=>{a.username - b.username}));
   return data;
 }
@@ -28,7 +28,7 @@ export const getUser = async (id) => {
     .from('session')
     .select()
     .eq("id", id)
-  console.log({ data })
+  console.log("getuserdata:",{ data })
   return data;
 }
 
