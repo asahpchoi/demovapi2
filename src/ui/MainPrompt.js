@@ -47,7 +47,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
     height: "44px",
     display: "flex",
     borderRadius: "4px",
-    backgroundColor: enableButton ? "#E87722" : "#F3BB90",
+    backgroundColor:   "#E87722"  ,
     color: "#fff",
     padding: "0 16px 0 16px",
     fontSize: "14px",
@@ -235,7 +235,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
             </div>
             <button
               style={buttonStyle}
-              disabled={!enableButton}
+             
               onClick={async () => {
               }}
             >
