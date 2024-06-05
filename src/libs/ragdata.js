@@ -106,30 +106,7 @@ export const ragdata = {
         
         To make a claim for Theft of Baggage or Personal Belongings, please provide the following documents:
         
-        Flight itinerary or boarding pass 
-        Police report for the stolen item(s), lodged overseas within 24 hours of theft 
-        Original invoice(s) for the stolen item(s) 
-        Damage to Baggage or Personal Belongings 
-        
-        You can claim forDamage to Baggage or Personal Belongingsif your personal belongings got damaged due to an accident, while on your trip overseas. The amount payable will be subjected to limits, depending on (1) the item type, (2) whether you still have the original receipt and (3) the age of the item. For instance, if you are unable to submit the original invoice, the claim limit will be capped at S$50 per article/pair of articles/set of articles. 
-        
-        If you re claiming damage of baggage or personal belongings, please note that you must keep the item with you as we may request for you to send it to us to facilitate claim investigation or payout. In the event we do request for you to send us the damaged item, you will need to arrange the postage or transportation of the damaged item to us at your own expense. 
-        
-        If you intend to claim for repair costs for your damaged baggage or personal belongings, please first obtain a quotation from the service provider who will be repairing your item. 
-        
-        You will need to send us the quotation for approval before you repair your item, in order to be eligible for a claim.
-        
-        To make a claim for Damage to Baggage or Personal Belongings, please provide the following documents:
-        
-        Flight itinerary or boarding pass 
-        Baggage damage report from relevant authorities or service providers (including airport and airline) 
-        Proof of denial or partial compensation by the transportation or accommodation providers and/or manufacturers if your damaged item is still under warranty. 
-        Colored photographs of the damaged item(s) 
-        Original invoice(s) for the damaged item(s) 
-        Loss of Baggage by the Airline 
-        
-        You can claim forLoss of Baggage by the airlineif the airline lost your baggage. We ll need you to lodge a report with the airline first and request for compensation. In the event that the airline refuses to compensate, you can file a claim with us. 
-        
+          
         To make a claim Loss Baggage by the Airline, please provide the following documents:
         
         Flight itinerary or boarding pass 
@@ -167,25 +144,7 @@ export const ragdata = {
         Death certificate of policyholder s or insured person s family members 
         Trip Postponement 
         
-        You can claim forTrip Postponementif you postpone your trip or change a travel companion because any of the following happened 30 days or less before your scheduled departure: 
-        
-        You or any travel companions suffer a serious illness or injury, are not allowed by government authorities to travel because of infectious disease, or in case of death; 
-        A family member or any person that your trip is dependent on suffers a serious illness or injury, or dies; 
-        You or a travel companion are required to be a witness in court during the date(s) you intended to go on your trip; 
-        Your or a travel companion s home suffers serious damage due to a fire, storm, flood or natural disaster and, as a result, you or your travel companion have no choice but to cancel your trip or change your original trip schedule; 
-        The Singapore government issues a travel advisory against travelling to one of your planned destinations; 
-        A serious public event is declared in Singapore or one of your planned destinations; 
-        You are a child, and your guardian, who is also a travel companion, has to postpone your trip because of one of the reasons listed above. 
-        To make a claim for Trip Postponement, please provide the following documents:
-        
-        Tour booking invoice 
-        Travel agency or airline confirmation on the cost of non-refundable prepaid travelling expenses 
-        Written medical advice or medical certificate from the attending medical practitioner confirming that you were unfit to travel (for cases of serious injury or illness) 
-        Death certificate of policyholder s or insured person s family members 
-        Trip Cut Short 
-        
-        You can claim forTrip Cut Shortif you cut short your trip or change a travel companion because any of the following reasons: 
-        
+      
         You or any travel companions suffer a serious injury or illness or dies; 
         A family member or any person you plan to stay with during your trip suffer a serious injury or illness or dies; 
         The Singapore government issues a travel advisory against travelling to one of your planned destinations; 
@@ -207,58 +166,7 @@ export const ragdata = {
         Itinerary 
         Re-scheduled boarding pass 
         Copies of written proof from the public transport operator or their handling agents stating the number of hours you were delayed along with the reason for the delay 
-        Trip Diversion 
-        
-        You can claim forTrip Diversionif the public transport you are scheduled to travel in during your trip is diverted to another destination and you did not cause this diversion.  
-        
-        To make a claim forTrip Diversion, please provide the following documents:
-        
-        Itinerary 
-        Re-scheduled boarding pass 
-        Copies of written proof from the public transport operator or their handling agents stating the number of hours you were delayed along with the reason for the delay 
-        Missed Connections 
-        
-        You can claim forMissed Connectionsif you miss your travel connection when the public transport you are scheduled to travel in arrives late and you are stranded for six continuous hours or longer because there were no other available travel alternatives. 
-        
-        To make a claim forMissed Connections, please provide the following documents:
-        
-        Itinerary 
-        Re-scheduled boarding pass 
-        Copies of written proof from the public transport operator or their handling agents stating the number of hours you were delayed along with the reason for the delay 
-        Trip Disruption 
-        
-        Youcan claim this benefit if yourtrip is disrupted when youare overseas andyouare forced to change any part of yourscheduled itinerary due toSerious Public Eventor Serious IllnessorSerious Injuryor youronward flight is cancelled by the airline due to airport, runway or airspace closure or poor weather conditions, which forces airplanes to be grounded. 
-        
-        To make a claim for Trip Disruption, please provide the following documents:
-        
-        Travel Itinerary 
-        Booking Invoices 
-        Memo from doctor stating unfit for travel 
-        Medical invoice 
-        Memo from transport operator stating reason of disruption 
-        Proof from merchants  on non-refundable items 
-        Insolvency Protection 
-        
-        You can claim forInsolvency Protectionif your trip is cancelled unavoidably before your scheduled departure because the travel agent, transport provider, tour operator, and/or accommodation provider responsible for all or part of your trip is declared insolvent. 
-        
-        “Insolvent” and “Insolvency”refers to an individual or entity s inability to pay his, her, or its debt, resulting in his, her, or its business stopping all operations due to: 
-        
-        Declared insolvency, with or without filing for bankruptcy or a comparable process; 
-        An owner or employee has prior convictions for fraudulent or dishonest acts, or is under investigation on fraudulent or dishonesty charges, or is illegally running away with monies belonging to the business. 
-        To make a claim orInsolvency Protection, please provide the following documents:
-        
-        Tour booking invoice or event ticket 
-        Travel agency or airline confirmation on the cost of non-refundable prepaid travelling expenses 
-        Event company confirmation on the cost of non-refundable expenses 
-        Baggage Delay 
-        
-        You can claim forBaggage Delayif your checked-in baggage is delayed, sent to the wrong destination, or temporarily misplaced by any transport provider, but eventually reaches you six continuous hours or longer after your arrival at your scheduled destination or when you return to Singapore. 
-        
-        To make a claim forBaggage Delay, please provide the following documents:
-        
-        Boarding pass 
-        Copies of written proof from the public transport operator or their handling agents stating the number of hours you were without your baggage with the reason for the baggage delay`
-        , url:"https://help.fwd.com.sg/hc/en-us/articles/4406755345305-How-do-I-submit-my-Travel-claim-and-what-are-the-documents-required"
+        `, url:"https://help.fwd.com.sg/hc/en-us/articles/4406755345305-How-do-I-submit-my-Travel-claim-and-what-are-the-documents-required"
     }
    
 
