@@ -203,11 +203,11 @@ export default function App() {
             onPressModel={(model) => setModel(model)}
             onPressShowInstructions={onToggleInstructions}
             setRAG={setRAG}
-            setUseTool = {setUseTool}
+            setUseTool={setUseTool}
           />
         </div>
       </div>
-      <UserPrompt onEndSession={() => setDisplayMode("result")} model={model} useTool={useTool} rag={rag} prompt={prompt}/>
+      <UserPrompt onEndSession={() => setDisplayMode("result")} model={model} useTool={useTool} rag={rag} prompt={prompt} />
 
       <ModalTemplate isOpen={!sessionId} component={<Login />} />
       <ModalTemplate isOpen={displayMode === "upload"} component={<Stack ><Button onClick={() => {
@@ -219,8 +219,6 @@ export default function App() {
       <ModalTemplate isOpen={displayMode === "call"} component={<CallUI args={{ prompt, transcripts, currentMessage }} />} refresh={true} />
       <ModalTemplate isOpen={displayMode === "QR"} component={<ShowQR />} refresh={true} />
       <ModalTemplate isOpen={displayMode === "setting"} component={<SettingUI args={{ setUserlist }} />} />
-      <ModalTemplate isOpen={displayMode === 'result'} component={<Result result={result} />} />
-     
       <ModalTemplate isOpen={displayMode === 'result'} isHideClose component={<Result result={result} userlist={userlist} sessionId={sessionId} />} />
       <ModalTemplate isOpen={displayMode === 'rag'} component={<RagSection setRAG={setRAG} setDisplayMode={setDisplayMode} />} />
       {loading && <Loading />}
