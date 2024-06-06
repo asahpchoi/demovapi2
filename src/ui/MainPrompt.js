@@ -19,6 +19,7 @@ import {
   Modal,
 
 } from "@mui/material";
+import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 const icons = {
   openai: openai,
   mistral: mistral,
@@ -39,6 +40,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
     health: false,
     claim: false,
   });
+  const [promptH, setPromptH] = React.useState("400px");
   const enableButton = !!text && text.length > 0;
 
   const buttonStyle = {
@@ -47,7 +49,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
     height: "44px",
     display: "flex",
     borderRadius: "4px",
-    backgroundColor:   "#E87722"  ,
+    backgroundColor: "#E87722",
     color: "#fff",
     padding: "0 16px 0 16px",
     fontSize: "14px",
@@ -101,7 +103,14 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
           </div>
         )}
       </div>
-      <div className="flex flex-col h-[400px] justify-between p-2 mt-4 bg-white rounded-lg border-2 border-orange-500 border-solid max-md:max-w-full">
+      <div className="flex flex-col justify-between p-2 mt-4 bg-white rounded-lg border-2 border-orange-500 border-solid max-md:max-w-full"
+        style={{
+          height: promptH
+        }}>
+        <AspectRatioIcon onClick={() => {
+          setPromptH(promptH !== '400px' ? '400px' : '170px')
+          
+        }} style={{"position": "absolute", right:50}}/>
         <div className="flex flex-row flex-1 gap-2 max-md:flex-col max-md:gap-0">
           <textarea
             name="botPrompt"
@@ -179,7 +188,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
             )}
 
           </div>
-   
+
           <div className="flex gap-3 py-3 mt-3 text-sm rounded-lg max-md:flex-wrap">
             <div className="flex gap-2 self-start px-1 font-bold rounded text-neutral-800">
               <img
@@ -237,7 +246,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
 
             <button
               style={buttonStyle}
-             
+
               onClick={async () => {
               }}
             >
@@ -248,7 +257,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
           </div>
         </div>
       </div>
-     
+
       <div className="flex flex-col justify-center px-4 py-3 mt-4 text-sm font-bold rounded border-0 border-orange-300 border-solid text-neutral-800 max-md:max-w-full">
         <div onClick={() => setIsRag(prev => !prev)} style={{ cursor: "pointer" }} className="flex gap-2 items-center pr-20 rounded max-md:flex-wrap max-md:pr-5">
           <img
