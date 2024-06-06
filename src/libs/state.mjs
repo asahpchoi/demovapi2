@@ -5,7 +5,7 @@ const supabaseUrl = 'https://zabjstmmafriyymepyef.supabase.co'
 //const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InltZmJ5cGpic2d1amViZ3JlenB1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTY1MzIyODUsImV4cCI6MjAzMjEwODI4NX0.f9tmCKOS4HrsRM5GRJQNp5Q_elqj2hV9lNOmZi3j8fA'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InphYmpzdG1tYWZyaXl5bWVweWVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc1NzU1NDIsImV4cCI6MjAzMzE1MTU0Mn0.Ut-E9wPo2W_OUr-wmn8Iub5lVULtGsnPbUFSbdFnINk'
 const supabase = createClient(supabaseUrl, supabaseKey)
-
+//asachoitw@gmail.com / P@ssw0rd####
 
 //backup
 //https://ikqevetfqycsbcmuftov.supabase.co

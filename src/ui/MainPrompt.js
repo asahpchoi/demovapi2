@@ -151,7 +151,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
                     src={documentIcon}
                     className="shrink-0 w-5 aspect-square"
                   />
-                  <div className="my-auto">Health investment linked</div>
+                  <div className="my-auto">Set for Health</div>
                 </div>
                 <img
                   loading="lazy"
