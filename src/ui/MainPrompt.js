@@ -314,7 +314,7 @@ export function MainPrompt({ setPrompt, onPressModel, onOpenBot, isShowInstructi
                   className="shrink-0 w-5 aspect-square"
                 />
 
-                <a className="flex-1 my-auto underline" href={ragdata.health.url} target="_blank">Health investment linked</a>
+                <a className="flex-1 my-auto underline" href={ragdata.health.url} target="_blank">Set for Health</a>
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/20edc38edb55de419d162ad4a214d71d710f0594cc5ca107db3c28d5ef15d759?"
                   className="shrink-0 w-5 aspect-square"
