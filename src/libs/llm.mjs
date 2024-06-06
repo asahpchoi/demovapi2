@@ -44,7 +44,7 @@ export const checkSentiment = async (content) => {
 export const callLLM = async (systemPrompt, userPrompt, imageUrl, cb, history, rag, model, useTools) => {
     //The deployment name for your completions API model. The instruct model is the only new model that supports the legacy API.
 
-    const extraPrompt = "*when you sending a email, output the body as html, if you are sending sms, make sure prefix + is added, if print table, make sure it is in markdown format"
+    const extraPrompt = ", output as markdown"
     const messages = [
         {
             role: "system",
@@ -161,7 +161,7 @@ const minimaxLLM = async (systemPrompt, userPrompt, cb) => {
         "messages": messages,
         "tools": [],
         "tool_choice": "none",
-        "stream": true,
+        "stream": false,
         "max_tokens": 2048,
         "temperature": 0.1,
         "top_p": 0.9
