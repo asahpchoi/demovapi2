@@ -1,15 +1,24 @@
 import { createClient } from '@supabase/supabase-js'
 
+//old
 //const supabaseUrl = 'https://ymfbypjbsgujebgrezpu.supabase.co' 
-const supabaseUrl = 'https://zabjstmmafriyymepyef.supabase.co'
 //const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InltZmJ5cGpic2d1amViZ3JlenB1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTY1MzIyODUsImV4cCI6MjAzMjEwODI4NX0.f9tmCKOS4HrsRM5GRJQNp5Q_elqj2hV9lNOmZi3j8fA'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InphYmpzdG1tYWZyaXl5bWVweWVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc1NzU1NDIsImV4cCI6MjAzMzE1MTU0Mn0.Ut-E9wPo2W_OUr-wmn8Iub5lVULtGsnPbUFSbdFnINk'
+
+//local
+const supabaseUrl = 'http://223.16.173.109:82'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0'
+
+//prod
+//const supabaseUrl = 'https://zabjstmmafriyymepyef.supabase.co'
+//const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InphYmpzdG1tYWZyaXl5bWVweWVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc1NzU1NDIsImV4cCI6MjAzMzE1MTU0Mn0.Ut-E9wPo2W_OUr-wmn8Iub5lVULtGsnPbUFSbdFnINk'
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 
 //backup
 //https://ikqevetfqycsbcmuftov.supabase.co
 //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlrcWV2ZXRmcXljc2JjbXVmdG92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc2MDU3ODEsImV4cCI6MjAzMzE4MTc4MX0.iqagsnkV0_1vwrK57aBFOyG_kbZdKNk2crgR0LMj2Pk
+
+
 
 export const getID = async () => {
   const { data, error } = await supabase
